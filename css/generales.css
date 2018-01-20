@@ -1,0 +1,21 @@
+/* Estilos de plataforma Derechos Humanos */
+
+
+.header{
+	background: #4f0e61;
+	height:380px;
+	text-align: center;
+	color:#ffffff;
+}
+
+.cuadro-derechos{
+	width:100%;
+	height:250px;
+	display:inline;
+	float:left;
+	background:#666666;
+}
+
+.cuadro-derechos h1, .cuadro-derechos p{
+	color:#ffffff;
+}
