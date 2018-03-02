@@ -5,13 +5,16 @@
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Evaluación de Derechos Humanos</title>
-		
+
 		<!-- CSS -->
 	    <link href="/favicon.ico" rel="shortcut icon">
 	    <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
-	    
+
 	    <link href="css/generales.css" rel="stylesheet">
-		
+
+			<!-- Cargamos Vue.js -->
+			<script src="https://unpkg.com/vue"></script>
+
 		<!-- Respond.js soporte de media queries para Internet Explorer 8 -->
 	    <!-- ie8.js EventTarget para cada nodo en Internet Explorer 8 -->
 	    <!--[if lt IE 9]>
@@ -20,11 +23,11 @@
 	    <![endif]-->
 	</head>
 	<body>
-		
+
 		<!-- Contenido -->
 	    <main class="page">
-		    
-		    
+
+
 		    <nav class="navbar navbar-inverse sub-navbar navbar-fixed-top">
 			  <div class="container">
 			    <div class="navbar-header">
@@ -39,7 +42,7 @@
 			    <div class="collapse navbar-collapse" id="subenlaces">
 			      <ul class="nav navbar-nav navbar-right">
 			        <li><a href="acerca.html" >Acerca de</a></li>
-			        <li><a href="#">Derechos</a></li>
+			        <li><a href="derechos.html">Derechos</a></li>
 			        <li><a href="calendario.html">Calendario</a></li>
 			        <li><a href="descarga.html">Descarga masiva</a></li>
 			        <li><a href="contacto.html">Contacto</a></li>
@@ -48,15 +51,15 @@
 			    </div>
 			  </div>
 			</nav>
-		    
-		  
+
+
 			<div class="row header">
 		      <div class="col-md-12 titulo-header">
 			      <img src="img/logoDH.png" alt="" />
 		      </div>
 	      	</div>
-		  
-		    
+
+
 	      <div class="container">
 		  	<!-- Inicia Bloque -->
 		      <div class="row">
@@ -70,7 +73,19 @@
 				      </div>
 				      <div class="row">
 					  	<div class="col-md-8">
-					      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a luctus lectus, ut gravida turpis. Maecenas id augue dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce accumsan est vel ante pretium, ut aliquam lorem blandit. Proin a faucibus metus, vel sagittis magna. Nam diam lectus, convallis sit amet consequat eget, ultricies non eros. Curabitur id suscipit mi. Integer efficitur, eros non viverra placerat, enim dui rhoncus ex, ut sagittis nisl mauris vel neque. Phasellus vel fermentum erat, quis euismod lectus. Ut mollis neque vitae elit eleifend accumsan. </p>
+								<div id="app">
+									
+								</div>
+					      <p>El Sistema Nacional para la Evaluación del Nivel de Cumplimiento de los Derechos Humanos se apoya en una plataforma que conjunta indicadores de progreso de los derechos humanos que permiten valorar el cumplimiento de los compromisos establecidos en los tratados internacionales de los que el Estado Mexicano es parte. Es decir, miden los niveles de goce y ejercicio de los derechos humanos, que el Estado mexicano se comprometió a dar cumplimiento, de las personas que habitan o transitan por el territorio nacional. </p>
+
+                        <p>Estos indicadores utilizan dos metodologías concurrentes y validadas por las autoridades internacionales de derechos humanos: el Alto Comisionado de las Naciones Unidas para los Derechos Humanos (ACNUDH) y la Organización de los Estados Americanos (OEA). Al utilizar estas metodologías, el Estado mexicano obtiene una herramienta que le permite medir y monitorear el cumplimiento la realización progresiva de los derechos humanos contenidos en los tratados internacionales de los que el Estado Mexicano es parte, así como de las condiciones que favorecen o limitan la posibilidad de acceso efectivo a los derechos. </p>
+
+                        <p>El Sistema Nacional para la Evaluación del Nivel de Cumplimiento de los Derechos Humanos, por lo tanto, es una herramienta efectiva para la evaluación, seguimiento y mejora de las políticas públicas en el ámbito de los derechos humanos, ya que los indicadores que contiene pueden aportar al proceso de diseño de políticas públicas tendientes a asegurar el cumplimiento del conjunto de los derechos humanos.</p>
+
+                        <p>La primera etapa de este componente incorpora los indicadores para los derechos económicos, sociales, culturales y ambientales (DESCA), definidos a partir de los lineamientos establecidos en el Sistema Interamericano de Derechos Humanos para dar seguimiento al Protocolo adicional a la Convención Americana sobre Derechos Humanos en materia de Derechos Económicos, Sociales y Culturales “Protocolo de San Salvador” (PSS).
+                        evaluación de la situación en cada país, reconociendo el principio de progresividad de los derechos económicos, sociales y culturales.</p>
+
+                        <p>El Sistema Nacional de Evaluación del nivel de cumplimiento de los Derechos Humanos (SNEDH) pretende mejorar la acción estatal en materia de derechos humanos, a partir del establecimiento de procesos sólidos y permanentes de evaluación y diagnóstico. Los objetivos específicos planteados para el sistema consideran: impulsar la transparencia y rendición de cuentas en materia de derechos humanos; promover procesos independientes de evaluación integral de la situación de derechos humanos en México; así como, generar bases de información pertinente para evaluación de las políticas públicas en materia de derechos humanos.</p>
 					  	</div>
 				      </div>
 			      </div>
@@ -89,7 +104,7 @@
 			      </div>
 		      </div>
 		      <!-- Termina Bloque -->
-		      
+
 		      <!-- Inicia Derechos -->
 		      <div class="row">
 			      <div class="col-md-4">
@@ -154,7 +169,7 @@
 			  </div>
 			      <br>
 			  <div class="row">
-			      
+
 			      <div class="col-md-4">
 				     <div class="cuadro-derechos b7 desactivado">
 					     <div class="d7">
@@ -172,7 +187,7 @@
 				     <p><b>Próximamente</b></p>
 			      </div>
 			  </div>
-			  
+
 			  <!-- Inicia Bloque -->
 		      <div class="row">
 			      <div class="col-md-12">
@@ -180,7 +195,7 @@
 				      <hr />
 				      <div class="row">
 					  	<div class="col-md-8">
-					      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla a luctus lectus, ut gravida turpis. Maecenas id augue dui. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce accumsan est vel ante pretium, ut aliquam lorem blandit. </p>
+					      <p></p>
 					  	</div>
 				      </div>
 				      <div class="row">
@@ -188,22 +203,25 @@
 						      <table class="table">
 							      <thead>
 								      <tr>
-									      <th><h2>Artículos</h2></th>
+                                          <th><h2>Tratados Internacionales</h2></th>
 								      </tr>
 							      </thead>
 							      <tbody>
 								      <tr>
-									      <td>Nulla a luctus lectus, ut gravida turpis.</td>
+									      <td>Protocolo de San Salvador (PSS)</td>
 								      </tr>
 								      <tr>
-									      <td>Maecenas id augue dui.</td>
+									      <td>Pacto Internacional de Derechos Económicos, Sociales y Culturales (PIDESC)</td>
 								      </tr>
 								      <tr>
-									      <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+									      <td>Protocolo Facultativo del Pacto Internacional de Derechos Económicos, Sociales y Culturales (PFPIDESC)</td>
 								      </tr>
 								      <tr>
-									      <td>Fusce accumsan est vel ante pretium, ut aliquam lorem blandit.</td>
+									      <td>Pacto Internacional de Derechos Civiles y Políticos (PIDCP)</td>
 								      </tr>
+                                      <tr>
+                                        <td>Página de Observaciones Generales del CDESC </td>
+                                      </tr>
 							      </tbody>
 								</table>
 					      </div>
@@ -212,22 +230,25 @@
 						      <table class="table">
 							      <thead>
 								      <tr>
-									      <th><h2>Documentos</h2></th>
+									      <th><h2>Metodología de indicadores de derechos humanos</h2></th>
 								      </tr>
 							      </thead>
 							      <tbody>
 								      <tr>
-									      <td>Nulla a luctus lectus, ut gravida turpis.</td>
+									      <td>Oficina del Alto Comisionado de las Naciones Unidas para los Derechos Humanos - Informe Sobre Los Indicadores para Promover y Vigilar el Ejercicio de los Derechos Humanos (HRI/MC/2008/3)</td>
 								      </tr>
 								      <tr>
-									      <td>Maecenas id augue dui.</td>
+									      <td>Grupo de Trabajo para el análisis de los informes nacionales previstos en el Protocolo de San Salvador - Indicadores de progreso para la medición de derechos contemplados en el Protocolo de San Salvador</td>
 								      </tr>
 								      <tr>
-									      <td>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</td>
+									      <td>Oficina del Alto Comisionado de las Naciones Unidas para los Derechos Humanos - Indicadores de derechos humanos: Guía para la medición y la aplicación</td>
 								      </tr>
 								      <tr>
-									      <td>Fusce accumsan est vel ante pretium, ut aliquam lorem blandit.</td>
+									      <td>Asamblea General de la Organización de Estados Americanos - Adopción del Mecanismo de Seguimiento para la Implementación del Protocolo De San Salvador </td>
 								      </tr>
+                                      <tr>
+                                        <td>Mecanismo de Seguimiento de la Convención de Belém do Pará - Indicadores de progreso para la medición de la implementación de la Convención Interamericana para prevenir, sancionar y erradicar la violencia contra la mujer "Convención de Belém Do Pará"</td>
+                                      </tr>
 							      </tbody>
 								</table>
 					      </div>
@@ -235,22 +256,22 @@
 			      </div>
 		      </div>
 		      <!-- Termina Bloque -->
-			      
+
 		      </div>
 		      <!-- Termina Derechos -->
-		      
-		      
+
+
 	      </div>
 
 
 	    </main>
-	
+
 	    <!-- JS -->
 	    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
 	    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js"></script>
-		
+			<script src="js/vue.js"></script>
 	</body>
 </html>
