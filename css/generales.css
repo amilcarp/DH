@@ -194,3 +194,10 @@ p{
     100% { transform: rotate(360deg); }
 }
 
+
+.alinea-derecha{
+    text-align: right;
+    position: relative;
+    margin-bottom: 10px;
+    margin-right: 2px;
+}
