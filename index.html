@@ -107,14 +107,14 @@
 		      <!-- Inicia Derechos -->
 		      <div class="row">
 			      <div class="col-md-4">
-				     <a href="#">
+				     <a  href="#" data-toggle="tooltip" data-placement="top" title="Descripción del trabajo">
 					     <div class="cuadro-derechos b1">
 						     <div class="d1">
 								 <h2>Trabajo</h2>
 							  </div>
 				     	</div>
 				     </a>
-				     <p>“Toda persona tiene derecho al trabajo, el cual incluye la oportunidad de obtener los medios para llevar una vida digna y decorosa a través del desempeño de una actividad lícita libremente escogida o aceptada” (Artículo 6, párrafo 1 del Protocolo de San Salvador).</p>
+				     <p></p>
 			      </div>
 			      <div class="col-md-4">
 				      <a href="#">
@@ -124,7 +124,7 @@
 						     </div>
 					     </div>
 				      </a>
-				     <p>“Los Estados partes garantizarán: (a) el derecho de los trabajadores a organizar sindicatos y a afiliarse al de su elección, para la protección y promoción de sus intereses. Como proyección de este derecho, los Estados partes permitirán a los sindicatos formar federaciones y confederaciones nacionales y asociarse a las ya existentes, así como formar organizaciones sindicales internacionales y asociarse a la de su elección. Los Estados partes también permitirán que los sindicatos, federaciones y confederaciones funcionen libremente; (b) el derecho a la huelga” (Artículo 8, párrafo 1 del Protocolo de San Salvador).</p>
+				     <p></p>
 			      </div>
 			      <div class="col-md-4">
 					  <a href="#">
@@ -134,7 +134,7 @@
 						     </div>
 					     </div>
 					  </a>
-				     <p>“Los Estados partes en el presente Protocolo reconocen el derecho de toda persona a: a. Participar en la vida cultural y artística de la comunidad; b. gozar de los beneficios del progreso científico y tecnológico; c. beneficiarse de la protección de los intereses morales y materiales que le correspondan por razón de las producciones científicas, literarias o artísticas de que sea autora” (Artículo 14, párrafo 1 del Protocolo de San Salvador).</p>
+				     <p></p>
 			      </div>
 		      </div>
 			      <br>
@@ -147,7 +147,7 @@
 						     </div>
 					     </div>
 				      </a>
-				     <p>“1. Toda persona tiene derecho a una nutrición adecuada que le asegure la posibilidad de gozar del más alto nivel de desarrollo físico, emocional e intelectual. 2. Con el objeto de hacer efectivo este derecho y a erradicar la desnutrición, los Estados partes se comprometen a perfeccionar los métodos de producción, aprovisionamiento y distribución de alimentos, para lo cual se comprometen a promover una mayor cooperación internacional en apoyo de las políticas nacionales sobre la materia.” (Artículo 12, del Protocolo de San Salvador).</p>
+				     <p></p>
 			      </div>
 			      <div class="col-md-4">
 				     <div class="cuadro-derechos b5 desactivado">
@@ -155,7 +155,7 @@
 						     <h2>Medio ambiente sano</h2>
 					     </div>
 				     </div>
-				     <p><b>Próximamente</b>“1. Toda persona tiene derecho a vivir en un medio ambiente sano y a contar con servicios públicos básicos. 2. Los Estados partes promoverán la protección, preservación y mejoramiento del medio ambiente.” (Artículo 11, del Protocolo de San Salvador).</p>
+				     <p><b>Próximamente</b></p>
 			      </div>
 			      <div class="col-md-4">
 				     <div class="cuadro-derechos b6 desactivado">
@@ -272,5 +272,13 @@
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js"></script>
 			<script src="js/vue.js"></script>
+        <script>
+		    $gmx(document).ready(function() {
+			  // Inicia tooltips
+			  $('[data-toggle="tooltip"]').tooltip();
+
+			});
+	    </script>
+    
 	</body>
 </html>
