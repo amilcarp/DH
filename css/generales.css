@@ -1,5 +1,8 @@
 /* Estilos de plataforma Derechos Humanos */
 
+p{
+    text-align: justify;
+}
 
 .header{
 	background: #2A2164;
