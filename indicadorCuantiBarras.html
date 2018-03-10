@@ -100,7 +100,6 @@
                             <div class="tab-pane active" id="tab-01">
                                 
                                 <h2>Porcentaje de iniciativas legislativas en el ámbito cultural para la legislatura</h2>
-                                <p>Porcentaje</p>
                                 
                                 <svg width="960" height="500"></svg>
                                 <script src="https://d3js.org/d3.v4.min.js"></script>
@@ -118,7 +117,7 @@
                                     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
                                 d3.csv("CcE04_Barras.csv", function(d) {
-                                  d.Porcentaje = +d.Porcentaje;
+                                  d.Porcentaje = +d.Porcentaje * 100;
                                   return d;
                                 }, function(error, data) {
                                   if (error) throw error;
@@ -135,6 +134,16 @@
                                       .attr("class", "axis axis--y")
                                       .call(d3.axisLeft(y))
                                     .append("text")
+                                      .attr("transform", "rotate(-90)")
+                                      .attr("y", 6)
+                                      .attr("dy", "0.71em")
+                                      .attr("text-anchor", "end")
+                                      .text("Porcentaje");
+                                    
+                                    g.append("g")
+                                      .call(d3.axisLeft(y))
+                                    .append("text")
+                                      .attr("fill", "#000")
                                       .attr("transform", "rotate(-90)")
                                       .attr("y", 6)
                                       .attr("dy", "0.71em")
