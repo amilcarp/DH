@@ -155,9 +155,15 @@
                                     .enter().append("rect")
                                       .attr("class", "bar")
                                       .attr("x", function(d) { return x(d.Legislatura); })
-                                      .attr("y", function(d) { return y(d.Porcentaje); })
+                                      .attr("y", function(d) { return height; })
                                       .attr("width", x.bandwidth())
-                                      .attr("height", function(d) { return height - y(d.Porcentaje); });
+                                      .attr("height", function(d) { return 0})
+                                       .transition()
+                                       .delay(function(d,i){ return i*100 })
+                                       .duration(2000)
+                                        .attr('y', function(d){ return y(d.Porcentaje)})
+                                       .attr('height', function(d){ return height - y(d.Porcentaje) });
+                                      
                                 });
 
                                 </script>

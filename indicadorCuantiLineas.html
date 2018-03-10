@@ -99,11 +99,15 @@
 
                                 var x = d3.scaleLinear()
                                     .range([0, width]);
+                                
+                                    
+                                //var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
 
                                 var y = d3.scaleLinear()
                                     .rangeRound([height, 0]);
 
                                 var line = d3.line()
+                                    .curve(d3.curveCardinal)
                                     .x(function(d) { return x(d['Anio']); })
                                     .y(function(d) { return y(d['Total-por-fecha-de-ingreso']); });
 
@@ -114,7 +118,9 @@
                                 }, function(error, data) {
                                   if (error) throw error;
                                     
-                                  x.domain(d3.extent(data, function(d) { return d['Anio']; }));
+                                 x.domain(d3.extent(data, function(d) { return d['Anio']; }));
+                                    //x.domain(data.map(function(d) {return d['Anio'];}));
+                                    //x.domain(data.map(function(d){ return d['Anio']; }));
                                   y.domain(d3.extent(data, function(d) { return d['Total-por-fecha-de-ingreso']; }));
 
                                   g.append("g")
@@ -139,7 +145,24 @@
                                       .attr("stroke-linejoin", "round")
                                       .attr("stroke-linecap", "round")
                                       .attr("stroke-width", 3)
-                                      .attr("d", line);
+                                      .attr("d", line)
+                                    .duration(2000)
+                                    .ease("linear")
+                                    .attr("stroke-dashoffset", 0);
+//                                    .transition()
+//                                    .delay(function(d,i){ return i * 100 })
+//                                    .duration(2000)
+//                                    .attr('d',line);
+                                    
+                                    
+//                                    d3.transition().selectAll(".line")
+//                                      .duration(500)
+//                                      .delay(function(d, i) { return i * 500; })
+//                                      .ease("linear")
+//                                      .attr("d", function(d){return line(d['Total-por-fecha-de-ingreso']); })
+//                                      .style("stroke", function(d) {return color(d['Anio']); });
+                                    
+                                    
                                 });
 
                                 </script>
