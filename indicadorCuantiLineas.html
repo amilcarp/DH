@@ -97,8 +97,8 @@
 
                                 var parseTime = d3.timeParse("%y");
 
-                                var x = d3.scaleTime()
-                                    .rangeRound([0, width]);
+                                var x = d3.scaleLinear()
+                                    .range([0, width]);
 
                                 var y = d3.scaleLinear()
                                     .rangeRound([height, 0]);
@@ -113,7 +113,7 @@
                                   return d;
                                 }, function(error, data) {
                                   if (error) throw error;
-
+                                    
                                   x.domain(d3.extent(data, function(d) { return d['Anio']; }));
                                   y.domain(d3.extent(data, function(d) { return d['Total-por-fecha-de-ingreso']; }));
 
@@ -135,7 +135,7 @@
                                   g.append("path")
                                       .datum(data)
                                       .attr("fill", "none")
-                                      .attr("stroke", "steelblue")
+                                      .attr("stroke", "#a1b5c0")
                                       .attr("stroke-linejoin", "round")
                                       .attr("stroke-linecap", "round")
                                       .attr("stroke-width", 3)
