@@ -208,7 +208,7 @@ p{
     font-size: 13px;
 }
 
-div.tooltip {
+.valor {
   position: absolute;
   text-align: center;
   width: 60px;
@@ -219,4 +219,30 @@ div.tooltip {
   border: 0px;
   border-radius: 8px;
   pointer-events: none;
+}
+
+/* PARA ANIMAR GráFICA DE LINEA */
+
+.line {
+    fill: none;
+    /*stroke: #aaa;
+    stroke: #43484c;
+    stroke: #405275;
+    stroke: rgba(40, 53, 79, .95);
+    stroke: #161719;
+    stroke: #f99e1a;*/
+    stroke: #a1b5c0;
+    stroke-width: 5px;
+    stroke-dasharray:1400;
+    stroke-dashoffset: 1400;
+    animation: dash 3.5s linear normal;
+}
+
+@keyframes dash{
+    0%{
+        stroke-dashoffset: 1400;
+    }
+    100%{
+        stroke-dashoffset:  0;
+    }
 }
