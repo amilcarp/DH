@@ -246,3 +246,16 @@ p{
         stroke-dashoffset:  0;
     }
 }
+
+
+.toolTip {
+  position: absolute;
+  display: none;
+  min-width: 50px;
+  height: auto;
+  background: none repeat scroll 0 0 #ffffff;
+  border: 1px solid #a1b5c0;
+  padding: 5px;
+  text-align: center;
+    font-size: 12px;
+}
