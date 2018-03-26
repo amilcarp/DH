@@ -213,8 +213,8 @@ p{
   text-align: center;
   width: 60px;
   height: 28px;
-  padding: 2px;
-  font: 12px sans-serif;
+  padding: 5px;
+  font: 14px sans-serif;
   background: lightsteelblue;
   border: 0px;
   border-radius: 8px;
@@ -235,7 +235,11 @@ p{
     stroke-width: 5px;
     stroke-dasharray:1400;
     stroke-dashoffset: 1400;
-    animation: dash 3.5s linear normal;
+    animation: dash 3.5s 1 linear normal;
+    -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+    animation-fill-mode: forwards;
+
+
 }
 
 @keyframes dash{
