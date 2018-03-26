@@ -264,9 +264,8 @@
                       .style("top", d3.event.pageY - 40 + "px")
                       .style("display", "inline-block")
                     .text(d.Porcentaje);
-                      //.html((d.Legislatura) + "<br>" + "£" + (d.Porcentaje));
                 })
-                    .on("mouseout", function(d){ tooltip.style("display", "none");})
+                .on("mouseout", function(d){ tooltip.style("display", "none");})
                .transition()
                .delay(function(d,i){ return i*100 })
                .duration(2000)
