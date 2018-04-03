@@ -1,42 +1,21 @@
-
 $(document).ready(function() {
+    
+    //---- Variables
+    
+    var bdown = [];
+    
     
     $('.cuadro-derechos p').hide();
     
-    function getIndicador(indicador){
-	  var valores = [];
-		$.ajax({
+    $.ajax({
 		  type: 'POST',
-		  url: PathAPI + "Valores/PorClaveSerie",
-		  data: {'PCveInd':indicador,'PAnoIni':'0', 'PAnoFin':'0', 'POrden':'DESC','PCveSer': ser , 'PIdioma':'ES'},
-		  success: function( data, textStatus, jqxhr ) {
-
-                var temporal = [];
-                temporal.push('Entidad');
-                for (var j = 0; j < data.Series[0].Coberturas[0].ValorDato.length; j++) {
-                temporal.push(data.Series[0].Coberturas[0].ValorDato[j].AADato_ser+'-01-01');
-                }
-                estados.push(temporal);
-
-
-                for (var i = 0; i < data.Series[0].Coberturas.length; i++) {
-                    var temporal = [];
-                    temporal.push(data.Series[0].Coberturas[i].Descrip_cg);
-                    for (var j = 0; j < data.Series[0].Coberturas[i].ValorDato.length; j++) {
-                        temporal.push(data.Series[0].Coberturas[i].ValorDato[j].Dato_ser);
-                    }
-                    estados.push(temporal);
-                }
-
-                var codigo_indicador = data.Codigo_ind;
-                console.log(codigo_indicador);
-                var descripcion = data.Descrip_ind;
-                console.log(descripcion);
+		  url: "json/breakdown_group.json",
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {      
+              bdown = data;
+              console.log(bdown);
 		  },
 		  async:false
 		});
-		return valores;
-	}
-
     
 });
