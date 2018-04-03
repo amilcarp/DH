@@ -202,14 +202,6 @@
 	    <script src="js/main.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script>
-            $.ajax({
-  dataType: "json",
-  url: url,
-  data: data,
-  success: success
-});
-        </script>
-        <script>
 
         var svg = d3.select("svg"),
             margin = {top: 20, right: 20, bottom:130, left: 40},
@@ -221,6 +213,8 @@
 
         var g = svg.append("g")
             .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            
+        var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
         d3.csv("CcE04_Barras.csv", function(d) {
           d.Porcentaje = +d.Porcentaje * 100;
@@ -264,11 +258,29 @@
               .attr("y", function(d) { return height; })
               .attr("width", x.bandwidth())
               .attr("height", function(d) { return 0})
+            .on("mousemove", function(d){
+                    tooltip
+                      .style("left", d3.event.pageX - 25 + "px")
+                      .style("top", d3.event.pageY - 40 + "px")
+                      .style("display", "inline-block")
+                    .text(d.Porcentaje);
+                })
+                .on("mouseout", function(d){ tooltip.style("display", "none");})
                .transition()
                .delay(function(d,i){ return i*100 })
                .duration(2000)
                 .attr('y', function(d){ return y(d.Porcentaje)})
                .attr('height', function(d){ return height - y(d.Porcentaje) });
+//            });
+            
+//            g.selectAll(".bar")
+//            .data(data)
+//            .enter().append("text")
+//            .attr("x", function(d) { return x(d.Legislatura); })
+//            .attr("y", function(d) { return height; })
+//            .text(d.Porcentaje);
+//            
+            
 
         });
 
