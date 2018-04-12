@@ -263,3 +263,8 @@ p{
   text-align: center;
     font-size: 12px;
 }
+
+.alert{
+    margin-top: 45px !important;
+    margin-bottom: 0px !important;
+}
