@@ -40,37 +40,37 @@ $(document).ready(function() {
             if(tipoDer[i].indicator_category_key == 'a'){
                 tablaIndContA += '<tr>' +
                               '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td>'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
+                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].indicator_code +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
                               '<td>'+ tipoDer[i].indicator_definition +'</td>' +
                           '</tr>';
             }else if(tipoDer[i].indicator_category_key == 'c'){
                  tablaIndContC += '<tr>' +
                               '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td>'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
+                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].indicator_code +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
                               '<td>'+ tipoDer[i].indicator_definition +'</td>' +
                           '</tr>';
             }else if(tipoDer[i].indicator_category_key == 'd'){
                 tablaIndContD += '<tr>' +
                               '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td>'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
+                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].indicator_code +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
                               '<td>'+ tipoDer[i].indicator_definition +'</td>' +
                           '</tr>';
             }else if(tipoDer[i].indicator_category_key == 'f'){
                 tablaIndContF += '<tr>' +
                               '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td>'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
+                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].indicator_code +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
                               '<td>'+ tipoDer[i].indicator_definition +'</td>' +
                           '</tr>';
             }else if(tipoDer[i].indicator_category_key == 'i'){
                 tablaIndContI += '<tr>' +
                               '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td>'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
+                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].indicator_code +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
                               '<td>'+ tipoDer[i].indicator_definition +'</td>' +
                           '</tr>';
             }else if(tipoDer[i].indicator_category_key == 'j'){
                 tablaIndContJ += '<tr>' +
                               '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td>'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
+                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].indicator_code +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
                               '<td>'+ tipoDer[i].indicator_definition +'</td>' +
                           '</tr>';
             }
