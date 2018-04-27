@@ -14,6 +14,24 @@ var tablaIndContMatrizD = '';
 var tablaIndContMatrizF = '';
 var tablaIndContMatrizI = '';
 var tablaIndContMatrizJ = '';
+var tablaIndContMatrizAE = '';
+var tablaIndContMatrizCE = '';
+var tablaIndContMatrizDE = '';
+var tablaIndContMatrizFE = '';
+var tablaIndContMatrizIE = '';
+var tablaIndContMatrizJE = '';
+var tablaIndContMatrizAP = '';
+var tablaIndContMatrizCP = '';
+var tablaIndContMatrizDP = '';
+var tablaIndContMatrizFP = '';
+var tablaIndContMatrizIP = '';
+var tablaIndContMatrizJP = '';
+var tablaIndContMatrizAR = '';
+var tablaIndContMatrizCR = '';
+var tablaIndContMatrizDR = '';
+var tablaIndContMatrizFR = '';
+var tablaIndContMatrizIR = '';
+var tablaIndContMatrizJR = '';
 var contenido;
 
 $(document).ready(function() {
@@ -33,12 +51,12 @@ $(document).ready(function() {
                 $('#recepDerI').html('<table class="table"><tbody>' + tablaIndContI + '</tbody></table>' );
                 $('#recepDerJ').html('<table class="table"><tbody>' + tablaIndContJ + '</tbody></table>' );
                 // Vista matriz
-                $('#recepDerMatrizA').html('<div>' + tablaIndContMatrizA + '</div>' );
-                $('#recepDerMatrizC').html('<table class="table"><tbody>' + tablaIndContMatrizC + '</tbody></table>' );
-                $('#recepDerMatrizD').html('<table class="table"><tbody>' + tablaIndContMatrizD + '</tbody></table>' );
-                $('#recepDerMatrizF').html('<table class="table"><tbody>' + tablaIndContMatrizF + '</tbody></table>' );
-                $('#recepDerMatrizI').html('<table class="table"><tbody>' + tablaIndContMatrizI + '</tbody></table>' );
-                $('#recepDerMatrizJ').html('<table class="table"><tbody>' + tablaIndContMatrizJ + '</tbody></table>' );
+                $('#recepDerMatrizA').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE" data-toggle="tooltip" data-placement="top" title="Indicador Estructural" style="clear: none;display: inline;float: left;">E</p> <span style="display: inline;float: left;margin-left: 15px;">Estructural</span></div>' + tablaIndContMatrizAE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso" style="clear: none;display: inline;float: left;">P</p> <span style="display: inline;float: left;margin-left: 15px;">De Proceso</span></div>' + tablaIndContMatrizAP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado" style="clear: none;display: inline;float: left;">R</p> <span style="display: inline;float: left;margin-left: 15px;">De Resultado</span></div>' + tablaIndContMatrizAR + '</div></div>');
+                $('#recepDerMatrizC').html('<div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizCE + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizCP + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizCR + '</div></div>');
+                $('#recepDerMatrizD').html('<div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizDE + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizDP + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizDR + '</div></div>');
+                $('#recepDerMatrizF').html('<div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizFE + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizFP + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizFR + '</div></div>');
+                $('#recepDerMatrizI').html('<div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizIE + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizIP + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizIR + '</div></div>');
+                $('#recepDerMatrizJ').html('<div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizJE + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizJP + '</div><div style="width:30.5%;display:inline-grid; padding:10px;">' + tablaIndContMatrizJR + '</div></div>');
 		  },
 		  async:true
 		});
@@ -95,63 +113,65 @@ $(document).ready(function() {
     function recepDerMatriz(){
         for(var i=0; i < tipoDer.length; i++){
             if(tipoDer[i].indicator_category_key == 'a'){
-                
-                tablaIndContMatrizA += '<div style="width:30.5%;display:inline-grid;">';
                 if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContMatrizA += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a>' +
-                              '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                   tablaIndContMatrizAE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
                 }
-                tablaIndContMatrizA += '</div>';
-                
-                tablaIndContMatrizA += '<div style="width:30.5%;display:inline-grid;">';
                 if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContMatrizA += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a>' +
-                      '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                    tablaIndContMatrizAP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
                 }
-                tablaIndContMatrizA += '</div>';
-                tablaIndContMatrizA += '<div style="width:30.5%;display:inline-grid;">';
                 if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContMatrizA += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a>' +
-                          '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
-                }
-                tablaIndContMatrizA += '</div>';
-                
-                
-//                tablaIndContMatrizA += '<tr>' +
-//                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-//                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-//                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-//                          '</tr>';
+                   tablaIndContMatrizAR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                } 
             }else if(tipoDer[i].indicator_category_key == 'c'){
-                 tablaIndContMatrizC += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContMatrizCE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContMatrizCP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContMatrizCR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                } 
             }else if(tipoDer[i].indicator_category_key == 'd'){
-                tablaIndContMatrizD += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContMatrizDE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContMatrizDP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContMatrizDR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                } 
             }else if(tipoDer[i].indicator_category_key == 'f'){
-                tablaIndContMatrizF += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContMatrizFE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContMatrizFP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContMatrizFR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                } 
             }else if(tipoDer[i].indicator_category_key == 'i'){
-                tablaIndContMatrizI += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContMatrizIE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContMatrizIP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContMatrizIR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                } 
             }else if(tipoDer[i].indicator_category_key == 'j'){
-                tablaIndContMatrizJ += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContMatrizJE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContMatrizJP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                }
+                if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContMatrizJR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                } 
             }
 
         }       
