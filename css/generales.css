@@ -268,3 +268,24 @@ p{
     margin-top: 45px !important;
     margin-bottom: 0px !important;
 }
+
+.matrizCol{
+    width:31.5%;
+    display:inline-grid;
+    border: 1px solid #999;
+    margin-right: 25px;
+}
+
+.matrizCol:last-child{
+    margin-right: 0px;
+}
+
+.matrizCol div:nth-child(1){
+    border-bottom: 1px solid #999;
+    vertical-align: middle;
+}
+
+.matrizCol div{
+    padding:10px;
+    border-bottom: 1px solid #999;
+}
