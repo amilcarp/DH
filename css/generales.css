@@ -289,3 +289,15 @@ p{
     padding:10px;
     border-bottom: 1px solid #999;
 }
+
+.matrizCol div span{
+    display: inline;
+    float: left;
+    margin-left: 15px;
+}
+
+.alineaTipoInd{
+    clear: none;
+    display: inline;
+    float: left;
+}
