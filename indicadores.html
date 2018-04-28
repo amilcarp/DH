@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>CcE04 - Evaluación de Derechos Humanos</title>
+		<title id="tInd">CcE04 - Evaluación de Derechos Humanos</title>
 		
 		<!-- CSS -->
 	    <link href="/favicon.ico" rel="shortcut icon">
@@ -77,8 +77,8 @@
 				<ol class="breadcrumb">
 				<li><a href="index.html"><i class="icon icon-home"></i> Home</a></li>
 				<li class="">Derechos</li>
-                <li class="">Culturales</li>
-                <li class="active">CcE04</li>
+                    <li class=""><span id="categoriaInd">Culturales</span></li>
+                <li class="active"><span id="claveInd">CcE04</span></li>
 				</ol>
 			</div>
 		    
@@ -87,7 +87,7 @@
 		  	<!-- Inicia Bloque -->
 		      <div class="row">
 			      <div class="col-md-12">
-				      <h1>CcE04 - Porcentaje de iniciativas legislativas presentadas en al ámbito de cultura</h1>
+				      <h1 id="tituloInd">...</h1>
 				      <hr />
 				      <div class="row">
 					  	<ul class="nav nav-tabs">
@@ -105,7 +105,7 @@
                                 <div class="row">
                                     <div class="col-md-10">
                                         <p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>
-                                        <p><b>Fuente: </b> [Aquí va la fuente de los datos del indicador, sí es que la hay]</p>
+                                        <p><b>Fuente: </b> <span id="fuenteInd"></span></p>
                                     </div>
                                 </div>
                                 
@@ -198,6 +198,7 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js"></script>
+        <script src="js/indicadores.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script>
 
