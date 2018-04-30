@@ -15,15 +15,25 @@ $(document).ready(function() {
 		  url: "https://datosabiertos.unam.mx/api/alice/search?q=guid:/"+ c +"/",
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
-              datosDer = data['results']['records'];
-              console.log(datosDer);
-              console.log(datosDer[0].indicator_code);
+            datosDer = data['results']['records'];
+            console.log(datosDer);
+            console.log(datosDer[0].indicator_code);
+
+
+            if(datosDer[0].is_cuantitative == false){
+                indicadorCuali();
+            }else{
+                indicadorCuanti();
+            }
               
-              $('#claveInd').html(datosDer[0].indicator_code);
-              $('#categoriaInd').html(datosDer[0].right_name_short);
-              $('#tituloInd').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
-              $('#tInd').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
-              $('#fuenteInd').html(datosDer[0].evidence_name + ' - ' + datosDer[0].evidence_url);
+            $('#claveInd').html(datosDer[0].indicator_code);
+            $('#categoriaInd').html(datosDer[0].right_name_short);
+            $('#tituloInd').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
+            $('#tInd').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
+            $('#fuenteInd').html(datosDer[0].evidence_name + ' - <a href="'+ datosDer[0].evidence_url + '">' + datosDer[0].evidence_url + '</a>');
+            $('#descarDatos1').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
+            $('#descarDatos2').html(datosDer[0].indicator_definition);
+            $('#descarDatos3').html(datosDer[0].institution_name_evidencie);
               
               
 		  },
@@ -32,11 +42,19 @@ $(document).ready(function() {
     
     
     function getTipoIndicador(tipoIndicador){
-        return tipoIndicador === "E"? '<p class="tipoIndicador colorE" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p>' :  tipoIndicador === "P"? '<p class="tipoIndicador colorP" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p>':  tipoIndicador === "R"? '<p class="tipoIndicador colorR" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p>': 'N/D';
+        return tipoIndicador === "E" ? '<p class="tipoIndicador colorE" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p>' :  tipoIndicador === "P" ? '<p class="tipoIndicador colorP" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p>':  tipoIndicador === "R" ? '<p class="tipoIndicador colorR" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p>': 'N/D';
     }
    
     
     function getMetadatos(){
+        
+    }
+    
+    function indicadorCuali(){
+        
+    }
+    
+    function indicadorCuanti(){
         
     }
     
