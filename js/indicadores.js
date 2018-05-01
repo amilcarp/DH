@@ -227,7 +227,7 @@ $(document).ready(function() {
                                 
                                 '<h2>' + data[0].indicator_definition + '</h2>' +
                                 
-                                '<svg width="960" height="500"></svg>' +
+                                '<svg id="graph" width="960" height="500"></svg>' +
                                 
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
@@ -248,11 +248,11 @@ $(document).ready(function() {
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fórmula</td>' +
-                                            '<td>'+data[0].indicator_formule_code+'</td>' +
+                                            '<td><span lang="latex">'+data[0].indicator_formule_code+'</span></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Elementos del cálculo</td>' +
-                                            '<td>'+data[0].indicator_calculation_element+'</td>' +
+                                            '<td><span lang="latex">'+data[0].indicator_calculation_element+'</span></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fuente de la fórmula</td>' +
@@ -285,6 +285,78 @@ $(document).ready(function() {
 			      '</div>' +
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
+        
+        cuanti += '<script>' +
+                'var svg = d3.select("#graph"),' +
+                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
+                'width = +svg.attr("width") - margin.left - margin.right,' +
+                'height = +svg.attr("height") - margin.top - margin.bottom;' +
+
+                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
+                'y = d3.scaleLinear().rangeRound([height, 0]);' +
+
+                'var g = svg.append("g")' +
+                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
+
+                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
+
+                'd3.csv("CcE04_Barras.csv", function(d) {' +
+                'd.Porcentaje = +d.Porcentaje * 100;' +
+                'return d;' +
+                '}, function(error, data) {' +
+                'if (error) throw error;' +
+
+                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
+                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
+
+                'g.append("g")' +
+                '.attr("class", "axis axis--x")' +
+                '.attr("transform", "translate(0," + height  + ")")' +
+                '.call(d3.axisBottom(x));' +
+
+                'g.append("g")' +
+                '.attr("class", "axis axis--y")' +
+                '.call(d3.axisLeft(y))' +
+                '.append("text")' +
+                '.attr("transform", "rotate(-90)")' +
+                '.attr("y", 6)' +
+                '.attr("dy", "0.71em")' +
+                '.attr("text-anchor", "end")' +
+                '.text("Porcentaje");' +
+
+                'g.append("g")' +
+                '.call(d3.axisLeft(y))' +
+                '.append("text")' +
+                '.attr("fill", "#000")' +
+                '.attr("transform", "rotate(-90)")' +
+                '.attr("y", 6)' +
+                '.attr("dy", "0.71em")' +
+                '.attr("text-anchor", "end")' +
+                '.text("Porcentaje");' +
+
+                'g.selectAll(".bar")' +
+                '.data(data)' +
+                '.enter().append("rect")' +
+                '.attr("class", "bar")' +
+                '.attr("x", function(d) { return x(d.Legislatura); })' +
+                '.attr("y", function(d) { return height; })' +
+                '.attr("width", x.bandwidth())' +
+                '.attr("height", function(d) { return 0})' +
+                '.on("mousemove", function(d){' +
+                'tooltip' +
+                '.style("left", d3.event.pageX - 25 + "px")' +
+                '.style("top", d3.event.pageY - 40 + "px")' +
+                '.style("display", "inline-block")' +
+                '.text(d.Porcentaje);' +
+                '})' +
+                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
+                '.transition()' +
+                '.delay(function(d,i){ return i*100 })' +
+                '.duration(2000)' +
+                '.attr("y", function(d){ return y(d.Porcentaje)})' +
+                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
+                '});' +
+                '</script>';
         return cuanti;
     }
     
