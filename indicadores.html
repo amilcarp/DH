@@ -30,6 +30,7 @@
 	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 	      <script src="https://cdnjs.cloudflare.com/ajax/libs/ie8/0.2.2/ie8.js"></script>
 	    <![endif]-->
+        <script type="text/javascript" src="http://latex.codecogs.com/latexit.js"></script>
 	</head>
 	<body>
 		
@@ -80,84 +81,7 @@
 	      <div class="container">
               
               <div id="indicadores"></div>
-		  	<!-- Inicia Bloque -->
-<!--
-		      <div class="row">
-			      <div class="col-md-12">
-				      <h1 id="tituloInd">...</h1>
-				      <hr />
-				      <div class="row">
-					  	<ul class="nav nav-tabs">
-                            <li class="active"><a data-toggle="tab" href="#tab-01">Indicador</a></li>
-                            <li><a data-toggle="tab" href="#tab-02">Metadato</a></li>
-                            <li><a data-toggle="tab" href="#tab-03">Datos para el cálculo</a></li>
-                        </ul>
-                        <div class="tab-content">
-                            <div class="tab-pane active" id="tab-01">
-                                
-                                <h2>Porcentaje de iniciativas legislativas en el ámbito cultural para la legislatura</h2>
-                                
-                                <svg width="960" height="500"></svg>
-                                
-                                <div class="row">
-                                    <div class="col-md-10">
-                                        <p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>
-                                        <p><b>Fuente: </b> <span id="fuenteInd"></span></p>
-                                    </div>
-                                </div>
-                                
-                            </div>
-                            
-                            <div class="tab-pane" id="tab-02">
-                            
-                                <table class="table table-striped">
-                                    <tbody>
-                                        <tr>
-                                            <td>Definición</td>
-                                            <td>Porcentaje de las iniciativas legislativas presentadas por la Comisión de Cultura y Cinematografía, por periodo legislativo, en la Cámara de Diputados.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Fórmula</td>
-                                            <td><img src="img/formulaCcE04.png" alt="" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Elementos del cálculo</td>
-                                            <td><img src="img/calculoCcE04.png" alt="" /></td>
-                                        </tr>
-                                        <tr>
-                                            <td> 
-                                                Fuente de la fórmula
-                                            </td>
-                                            <td>Fórmula descriptiva elaborada por el PUDH.</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Estado de Validación de la fórmula</td>
-                                            <td>En datos.gob.mx</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Unidad de Medida</td>
-                                            <td>Porcentaje</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Referencia</td>
-                                            <td>Indicador calculado a partir del Servicio de Información para la Estadística Parlamentaria de la Cámara de Diputados.</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                                
-                            </div>
-                            
-                            <div class="tab-pane" id="tab-03">
-                                <h3>[Aquí iría una tabla que represente los datos para el cálculo]</h3>
-                            </div>
-                            
-                        </div>
-				      </div>
-				      
-			      </div>
-		      </div>
--->
-		      <!-- Termina Bloque -->
+		  	
 		      <br /><br />	      
 		      
               <!-- Inicia Bloque -->
@@ -168,7 +92,7 @@
 				      <div class="row">
 					  	<div class="col-md-3"><b>Nombre del indicicador</b></div>
                         <div class="col-md-3"><b>Descripción del indicador</b></div>
-                        <div class="col-md-3"><b>Instrucción responsable de la información</b></div>
+                        <div class="col-md-3"><b>Institución responsable de la información</b></div>
                         <div class="col-md-3"><b>Formatos</b></div>
 				      </div>
                       <div class="row">
@@ -198,9 +122,11 @@
 	    <script src="js/main.js"></script>
         <script src="js/indicadores.js"></script>
         <script src="https://d3js.org/d3.v4.min.js"></script>
+
+<!--
         <script>
 
-        var svg = d3.select("svg"),
+        var svg = d3.select("#graph"),
             margin = {top: 20, right: 20, bottom:130, left: 40},
             width = +svg.attr("width") - margin.left - margin.right,
             height = +svg.attr("height") - margin.top - margin.bottom;
@@ -282,6 +208,7 @@
         });
 
         </script>
+-->
 		
 	</body>
 </html>
