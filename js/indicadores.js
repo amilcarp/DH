@@ -9,7 +9,29 @@ var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
 var c = url.searchParams.get("codigo");
 
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+
 $(document).ready(function() {
+    
+       function reemplazaChar(string){
+            //string = string.replace(/\r\n/g,"\n");
+            var utftex= "";
+            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ","\n"," "];
+            var cambio = ["\\acute{a}","\\acute{e}","\\acute{i}","\\acute{o}","\\acute{u}","\\acute{A}","\\acute{E}","\\acute{I}","\\acute{O}","\\acute{U}","\\tilde{n}","\\tilde{N}","\\*","\~"];
+       
+            for(var i = 0; i < letr.length; i++)
+            {
+                string = string.replaceAll(new RegExp(letr[i], 'g'),cambio[i]);      
+            }
+            console.log(string);
+            return string;
+        }
+
     
     // Aquí se cargan los datos de los derechos
     $.ajax({
@@ -52,7 +74,21 @@ $(document).ready(function() {
     function getMetadatos(){
         
     }
+
     
+//    function reemplazaChar(string){
+//            string = string.replace(/\r\n/g,"\n");
+//            var utftex= "";
+//            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ"];
+//            var cambio = ["\acute{a}","\acute{e}","\acute{i}","\acute{o}","\acute{u}","\acute{A}","\acute{E}","\acute{I}","\acute{O}","\acute{U}","\tilde{n}","\tilde{N}"];
+//
+//            for(var v = 0; v < string.length; v++)
+//            {
+//                utftex += string[v].replace(letr[v], cambio[v]);
+//            }
+//        
+//            return utftex;
+//    }
     
     var Utf8 = {
         // public method for url encoding
@@ -74,6 +110,18 @@ $(document).ready(function() {
                 }
             }
             return utftext;
+        },
+        mia : function (string) {
+            string = string.replace(/\r\n/g,"\n");
+            var utftex= "";
+            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ"];
+            var cambio = ["\acute{a}","\acute{e}","\acute{i}","\acute{o}","\acute{u}","\acute{A}","\acute{E}","\acute{I}","\acute{O}","\acute{U}","\tilde{n}","\tilde{N}"];
+
+            for(var v = 0; v < string.length; v++)
+            {
+                utftex += string[v].replace(letr[v], cambio[v]);
+            }
+            return utftex;
         },
 
         // public method for url decoding
@@ -262,7 +310,7 @@ $(document).ready(function() {
     
     function indicadorCuanti(data){
         
-        console.log(Utf8.decode(data[0].indicator_calculation_element));
+        console.log(reemplazaChar(data[0].indicator_calculation_element));
         
         cuanti = '<!-- Inicia Bloque -->' +
 		      '<div class="row">' +
@@ -301,11 +349,11 @@ $(document).ready(function() {
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fórmula</td>' +
-                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+encodeURIComponent(data[0].indicator_formule_code)+'" border="0"/></td>' +
+                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+data[0].indicator_formule_code+'" border="0" style="max-width:600px;" /></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Elementos del cálculo</td>' +
-                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+encodeURIComponent(data[0].indicator_calculation_element)+'" border="0"/></td>' +
+                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+reemplazaChar(data[0].indicator_calculation_element)+'" border="0" style="" /></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fuente de la fórmula</td>' +
