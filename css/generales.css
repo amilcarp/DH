@@ -18,7 +18,6 @@ p{
 	height:285px;
 	display:flex;
 	float:left;
-	background:#666666;
 	align-items: center;
 }
 
@@ -30,6 +29,12 @@ p{
 
 .cuadro-derechos p{
 	color:#ffffff;
+}
+
+.cuadro-derechos img{
+    width:150px;
+    text-align: center;
+    margin:0 auto;
 }
 
 .cuadro-derechos div{

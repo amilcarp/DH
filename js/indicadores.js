@@ -1,4 +1,5 @@
 //---- Variables
+var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
 var datosDer = [];
 var acumula = [];
 var tablaInd =  '';
@@ -8,11 +9,34 @@ var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
 var c = url.searchParams.get("codigo");
 
+
+String.prototype.replaceAll = function(search, replacement) {
+    var target = this;
+    return target.replace(new RegExp(search, 'g'), replacement);
+};
+
+
 $(document).ready(function() {
     
+       function reemplazaChar(string){
+            //string = string.replace(/\r\n/g,"\n");
+            var utftex= "";
+            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ","\n"," "];
+            var cambio = ["\\acute{a}","\\acute{e}","\\acute{i}","\\acute{o}","\\acute{u}","\\acute{A}","\\acute{E}","\\acute{I}","\\acute{O}","\\acute{U}","\\tilde{n}","\\tilde{N}","\\*","\~"];
+       
+            for(var i = 0; i < letr.length; i++)
+            {
+                string = string.replaceAll(new RegExp(letr[i], 'g'),cambio[i]);      
+            }
+            console.log(string);
+            return string;
+        }
+    
+    
+    // Aquí se cargan los datos de los derechos
     $.ajax({
 		  type: 'GET',
-		  url: "https://datosabiertos.unam.mx/api/alice/search?q=guid:/"+ c +"/",
+		  url: pathAPI + "search?q=guid:/"+ c +"/",
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
             datosDer = data['results']['records'];
@@ -50,6 +74,81 @@ $(document).ready(function() {
     function getMetadatos(){
         
     }
+
+    
+//    function reemplazaChar(string){
+//            string = string.replace(/\r\n/g,"\n");
+//            var utftex= "";
+//            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ"];
+//            var cambio = ["\acute{a}","\acute{e}","\acute{i}","\acute{o}","\acute{u}","\acute{A}","\acute{E}","\acute{I}","\acute{O}","\acute{U}","\tilde{n}","\tilde{N}"];
+//
+//            for(var v = 0; v < string.length; v++)
+//            {
+//                utftex += string[v].replace(letr[v], cambio[v]);
+//            }
+//        
+//            return utftex;
+//    }
+    
+    var Utf8 = {
+        // public method for url encoding
+        encode : function (string) {
+            string = string.replace(/\r\n/g,"\n");
+            var utftext = "";
+
+            for (var n = 0; n < string.length; n++) {
+                var c = string.charCodeAt(n);
+                if (c < 128) {
+                    utftext += String.fromCharCode(c);
+                }else if((c > 127) && (c < 2048)) {
+                    utftext += String.fromCharCode((c >> 6) | 192);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                }else {
+                    utftext += String.fromCharCode((c >> 12) | 224);
+                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
+                    utftext += String.fromCharCode((c & 63) | 128);
+                }
+            }
+            return utftext;
+        },
+        mia : function (string) {
+            string = string.replace(/\r\n/g,"\n");
+            var utftex= "";
+            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ"];
+            var cambio = ["\acute{a}","\acute{e}","\acute{i}","\acute{o}","\acute{u}","\acute{A}","\acute{E}","\acute{I}","\acute{O}","\acute{U}","\tilde{n}","\tilde{N}"];
+
+            for(var v = 0; v < string.length; v++)
+            {
+                utftex += string[v].replace(letr[v], cambio[v]);
+            }
+            return utftex;
+        },
+
+        // public method for url decoding
+        decode : function (utftext) {
+            var string = "";
+            var i = 0;
+            var c = c1 = c2 = 0;
+            while ( i < utftext.length ) {
+                c = utftext.charCodeAt(i);
+                if (c < 128) {
+                    string += String.fromCharCode(c);
+                    i++;
+                }else if((c > 191) && (c < 224)) {
+                    c2 = utftext.charCodeAt(i+1);
+                    string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
+                    i += 2;
+                } else {
+                    c2 = utftext.charCodeAt(i+1);
+                    c3 = utftext.charCodeAt(i+2);
+                    string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
+                    i += 3;
+                }
+            }
+            return string;
+        }
+    }
+    
     
     function indicadorCuali(data){
         
@@ -131,7 +230,7 @@ $(document).ready(function() {
 
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
-                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
+//                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
                                         '<p><b>Fuente: </b> ' + data[0].evidence_name + ' - <a href="' + data[0].evidence_url + '" target="_blank">' + data[0].evidence_url + '</a></p>' +
                                         '<p><b>Fecha de actualización: </b> '+ data[0].update_date_lit +'</p>' +
                                     '</div>' +
@@ -211,6 +310,8 @@ $(document).ready(function() {
     
     function indicadorCuanti(data){
         
+        console.log(reemplazaChar(data[0].indicator_calculation_element));
+        
         cuanti = '<!-- Inicia Bloque -->' +
 		      '<div class="row">' +
 			      '<div class="col-md-12">' +
@@ -248,11 +349,11 @@ $(document).ready(function() {
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fórmula</td>' +
-                                            '<td><span lang="latex">'+data[0].indicator_formule_code+'</span></td>' +
+                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+data[0].indicator_formule_code+'" border="0" style="max-width:600px;" /></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Elementos del cálculo</td>' +
-                                            '<td><span lang="latex">'+data[0].indicator_calculation_element+'</span></td>' +
+                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+reemplazaChar(data[0].indicator_calculation_element)+'" border="0" style="" /></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fuente de la fórmula</td>' +

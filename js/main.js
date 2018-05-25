@@ -4,7 +4,6 @@ $(document).ready(function() {
     
     var bdown = [];
     
-    
     $('.cuadro-derechos p').hide();
     
     $.ajax({
