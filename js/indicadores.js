@@ -169,6 +169,10 @@ $(document).ready(function() {
                                 
                                 '<table class="table table-striped">' +
                                     '<tbody>' +
+                                        '<tr>' +
+                                            '<td>Nombre</td>' +
+                                            '<td>' + data[0].indicator_name + '</td>' +
+                                        '</tr>' +
                                        '<tr>' +
                                             '<td>Clave</td>' +
                                             '<td>' + data[0].indicator_code + '</td>' +
@@ -178,63 +182,19 @@ $(document).ready(function() {
                                             '<td>' + data[0].indicator_definition + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
-                                            '<td>Evidencia</td>' +
-                                            '<td>' + data[0].evidence_name + '</td>' +
+                                            '<td>Tipo de Indicador</td>' +
+                                            '<td>' + data[0].indicator_type_short + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
-                                            '<td>Unidad de Observación</td>' +
-                                            '<td>'+ data[0].observation_unit_name +'</td>' +
+                                            '<td>Categoría/Principio Transversal</td>' +
+                                            '<td>'+ data[0].indicator_category_name +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
-                                            '<td>Fecha de Firma</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Aceptación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Promulgación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Adhesión</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                           '<td>Fecha de Vinculación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Publicación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Entrada en Vigor</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>URL</td>' +
-                                            '<td><a href="' + data[0].evidence_url + '" target="_blank">' + data[0].evidence_url + '</a></td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Actualización</td>' +
-                                            '<td>' + data[0].update_date_lit + '</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Entidad Responsable de Validación</td>' +
-                                            '<td>' + data[0].institution_name_evidencie + '</td>' +
+                                            '<td>Derecho</td>' +
+                                            '<td>'+ data[0].right_name_short +'</td>' +
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
-
-                                '<div class="row">' +
-                                    '<div class="col-md-10">' +
-//                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
-                                        '<p><b>Fuente: </b> ' + data[0].evidence_name + ' - <a href="' + data[0].evidence_url + '" target="_blank">' + data[0].evidence_url + '</a></p>' +
-                                        '<p><b>Fecha de actualización: </b> '+ data[0].update_date_lit +'</p>' +
-                                    '</div>' +
-                                '</div>' +
                                 
                             '</div>' +
                             
@@ -299,6 +259,13 @@ $(document).ready(function() {
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
+                                '<div class="row">' +
+                                    '<div class="col-md-10">' +
+//                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
+                                        '<p><b>Fuente: </b> ' + data[0].evidence_name + ' - <a href="' + data[0].evidence_url + '" target="_blank">' + data[0].evidence_url + '</a></p>' +
+                                        '<p><b>Fecha de actualización: </b> '+ data[0].update_date_lit +'</p>' +
+                                    '</div>' +
+                                '</div>' +
                             '</div>'
                         '</div>' +
 				      '</div>' +
@@ -387,7 +354,157 @@ $(document).ready(function() {
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
         
-        cuanti += '<script>' +
+        cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "grupo-especifico", "pob-con-carencia-alim-miles", "#898989", "Abierto");
+        
+        console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto"));
+//        cuanti += '<script>' +
+//                'var svg = d3.select("#graph"),' +
+//                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
+//                'width = +svg.attr("width") - margin.left - margin.right,' +
+//                'height = +svg.attr("height") - margin.top - margin.bottom;' +
+//
+//                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
+//                'y = d3.scaleLinear().rangeRound([height, 0]);' +
+//
+//                'var g = svg.append("g")' +
+//                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
+//
+//                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
+//
+//                'd3.json("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", function(d) {' +
+//                'd.Porcentaje = +d.Porcentaje * 100;' +
+//                'return d;' +
+//                '}, function(error, data) {' +
+//                'if (error) throw error;' +
+//
+//                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
+//                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
+//
+//                'g.append("g")' +
+//                '.attr("class", "axis axis--x")' +
+//                '.attr("transform", "translate(0," + height  + ")")' +
+//                '.call(d3.axisBottom(x));' +
+//
+//                'g.append("g")' +
+//                '.attr("class", "axis axis--y")' +
+//                '.call(d3.axisLeft(y))' +
+//                '.append("text")' +
+//                '.attr("transform", "rotate(-90)")' +
+//                '.attr("y", 6)' +
+//                '.attr("dy", "0.71em")' +
+//                '.attr("text-anchor", "end")' +
+//                '.text("Porcentaje");' +
+//
+//                'g.append("g")' +
+//                '.call(d3.axisLeft(y))' +
+//                '.append("text")' +
+//                '.attr("fill", "#000")' +
+//                '.attr("transform", "rotate(-90)")' +
+//                '.attr("y", 6)' +
+//                '.attr("dy", "0.71em")' +
+//                '.attr("text-anchor", "end")' +
+//                '.text("Porcentaje");' +
+//
+//                'g.selectAll(".bar")' +
+//                '.data(data)' +
+//                '.enter().append("rect")' +
+//                '.attr("class", "bar")' +
+//                '.attr("x", function(d) { return x(d.Legislatura); })' +
+//                '.attr("y", function(d) { return height; })' +
+//                '.attr("width", x.bandwidth())' +
+//                '.attr("height", function(d) { return 0})' +
+//                '.on("mousemove", function(d){' +
+//                'tooltip' +
+//                '.style("left", d3.event.pageX - 25 + "px")' +
+//                '.style("top", d3.event.pageY - 40 + "px")' +
+//                '.style("display", "inline-block")' +
+//                '.text(d.Porcentaje);' +
+//                '})' +
+//                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
+//                '.transition()' +
+//                '.delay(function(d,i){ return i*100 })' +
+//                '.duration(2000)' +
+//                '.attr("y", function(d){ return y(d.Porcentaje)})' +
+//                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
+//                '});' +
+//                '</script>';
+//        
+//        cuanti += '<script>' +
+//                'var svg = d3.select("#graph"),' +
+//                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
+//                'width = +svg.attr("width") - margin.left - margin.right,' +
+//                'height = +svg.attr("height") - margin.top - margin.bottom;' +
+//
+//                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
+//                'y = d3.scaleLinear().rangeRound([height, 0]);' +
+//
+//                'var g = svg.append("g")' +
+//                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
+//
+//                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
+//
+//                'd3.csv("CcE04_Barras.csv", function(d) {' +
+//                'd.Porcentaje = +d.Porcentaje * 100;' +
+//                'return d;' +
+//                '}, function(error, data) {' +
+//                'if (error) throw error;' +
+//
+//                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
+//                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
+//
+//                'g.append("g")' +
+//                '.attr("class", "axis axis--x")' +
+//                '.attr("transform", "translate(0," + height  + ")")' +
+//                '.call(d3.axisBottom(x));' +
+//
+//                'g.append("g")' +
+//                '.attr("class", "axis axis--y")' +
+//                '.call(d3.axisLeft(y))' +
+//                '.append("text")' +
+//                '.attr("transform", "rotate(-90)")' +
+//                '.attr("y", 6)' +
+//                '.attr("dy", "0.71em")' +
+//                '.attr("text-anchor", "end")' +
+//                '.text("Porcentaje");' +
+//
+//                'g.append("g")' +
+//                '.call(d3.axisLeft(y))' +
+//                '.append("text")' +
+//                '.attr("fill", "#000")' +
+//                '.attr("transform", "rotate(-90)")' +
+//                '.attr("y", 6)' +
+//                '.attr("dy", "0.71em")' +
+//                '.attr("text-anchor", "end")' +
+//                '.text("Porcentaje");' +
+//
+//                'g.selectAll(".bar")' +
+//                '.data(data)' +
+//                '.enter().append("rect")' +
+//                '.attr("class", "bar")' +
+//                '.attr("x", function(d) { return x(d.Legislatura); })' +
+//                '.attr("y", function(d) { return height; })' +
+//                '.attr("width", x.bandwidth())' +
+//                '.attr("height", function(d) { return 0})' +
+//                '.on("mousemove", function(d){' +
+//                'tooltip' +
+//                '.style("left", d3.event.pageX - 25 + "px")' +
+//                '.style("top", d3.event.pageY - 40 + "px")' +
+//                '.style("display", "inline-block")' +
+//                '.text(d.Porcentaje);' +
+//                '})' +
+//                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
+//                '.transition()' +
+//                '.delay(function(d,i){ return i*100 })' +
+//                '.duration(2000)' +
+//                '.attr("y", function(d){ return y(d.Porcentaje)})' +
+//                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
+//                '});' +
+//                '</script>';
+        return cuanti;
+    }
+    
+    function graficaCuanti(fuente, tipoGrafica, ejeX, ejeY, color, datos){
+        var graf = '<script>' +
                 'var svg = d3.select("#graph"),' +
                 'margin = {top: 20, right: 20, bottom:130, left: 40},' +
                 'width = +svg.attr("width") - margin.left - margin.right,' +
@@ -401,14 +518,14 @@ $(document).ready(function() {
 
                 'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
 
-                'd3.csv("CcE04_Barras.csv", function(d) {' +
-                'd.Porcentaje = +d.Porcentaje * 100;' +
+                'd3.json("'+fuente+'", function(d) {' +
+                'd'+ejeY+' = +d'+ejeY+' * 100;' +
                 'return d;' +
                 '}, function(error, data) {' +
                 'if (error) throw error;' +
 
-                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
-                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
+                'x.domain(data.map(function(d) { return d'+ejeX+'; }));' +
+                'y.domain([0, d3.max(data, function(d) { return d'+ejeY+'; })]);' +
 
                 'g.append("g")' +
                 '.attr("class", "axis axis--x")' +
@@ -439,7 +556,7 @@ $(document).ready(function() {
                 '.data(data)' +
                 '.enter().append("rect")' +
                 '.attr("class", "bar")' +
-                '.attr("x", function(d) { return x(d.Legislatura); })' +
+                '.attr("x", function(d) { return x(d'+ejeX+'); })' +
                 '.attr("y", function(d) { return height; })' +
                 '.attr("width", x.bandwidth())' +
                 '.attr("height", function(d) { return 0})' +
@@ -448,17 +565,20 @@ $(document).ready(function() {
                 '.style("left", d3.event.pageX - 25 + "px")' +
                 '.style("top", d3.event.pageY - 40 + "px")' +
                 '.style("display", "inline-block")' +
-                '.text(d.Porcentaje);' +
+                '.text(d'+ejeY+');' +
                 '})' +
                 '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
                 '.transition()' +
                 '.delay(function(d,i){ return i*100 })' +
                 '.duration(2000)' +
-                '.attr("y", function(d){ return y(d.Porcentaje)})' +
-                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
+                '.attr("y", function(d){ return y(d'+ejeY+')})' +
+                '.attr("height", function(d){ return height - y(d'+ejeY+') });' +
                 '});' +
                 '</script>';
-        return cuanti;
+        
+        return graf;
     }
+    
+    
     
 });
