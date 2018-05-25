@@ -31,7 +31,7 @@ $(document).ready(function() {
             console.log(string);
             return string;
         }
-
+    
     
     // Aquí se cargan los datos de los derechos
     $.ajax({
@@ -230,7 +230,7 @@ $(document).ready(function() {
 
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
-                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
+//                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
                                         '<p><b>Fuente: </b> ' + data[0].evidence_name + ' - <a href="' + data[0].evidence_url + '" target="_blank">' + data[0].evidence_url + '</a></p>' +
                                         '<p><b>Fecha de actualización: </b> '+ data[0].update_date_lit +'</p>' +
                                     '</div>' +
