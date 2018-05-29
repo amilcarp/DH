@@ -4,12 +4,12 @@ var tipoDer = [];
 var countDer = [];
 var acumula = [];
 var tablaInd, cuadroDer =  '';
-var tablaIndContA = '';
-var tablaIndContC = '';
-var tablaIndContD = '';
-var tablaIndContF = '';
-var tablaIndContI = '';
-var tablaIndContJ = '';
+var tablaIndContA, tablaIndContAE, tablaIndContAP, tablaIndContAR = '';
+var tablaIndContC, tablaIndContCE, tablaIndContCP, tablaIndContCR = '';
+var tablaIndContD, tablaIndContDE, tablaIndContDP, tablaIndContDR = '';
+var tablaIndContF, tablaIndContFE, tablaIndContFP, tablaIndContFR = '';
+var tablaIndContI, tablaIndContIE, tablaIndContIP, tablaIndContIR = '';
+var tablaIndContJ, tablaIndContJE, tablaIndContJP, tablaIndContJR = '';
 var tablaIndContMatrizA = '';
 var tablaIndContMatrizC = '';
 var tablaIndContMatrizD = '';
@@ -88,9 +88,11 @@ $(document).ready(function () {
 //
    //function getValores(derecho){
         var derecho = "Medio Ambiente";
+        var id_derecho = 5;
          $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+//		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+            url: pathAPI + "search?q=right_id:"+id_derecho+"&rows=100",
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               tipoDer = data['results']['records'];
@@ -98,13 +100,16 @@ $(document).ready(function () {
               recepDer();
               recepDerMatriz();
               
+              console.log(tablaIndContAE);
+              console.log(tablaIndContAP);
+              console.log(tablaIndContAR);
               
-                $('#recepDerA').html('<table class="table"><tbody>' + tablaIndContA + '</tbody></table>' );
-                $('#recepDerC').html('<table class="table"><tbody>' + tablaIndContC + '</tbody></table>' );
-                $('#recepDerD').html('<table class="table"><tbody>' + tablaIndContD + '</tbody></table>' );
-                $('#recepDerF').html('<table class="table"><tbody>' + tablaIndContF + '</tbody></table>' );
-                $('#recepDerI').html('<table class="table"><tbody>' + tablaIndContI + '</tbody></table>' );
-                $('#recepDerJ').html('<table class="table"><tbody>' + tablaIndContJ + '</tbody></table>' );
+                $('#recepDerA').html('<table class="table"><tbody>' + tablaIndContAE + tablaIndContAP + tablaIndContAR + '</tbody></table>' );
+                $('#recepDerC').html('<table class="table"><tbody>' + tablaIndContCE + tablaIndContCP + tablaIndContCR + '</tbody></table>' );
+                $('#recepDerD').html('<table class="table"><tbody>' + tablaIndContDE + tablaIndContDP + tablaIndContDR + '</tbody></table>' );
+                $('#recepDerF').html('<table class="table"><tbody>' + tablaIndContFE + tablaIndContFP + tablaIndContFR + '</tbody></table>' );
+                $('#recepDerI').html('<table class="table"><tbody>' + tablaIndContIE + tablaIndContIP + tablaIndContIR + '</tbody></table>' );
+                $('#recepDerJ').html('<table class="table"><tbody>' + tablaIndContJE + tablaIndContJP + tablaIndContJR + '</tbody></table>' );
                 // Vista matriz
                 $('#recepDerMatrizA').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizAE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizAP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizAR + '</div></div>');
                 $('#recepDerMatrizC').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizCE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizCP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizCR + '</div></div>');
@@ -214,6 +219,7 @@ $(document).ready(function () {
     }
     
     function recepDer(){
+        console.log(tipoDer);
         for(var i=0; i < tipoDer.length; i++){
             if(tipoDer[i].indicator_category_key == 'a'){
 //                tablaIndContA += '<tr>' +
@@ -223,44 +229,92 @@ $(document).ready(function () {
 //                          '</tr>';
                 
                 if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContMatrizAE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                   tablaIndContAE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
-                if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContMatrizAP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContAP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
-                if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContMatrizAR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContAR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }else{
+                    console.log(tipoDer[i].guid);
+                    alert(tipoDer[i].guid);
                 }
             }else if(tipoDer[i].indicator_category_key == 'c'){
-                 tablaIndContC += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+//                 tablaIndContC += '<tr>' +
+//                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
+//                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
+//                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
+//                          '</tr>';
+                if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContCE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContCP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContCR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'd'){
-                tablaIndContD += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+//                tablaIndContD += '<tr>' +
+//                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
+//                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
+//                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
+//                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContDE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContDP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContDR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'f'){
-                tablaIndContF += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+//                tablaIndContF += '<tr>' +
+//                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
+//                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
+//                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
+//                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContFE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContFP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContFR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'i'){
-                tablaIndContI += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+//                tablaIndContI += '<tr>' +
+//                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
+//                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
+//                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
+//                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContIE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContIP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContIR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'j'){
-                tablaIndContJ += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+//                tablaIndContJ += '<tr>' +
+//                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
+//                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
+//                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
+//                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContJE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContJP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContJR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }
 
         }       

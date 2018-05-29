@@ -28,7 +28,7 @@ $(document).ready(function() {
             {
                 string = string.replaceAll(new RegExp(letr[i], 'g'),cambio[i]);      
             }
-            console.log(string);
+            //console.log(string);
             return string;
         }
     
@@ -36,29 +36,29 @@ $(document).ready(function() {
     // Aquí se cargan los datos de los derechos
     $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=guid:/"+ c +"/",
+		  url: pathAPI + "data/" + c,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
-            datosDer = data['results']['records'];
-            console.log(datosDer);
-            console.log(datosDer[0].indicator_code);
+            datosDer = data;
+//            console.log(datosDer);
+//            console.log(datosDer[0].indicator_code);
+//
+//              console.log(indicadorCuali(datosDer));
 
-              console.log(indicadorCuali(datosDer));
-
-            if(datosDer[0].is_cuantitative == false){
+            if(datosDer.is_cuantitative == false){
                 $('#indicadores').html(indicadorCuali(datosDer));
             }else{
                 $('#indicadores').html(indicadorCuanti(datosDer));
             }
               
-            $('#claveInd').html(datosDer[0].indicator_code);
-            $('#categoriaInd').html(datosDer[0].right_name_short);
-            $('#tituloInd').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
-            $('#tInd').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
-            $('#fuenteInd').html(datosDer[0].evidence_name + ' - <a href="'+ datosDer[0].evidence_url + '">' + datosDer[0].evidence_url + '</a>');
-            $('#descarDatos1').html(datosDer[0].indicator_code + ' - ' + datosDer[0].indicator_name);
-            $('#descarDatos2').html(datosDer[0].indicator_definition);
-            $('#descarDatos3').html(datosDer[0].institution_name_evidencie);
+            $('#claveInd').html(datosDer.indicator_code);
+            $('#categoriaInd').html(datosDer.right_name_short);
+            $('#tituloInd').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
+            $('#tInd').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
+            $('#fuenteInd').html(datosDer.evidence_name + ' - <a href="'+ datosDer.evidence_url + '">' + datosDer.evidence_url + '</a>');
+            $('#descarDatos1').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
+            $('#descarDatos2').html(datosDer.indicator_definition);
+            $('#descarDatos3').html(datosDer.institution_name_evidencie);
               
               
 		  },
@@ -155,7 +155,7 @@ $(document).ready(function() {
         cuali = '<!-- Inicia Bloque -->' +
 		      '<div class="row">' +
 			      '<div class="col-md-12">' +
-				      '<h1 id="tituloInd">' + data[0].indicator_code + ' - ' + data[0].indicator_name + '</h1>' +
+				      '<h1 id="tituloInd">' + data.indicator_code + ' - ' + data.indicator_name + '</h1>' +
 				      '<hr />' +
 				      '<div class="row">' +
 					  	'<ul class="nav nav-tabs">' +
@@ -165,33 +165,33 @@ $(document).ready(function() {
                         '<div class="tab-content">' +
                             '<div class="tab-pane active" id="tab-01">' +
                                 
-                                '<h2>' + datosDer[0].indicator_name + '</h2>' +
+                                '<h2>' + datosDer.indicator_name + '</h2>' +
                                 
                                 '<table class="table table-striped">' +
                                     '<tbody>' +
                                         '<tr>' +
                                             '<td>Nombre</td>' +
-                                            '<td>' + data[0].indicator_name + '</td>' +
+                                            '<td>' + data.indicator_name + '</td>' +
                                         '</tr>' +
                                        '<tr>' +
                                             '<td>Clave</td>' +
-                                            '<td>' + data[0].indicator_code + '</td>' +
+                                            '<td>' + data.indicator_code + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Descripción</td>' +
-                                            '<td>' + data[0].indicator_definition + '</td>' +
+                                            '<td>' + data.indicator_definition + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Tipo de Indicador</td>' +
-                                            '<td>' + data[0].indicator_type_short + '</td>' +
+                                            '<td>' + data.indicator_type_short + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Categoría/Principio Transversal</td>' +
-                                            '<td>'+ data[0].indicator_category_name +'</td>' +
+                                            '<td>'+ data.indicator_category_name +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Derecho</td>' +
-                                            '<td>'+ data[0].right_name_short +'</td>' +
+                                            '<td>'+ data.right_name_short +'</td>' +
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
@@ -203,67 +203,67 @@ $(document).ready(function() {
                                     '<tbody>' +
                                        '<tr>' +
                                             '<td>Clave</td>' +
-                                            '<td>' + data[0].indicator_code + '</td>' +
+                                            '<td>' + data.indicator_code + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Descripción</td>' +
-                                            '<td>' + data[0].indicator_definition + '</td>' +
+                                            '<td>' + data.indicator_definition + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Evidencia</td>' +
-                                            '<td>' + data[0].evidence_name + '</td>' +
+                                            '<td>' + data.evidence_name + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Unidad de Observación</td>' +
-                                            '<td>'+ data[0].observation_unit_name +'</td>' +
+                                            '<td>'+ data.observation_unit_name +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fecha de Firma</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
+                                            '<td>'+ data.validity_date +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fecha de Aceptación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
+                                            '<td>'+ data.validity_date +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fecha de Promulgación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
+                                            '<td>'+ data.validity_date +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fecha de Adhesión</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
+                                            '<td>'+ data.validity_date +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                            '<td>Fecha de Vinculación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
+                                            '<td>'+ data.validity_date +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fecha de Publicación</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
+                                            '<td>'+ data.validity_date +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fecha de Entrada en Vigor</td>' +
-                                            '<td>'+ data[0].validity_date +'</td>' +
+                                            '<td>'+ data.validity_date +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>URL</td>' +
-                                            '<td><a href="' + data[0].evidence_url + '" target="_blank">' + data[0].evidence_url + '</a></td>' +
+                                            '<td><a href="' + data.evidence_url + '" target="_blank">' + data.evidence_url + '</a></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fecha de Actualización</td>' +
-                                            '<td>' + data[0].update_date_lit + '</td>' +
+                                            '<td>' + data.update_date_lit + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Entidad Responsable de Validación</td>' +
-                                            '<td>' + data[0].institution_name_evidencie + '</td>' +
+                                            '<td>' + data.institution_name_evidencie + '</td>' +
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
 //                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
-                                        '<p><b>Fuente: </b> ' + data[0].evidence_name + ' - <a href="' + data[0].evidence_url + '" target="_blank">' + data[0].evidence_url + '</a></p>' +
-                                        '<p><b>Fecha de actualización: </b> '+ data[0].update_date_lit +'</p>' +
+                                        '<p><b>Fuente: </b> ' + data.evidence_name + ' - <a href="' + data.evidence_url + '" target="_blank">' + data.evidence_url + '</a></p>' +
+                                        '<p><b>Fecha de actualización: </b> '+ data.update_date_lit +'</p>' +
                                     '</div>' +
                                 '</div>' +
                             '</div>'
@@ -275,14 +275,31 @@ $(document).ready(function() {
 		      return cuali;
     }
     
+    
+    function formulas(formula){
+        var img = '';
+        var j = 2;
+        for(var i = 0; i < formula.length; i++){
+            i++;
+            if(formula[i] == null){
+                
+            }else{
+                img += '<img src="http://latex.codecogs.com/svg.latex?'+formula[i]+'" border="0" style="" /> <span>'+formula[i+1]+'</span><br/>';
+//                console.log(formula[i]);
+            }
+        }
+        return img;
+    }
+    
     function indicadorCuanti(data){
-        
-        console.log(reemplazaChar(data[0].indicator_calculation_element));
-        
+
+        var formCalculo = data[0].indicator_calculation_element;
+        var res = formCalculo.split("$* ");
+
         cuanti = '<!-- Inicia Bloque -->' +
 		      '<div class="row">' +
 			      '<div class="col-md-12">' +
-				      '<h1 id="tituloInd">' + data[0].indicator_code + ' - ' + data[0].indicator_name + '</h1>' +
+				      '<h1 id="tituloInd">' + data.indicator_code + ' - ' + data.indicator_name + '</h1>' +
 				      '<hr />' +
 				      '<div class="row">' +
 					  	'<ul class="nav nav-tabs">' +
@@ -293,14 +310,14 @@ $(document).ready(function() {
                         '<div class="tab-content">' +
                             '<div class="tab-pane active" id="tab-011">' +
                                 
-                                '<h2>' + data[0].indicator_definition + '</h2>' +
+                                '<h2>' + data.indicator_definition + '</h2>' +
                                 
                                 '<svg id="graph" width="960" height="500"></svg>' +
                                 
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
-                                        '<p><b>Nota: </b> ' + data[0].indicator_reference + '</p>' +
-                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data[0].indicator_reference+'</span></p>' +
+                                        '<p><b>Nota: </b> ' + data.indicator_reference + '</p>' +
+                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data.indicator_reference+'</span></p>' +
                                     '</div>' +
                                 '</div>' +
                                 
@@ -312,19 +329,19 @@ $(document).ready(function() {
                                     '<tbody>' +
                                         '<tr>' +
                                             '<td>Definición</td>' +
-                                            '<td>' + data[0].indicator_definition + '</td>' +
+                                            '<td>' + data.indicator_definition + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fórmula</td>' +
-                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+data[0].indicator_formule_code+'" border="0" style="max-width:600px;" /></td>' +
+                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+data.indicator_formule_code+'" border="0" style="max-width:600px;" /></td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Elementos del cálculo</td>' +
-                                            '<td><img src="http://latex.codecogs.com/svg.latex?'+reemplazaChar(data[0].indicator_calculation_element)+'" border="0" style="" /></td>' +
+                                            '<td>'+formulas(res)+'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Fuente de la fórmula</td>' +
-                                            '<td>'+data[0].indicator_source_formule+'</td>' +
+                                            '<td>'+data.indicator_source_formule+'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Estado de Validación de la fórmula</td>' +
@@ -332,11 +349,11 @@ $(document).ready(function() {
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Unidad de Medida</td>' +
-                                            '<td>'+data[0].indicator_measure_unit+'</td>' +
+                                            '<td>'+data.indicator_measure_unit+'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Referencia</td>' +
-                                            '<td>'+data[0].indicator_reference+'</td>' +
+                                            '<td>'+data.indicator_reference+'</td>' +
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
@@ -354,7 +371,7 @@ $(document).ready(function() {
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
         
-        cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "grupo-especifico", "pob-con-carencia-alim-miles", "#898989", "Abierto");
+        cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto");
         
         console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto"));
 //        cuanti += '<script>' +
