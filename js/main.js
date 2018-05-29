@@ -6,15 +6,16 @@ $(document).ready(function() {
     
     $('.cuadro-derechos p').hide();
     
-    $.ajax({
-		  type: 'POST',
-		  url: "json/breakdown_group.json",
-		  data: {},
-		  success: function( data, textStatus, jqxhr ) {      
-              bdown = data;
-              console.log(bdown);
-		  },
-		  async:false
-		});
+//    $.ajax({
+//		  type: 'POST',
+//		  url: "json/breakdown_group.json",
+//		  data: {},
+//		  success: function( data, textStatus, jqxhr ) {      
+//              bdown = data;
+//              console.log(bdown);
+//		  },
+//		  async:false
+//		});
     
+
 });

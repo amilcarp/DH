@@ -4,12 +4,12 @@ var tipoDer = [];
 var countDer = [];
 var acumula = [];
 var tablaInd, cuadroDer =  '';
-var tablaIndContA = '';
-var tablaIndContC = '';
-var tablaIndContD = '';
-var tablaIndContF = '';
-var tablaIndContI = '';
-var tablaIndContJ = '';
+var tablaIndContA, tablaIndContAE = '', tablaIndContAP = '', tablaIndContAR = '';
+var tablaIndContC, tablaIndContCE = '', tablaIndContCP = '', tablaIndContCR = '';
+var tablaIndContD, tablaIndContDE = '', tablaIndContDP = '', tablaIndContDR = '';
+var tablaIndContF, tablaIndContFE = '', tablaIndContFP = '', tablaIndContFR = '';
+var tablaIndContI, tablaIndContIE = '', tablaIndContIP = '', tablaIndContIR = '';
+var tablaIndContJ, tablaIndContJE = '', tablaIndContJP = '', tablaIndContJR = '';
 var tablaIndContMatrizA = '';
 var tablaIndContMatrizC = '';
 var tablaIndContMatrizD = '';
@@ -38,45 +38,13 @@ var contenido;
 
 $(document).ready(function () {
     
-    console.log(nombreDerechos());
-    
-//    $.ajax({
-//		  type: 'GET',
-//		  url: pathAPI + "search?q=right_name_short_id:"+derecho+"&rows=100",
-//		  data: {},
-//		  success: function( data, textStatus, jqxhr ) {      
-//              tipoDer = data['results']['records'];
-//              derechos();
-//              recepDer();
-//              recepDerMatriz();
-//              
-//              
-//                $('#recepDerA').html('<table class="table"><tbody>' + tablaIndContA + '</tbody></table>' );
-//                $('#recepDerC').html('<table class="table"><tbody>' + tablaIndContC + '</tbody></table>' );
-//                $('#recepDerD').html('<table class="table"><tbody>' + tablaIndContD + '</tbody></table>' );
-//                $('#recepDerF').html('<table class="table"><tbody>' + tablaIndContF + '</tbody></table>' );
-//                $('#recepDerI').html('<table class="table"><tbody>' + tablaIndContI + '</tbody></table>' );
-//                $('#recepDerJ').html('<table class="table"><tbody>' + tablaIndContJ + '</tbody></table>' );
-//                // Vista matriz
-//                $('#recepDerMatrizA').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizAE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizAP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizAR + '</div></div>');
-//                $('#recepDerMatrizC').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizCE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizCP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizCR + '</div></div>');
-//                $('#recepDerMatrizD').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizDE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizDP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizDR + '</div></div>');
-//                $('#recepDerMatrizF').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizFE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizFP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizFR + '</div></div>');
-//                $('#recepDerMatrizI').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizIE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizIP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizIR + '</div></div>');
-//                $('#recepDerMatrizJ').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizJE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizJP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizJR + '</div></div>');
-//		  },
-//		  async:true
-//		});
-    
-    
-    
-  
+    console.log(nombreDerechos());  
     
     function init(){
         var x;
          var valores = nombreDerechos();
         //var valores = nombreDerechos();
-        console.log(valores);
+        //console.log(valores);
         for (x = 0; x < valores.length; x++){
             //getValores(valores[i]);
             console.log(valores[x]);
@@ -88,9 +56,11 @@ $(document).ready(function () {
 //
    //function getValores(derecho){
         var derecho = "Medio Ambiente";
+        var id_derecho = 5;
          $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+//		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+            url: pathAPI + "search?q=right_id:"+id_derecho+"&rows=100",
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               tipoDer = data['results']['records'];
@@ -98,13 +68,12 @@ $(document).ready(function () {
               recepDer();
               recepDerMatriz();
               
-              
-                $('#recepDerA').html('<table class="table"><tbody>' + tablaIndContA + '</tbody></table>' );
-                $('#recepDerC').html('<table class="table"><tbody>' + tablaIndContC + '</tbody></table>' );
-                $('#recepDerD').html('<table class="table"><tbody>' + tablaIndContD + '</tbody></table>' );
-                $('#recepDerF').html('<table class="table"><tbody>' + tablaIndContF + '</tbody></table>' );
-                $('#recepDerI').html('<table class="table"><tbody>' + tablaIndContI + '</tbody></table>' );
-                $('#recepDerJ').html('<table class="table"><tbody>' + tablaIndContJ + '</tbody></table>' );
+                $('#recepDerA').html('<table class="table"><tbody>' + tablaIndContAE + tablaIndContAP + tablaIndContAR + '</tbody></table>' );
+                $('#recepDerC').html('<table class="table"><tbody>' + tablaIndContCE + tablaIndContCP + tablaIndContCR + '</tbody></table>' );
+                $('#recepDerD').html('<table class="table"><tbody>' + tablaIndContDE + tablaIndContDP + tablaIndContDR + '</tbody></table>' );
+                $('#recepDerF').html('<table class="table"><tbody>' + tablaIndContFE + tablaIndContFP + tablaIndContFR + '</tbody></table>' );
+                $('#recepDerI').html('<table class="table"><tbody>' + tablaIndContIE + tablaIndContIP + tablaIndContIR + '</tbody></table>' );
+                $('#recepDerJ').html('<table class="table"><tbody>' + tablaIndContJE + tablaIndContJP + tablaIndContJR + '</tbody></table>' );
                 // Vista matriz
                 $('#recepDerMatrizA').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizAE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizAP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizAR + '</div></div>');
                 $('#recepDerMatrizC').html('<div><div class="matrizCol"><div><p class="tipoIndicador colorE alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p> <span>Estructural</span></div>' + tablaIndContMatrizCE + '</div><div class="matrizCol"><div><p class="tipoIndicador colorP alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p> <span>De Proceso</span></div>' + tablaIndContMatrizCP + '</div><div class="matrizCol"><div><p class="tipoIndicador colorR alineaTipoInd" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p> <span>De Resultado</span></div>' + tablaIndContMatrizCR + '</div></div>');
@@ -130,13 +99,13 @@ $(document).ready(function () {
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               countDer = data['fac.json']['array']['buckets'];
-                console.log(countDer);
+                //console.log(countDer);
               
               var k = 3;
               
               for(var i = 0; i < countDer.length; i++){
                   var h = i+1;
-                  console.log(countDer[i]['val']);
+                  //console.log(countDer[i]['val']);
                       if(h == 1 || h == 4 || h == 7 || h == 10 || h == 13 || h == 16){
                           cuadroDer += '<div class="row">';
                           cuadroDer += '<div class="col-md-4">'+
@@ -191,7 +160,7 @@ $(document).ready(function () {
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               countDer = data['fac.json']['array']['buckets'];
-                console.log(countDer);
+                //console.log(countDer);
               
               for(var i = 0; i < countDer.length; i++){
                   nombres.push(countDer[i]['val']);
@@ -201,7 +170,7 @@ $(document).ready(function () {
 		  },
 		  async:true
 		});
-        console.log(nombres);
+        //console.log(nombres);
         return nombres;
     }
     
@@ -214,53 +183,71 @@ $(document).ready(function () {
     }
     
     function recepDer(){
+        //console.log(tipoDer);
         for(var i=0; i < tipoDer.length; i++){
             if(tipoDer[i].indicator_category_key == 'a'){
-//                tablaIndContA += '<tr>' +
-//                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-//                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-//                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-//                          '</tr>';
-                
                 if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContMatrizAE += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' +                      tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                   tablaIndContAE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
-                if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContMatrizAP += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContAP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
-                if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContMatrizAR += '<div><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a>' + '<p>'+ tipoDer[i].indicator_definition +'</p></div>';
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContAR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }else{
+                    console.log(tipoDer[i].guid);
+                    alert(tipoDer[i].guid);
                 }
             }else if(tipoDer[i].indicator_category_key == 'c'){
-                 tablaIndContC += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContCE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContCP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContCR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'd'){
-                tablaIndContD += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContDE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContDP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContDR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'f'){
-                tablaIndContF += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContFE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContFP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContFR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'i'){
-                tablaIndContI += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContIE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContIP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContIR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }else if(tipoDer[i].indicator_category_key == 'j'){
-                tablaIndContJ += '<tr>' +
-                              '<td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +
-                              '<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name +'</a></td>' +
-                              '<td>'+ tipoDer[i].indicator_definition +'</td>' +
-                          '</tr>';
+                 if(tipoDer[i].indicator_type_code === "E"){
+                   tablaIndContJE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "P"){
+                    tablaIndContJP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
+                else if(tipoDer[i].indicator_type_code === "R"){
+                   tablaIndContJR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                }
             }
 
         }       
@@ -350,6 +337,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse in" id="panel-01">' + 
                     '                    <div class="panel-body">' + 
+                    '                       <div><p>Categoría conceptual cuyos indicadores permiten identificar información sobre la forma en que cada derecho se encuentra incorporado en el sistema legal y en las políticas públicas, así como los resultados generales sobre su garantía.</p></div>' +
                     '                        <div id="recepDerA"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -366,6 +354,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-02">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.</p></div>' +
                     '                        <div id="recepDerC"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -382,6 +371,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-03">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Categoría conceptual cuyos indicadores incorporan los aspectos instrumentales y de disponibilidad de recursos al interior del aparato estatal para la atención de los derechos.</p></div>' +
                     '                        <div id="recepDerD"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -398,6 +388,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-04">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Principio transversal cuyos indicadores se orientan a asegurar la protección igualitaria y no discriminatoria de los derechos; detallan los mecanismos y políticas específicos disponibles para los grupos de población en situación de vulnerabilidad.</p></div>' +
                     '                        <div id="recepDerF"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -414,6 +405,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-05">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Principio transversal cuyos indicadores revisan, por un lado, el nivel de información y transparencia sobre los derechos, para una adecuada rendición de cuentas; y por el otro, examinan la disponibilidad de mecanismos para la participación en el diseño, implementación y seguimiento de las políticas públicas correspondientes.</p></div>' +
                     '                        <div id="recepDerI"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -430,6 +422,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-06">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Principio transversal cuyos indicadores están dirigidos a garantizar los recursos para la exigibilidad de los derechos y el apropiado acceso a la justicia, incluyendo el examen sobre la posibilidad de acceso a mecanismos de reclamo y protección.</p></div>' +
                     '                        <div id="recepDerJ"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -458,6 +451,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse in" id="panel-011">' + 
                     '                    <div class="panel-body">' + 
+                    '                       <div><p>Categoría conceptual cuyos indicadores permiten identificar información sobre la forma en que cada derecho se encuentra incorporado en el sistema legal y en las políticas públicas, así como los resultados generales sobre su garantía.</p></div>' +
                     '                        <div id="recepDerMatrizA"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -474,6 +468,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-021">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.</p></div>' +
                     '                        <div id="recepDerMatrizC"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -490,6 +485,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-031">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Categoría conceptual cuyos indicadores incorporan los aspectos instrumentales y de disponibilidad de recursos al interior del aparato estatal para la atención de los derechos.</p></div>' +
                     '                        <div id="recepDerMatrizD"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -506,6 +502,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-041">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Principio transversal cuyos indicadores se orientan a asegurar la protección igualitaria y no discriminatoria de los derechos; detallan los mecanismos y políticas específicos disponibles para los grupos de población en situación de vulnerabilidad.</p></div>' +
                     '                        <div id="recepDerMatrizF"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -522,6 +519,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-051">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Principio transversal cuyos indicadores revisan, por un lado, el nivel de información y transparencia sobre los derechos, para una adecuada rendición de cuentas; y por el otro, examinan la disponibilidad de mecanismos para la participación en el diseño, implementación y seguimiento de las políticas públicas correspondientes.</p></div>' +
                     '                        <div id="recepDerMatrizI"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -538,6 +536,7 @@ $(document).ready(function () {
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-061">' + 
                     '                    <div class="panel-body">' + 
+                    '                        <div><p>Principio transversal cuyos indicadores están dirigidos a garantizar los recursos para la exigibilidad de los derechos y el apropiado acceso a la justicia, incluyendo el examen sobre la posibilidad de acceso a mecanismos de reclamo y protección.</p></div>' +
                     '                        <div id="recepDerMatrizJ"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
