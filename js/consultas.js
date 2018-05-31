@@ -44,6 +44,8 @@ $(document).ready(function () {
     
     init(valores);
     
+    getValores(4);
+    
     function init(valores){
         console.log(valores);
         
