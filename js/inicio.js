@@ -8,16 +8,16 @@ var contenido;
 
 $(document).ready(function () {
     
-    console.log(nombreDerechos());
+    //console.log(nombreDerechos());
     
     function init(){
         var x;
          var valores = nombreDerechos();
         //var valores = nombreDerechos();
-        console.log(valores);
+        //console.log(valores);
         for (x = 0; x < valores.length; x++){
             //getValores(valores[i]);
-            console.log(valores[x]);
+            //console.log(valores[x]);
         }
     }
     
@@ -40,21 +40,41 @@ $(document).ready(function () {
     //}
     
     var estatusDerecho = nombreDerechos();
+    
     function estatus(derecho){
+        //Disponible = Si hay indicadores cualitativos y cuantitativos en el derecho
+        //Parcial = Si solo hay indicadores cualitativos
+        //Próximamente = Si no hay indicadores
+        var cuantis = '';
         var uno = "";
-        for(var i = 0; i < estatusDerecho.length; i++){
-            uno = estatusDerecho[i];
-        }
-        uno = derecho;
         
-        return uno === "Alimentación" ? 'Disponible' :  uno === "Medio Ambiente" ? 'Cuantis':  uno === "Sindicales" ? 'Cualis': uno === "Culturales" ? 'No disponible': 'Trabajo';
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=0&fac.json={array:{type:%22terms%22,field:%22is_cuantitative%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}},nombres: {type:%22terms%22,field:%22right_name_short_lit%22,limit:20,facet:{unique_indicators: %22unique(indicator_name_lit)%22,indicators_null: {type: %22query%22,q: %22-indicator_name:[*%20TO%20*]%22}}}}",
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {      
+              cuantis = data['fac.json']['array']['buckets'];
+              nombre = data['fac.json']['nombres']['buckets'];
+                //console.log(countDer);
+              
+              if(cuantis[0]['val'] === "false" && cuantis[0]['count'] > 1 && cuantis[1]['val'] === "true" && cuantis[1]['count'] > 1){
+                  uno = "Disponible";
+              }else if(cuantis[0]['val'] === "false" && cuantis[0]['count'] > 1 || cuantis[1]['val'] === "true" && cuantis[1]['count'] > 1){
+                    uno = "Parcial";
+              }else{
+                    uno = "Próximamente";
+              }
+              
+              console.log(uno);
+              console.log(cuantis[0]['val']);
+              
+              return uno;
+              
+		  },
+		  async:true
+		});
+
     }
-    
-    
-//    
-//    https://datosabiertos.unam.mx/api/alice/search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_lit%20AND%20is_cuantitative:false%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}
-//    
-//    
     
    
     function derechos(){
@@ -65,17 +85,17 @@ $(document).ready(function () {
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               countDer = data['fac.json']['array']['buckets'];
-                console.log(countDer);
+                //console.log(countDer);
               
               var k = 3;
               
               for(var i = 0; i < countDer.length; i++){
                   var h = i+1;
-                  console.log(countDer[i]['val']);
+                  //console.log(countDer[i]['val']);
                       if(h == 1 || h == 4 || h == 7 || h == 10 || h == 13 || h == 16){
                           cuadroDer += '<div class="row">';
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="derechos.html#'+ sinEspacios(countDer[i]['val']) +'">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -86,7 +106,7 @@ $(document).ready(function () {
                                   '</div>';
                       }else if(h == 3 || h == 6 || h == 9 || h == 12 || h == 15 || h == 18 || h == countDer.length){
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="derechos.html#'+ sinEspacios(countDer[i]['val']) +'">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -98,7 +118,7 @@ $(document).ready(function () {
                                cuadroDer += '</div><br /><div class="indis'+h+'"></div>';
                       }else{
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="derechos.html#'+ sinEspacios(countDer[i]['val']) +'">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -126,7 +146,7 @@ $(document).ready(function () {
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               countDer = data['fac.json']['array']['buckets'];
-                console.log(countDer);
+                //console.log(countDer);
               
               for(var i = 0; i < countDer.length; i++){
                   nombres.push(countDer[i]['val']);
@@ -136,7 +156,7 @@ $(document).ready(function () {
 		  },
 		  async:true
 		});
-        console.log(nombres);
+        //console.log(nombres);
         return nombres;
     }
     
