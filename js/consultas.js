@@ -3,7 +3,7 @@ var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
 var tipoDer = [];
 var countDer = [];
 var acumula = [];
-var tablaInd, cuadroDer =  '';
+var tablaInd = '', cuadroDer =  '', valores = [];
 var tablaIndContA, tablaIndContAE = '', tablaIndContAP = '', tablaIndContAR = '';
 var tablaIndContC, tablaIndContCE = '', tablaIndContCP = '', tablaIndContCR = '';
 var tablaIndContD, tablaIndContDE = '', tablaIndContDP = '', tablaIndContDR = '';
@@ -40,27 +40,46 @@ $(document).ready(function () {
     
     console.log(nombreDerechos());  
     
-    function init(){
-        var x;
-         var valores = nombreDerechos();
-        //var valores = nombreDerechos();
-        //console.log(valores);
-        for (x = 0; x < valores.length; x++){
-            //getValores(valores[i]);
-            console.log(valores[x]);
+    valores = nombreDerechos();
+    
+    init(valores);
+    
+    function init(valores){
+        console.log(valores);
+        
+        for (var hh = 0; hh < valores.length; hh++){
+            console.log(valores[hh]);
+            switch(valores[hh]){
+                case 'Alimentación':
+                    getValores(4);
+                    console.log(valores[hh]);
+                break;
+                case 'Medio Ambiente':
+                    getValores(5);
+                break;
+                case 'Culturales':
+                    getValores(6);
+                break;
+                case 'Trabajo':
+                    getValores(7);
+                break;
+                case 'Sindicales':
+                    getValores(8);
+                break;
+            }
         }
     }
     
-    init();
-   //getValores('Alimentación');
-//
-   //function getValores(derecho){
-        var derecho = "Medio Ambiente";
-        var id_derecho = 5;
+    
+   //getValores(5);
+
+   function getValores(derecho){
+        //var derecho = "Medio Ambiente";
+        //var id_derecho = 5;
          $.ajax({
 		  type: 'GET',
 //		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
-            url: pathAPI + "search?q=right_id:"+id_derecho+"&rows=100",
+            url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               tipoDer = data['results']['records'];
@@ -84,7 +103,7 @@ $(document).ready(function () {
 		  },
 		  async:true
 		});
-    //}
+    }
     
     
     function getTipoIndicador(tipoIndicador){
