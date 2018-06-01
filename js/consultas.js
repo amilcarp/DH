@@ -189,7 +189,7 @@ $(document).ready(function () {
                   nombres.push(countDer[i]['val']);
               }
               
-               inicial(nombres);
+                inicial(nombres);
          
 		  },
 		  async:true
