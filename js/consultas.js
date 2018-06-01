@@ -3,7 +3,7 @@ var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
 var tipoDer = [];
 var countDer = [];
 var acumula = [];
-var tablaInd = '', cuadroDer =  '', valores = [];
+var tablaInd = '', cuadroDer =  '', valores = [], vals = [];
 var tablaIndContA, tablaIndContAE = '', tablaIndContAP = '', tablaIndContAR = '';
 var tablaIndContC, tablaIndContCE = '', tablaIndContCP = '', tablaIndContCR = '';
 var tablaIndContD, tablaIndContDE = '', tablaIndContDP = '', tablaIndContDR = '';
@@ -36,18 +36,18 @@ var tablaIndContMatrizIR = '';
 var tablaIndContMatrizJR = '';
 var contenido;
 
+   
+
 $(document).ready(function () {
     
-    console.log(nombreDerechos());  
+    //console.log(nombreDerechos());  
     
-    valores = nombreDerechos();
     
-    init(valores);
+    nombreDerechos();
     
-    getValores(4);
     
-    function init(valores){
-        console.log(valores);
+    
+     function inicial(valores){
         
         for (var hh = 0; hh < valores.length; hh++){
             console.log(valores[hh]);
@@ -71,6 +71,8 @@ $(document).ready(function () {
             }
         }
     }
+
+
     
     
    //getValores(5);
@@ -187,12 +189,13 @@ $(document).ready(function () {
                   nombres.push(countDer[i]['val']);
               }
               
+               inicial(nombres);
          
 		  },
 		  async:true
 		});
         //console.log(nombres);
-        return nombres;
+      //  return nombres;
     }
     
     function sinEspacios(dato){
