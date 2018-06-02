@@ -2,20 +2,13 @@
 var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
 var tipoDer = [];
 var countDer = [];
-var acumula = [];
-var tablaInd = '', cuadroDer =  '', valores = [], vals = [];
-var tablaIndContA, tablaIndContAE = '', tablaIndContAP = '', tablaIndContAR = '';
-var tablaIndContC, tablaIndContCE = '', tablaIndContCP = '', tablaIndContCR = '';
-var tablaIndContD, tablaIndContDE = '', tablaIndContDP = '', tablaIndContDR = '';
-var tablaIndContF, tablaIndContFE = '', tablaIndContFP = '', tablaIndContFR = '';
-var tablaIndContI, tablaIndContIE = '', tablaIndContIP = '', tablaIndContIR = '';
-var tablaIndContJ, tablaIndContJE = '', tablaIndContJP = '', tablaIndContJR = '';
-var tablaIndContMatrizA = '';
-var tablaIndContMatrizC = '';
-var tablaIndContMatrizD = '';
-var tablaIndContMatrizF = '';
-var tablaIndContMatrizI = '';
-var tablaIndContMatrizJ = '';
+var cuadroDer =  '';
+var tablaIndContAE = '', tablaIndContAP = '', tablaIndContAR = '';
+var tablaIndContCE = '', tablaIndContCP = '', tablaIndContCR = '';
+var tablaIndContDE = '', tablaIndContDP = '', tablaIndContDR = '';
+var tablaIndContFE = '', tablaIndContFP = '', tablaIndContFR = '';
+var tablaIndContIE = '', tablaIndContIP = '', tablaIndContIR = '';
+var tablaIndContJE = '', tablaIndContJP = '', tablaIndContJR = '';
 var tablaIndContMatrizAE = '';
 var tablaIndContMatrizCE = '';
 var tablaIndContMatrizDE = '';
@@ -34,25 +27,18 @@ var tablaIndContMatrizDR = '';
 var tablaIndContMatrizFR = '';
 var tablaIndContMatrizIR = '';
 var tablaIndContMatrizJR = '';
-var contenido;
 
-   
 
 $(document).ready(function () {
-    
-    //console.log(nombreDerechos());  
-    
-    
-    //nombreDerechos();
-    
-    
+    //derechos();
     // Función para visualizar derechos disponibles
         var nombres = []; 
         $.ajax({
-		  type: 'GET',
-		  url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
-		  data: {},
-		  success: function( data, textStatus, jqxhr ) {      
+            type:'GET',
+            url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+            data: {},
+            success: function( data, textStatus, jqxhr ) {  
+                
               countDer = data['fac.json']['array']['buckets'];
                 //console.log(countDer);
               
@@ -60,32 +46,92 @@ $(document).ready(function () {
                   nombres.push(countDer[i]['val']);
               }
               
-                //inicial(nombres);
+                
+                var k = 3;
               
-              for (var hh = 0; hh < nombres.length; hh++){
-                    console.log(nombres[hh]);
-                    switch(nombres[hh]){
-                        case 'Alimentación':
-                            getValores(4);
-                            console.log(nombres[hh]);
-                        break;
-                        case 'Medio Ambiente':
-                            getValores(5);
-                        break;
-                        case 'Culturales':
-                            getValores(6);
-                        break;
-                        case 'Trabajo':
-                            getValores(7);
-                        break;
-                        case 'Sindicales':
-                            getValores(8);
-                        break;
-                    }
-                }
-         
-		  },
-		  async:true
+              for(var i = 0; i < countDer.length; i++){
+                  var h = i+1;
+                  //console.log(countDer[i]['val']);
+                      if(h == 1 || h == 4 || h == 7 || h == 10 || h == 13 || h == 16){
+                          cuadroDer += '<div class="row">';
+                          cuadroDer += '<div class="col-md-4 ' + sinEspacios(countDer[i]['val']) + '">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="">'+
+                                         '<div class="cuadro-derechos b'+h+'">'+
+                                             '<div class="d'+h+'">' +
+                                                 '<h2>'+ countDer[i]['val']+'</h2>'+
+                                              '</div>'+
+                                        '</div>'+
+                                     '</a>'+
+                                     '<div class="arrow-up none"></div>'+
+                                  '</div>';
+                      }else if(h == 3 || h == 6 || h == 9 || h == 12 || h == 15 || h == 18 || h == countDer.length){
+                          cuadroDer += '<div class="col-md-4 ' + sinEspacios(countDer[i]['val']) + '">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="">'+
+                                         '<div class="cuadro-derechos b'+h+'">'+
+                                             '<div class="d'+h+'">' +
+                                                 '<h2>'+ countDer[i]['val']+'</h2>'+
+                                              '</div>'+
+                                        '</div>'+
+                                     '</a>'+
+                                     '<div class="arrow-up none"></div>'+
+                                  '</div>';
+                               cuadroDer += '</div><br /><div class="indis'+h+'"></div>';
+                      }else{
+                          cuadroDer += '<div class="col-md-4 ' + sinEspacios(countDer[i]['val']) + '">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
+                                         '<div class="cuadro-derechos b'+h+'">'+
+                                             '<div class="d'+h+'">' +
+                                                 '<h2>'+ countDer[i]['val']+'</h2>'+
+                                              '</div>'+
+                                        '</div>'+
+                                     '</a>'+
+                                     '<div class="arrow-up none"></div>'+
+                                  '</div>';
+                      }
+                  
+              }
+                $('.Culturales .arrow-up').removeClass('none');
+                $('#derechos').html(cuadroDer);
+                
+                $('.Culturales').on('click', function(){
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Culturales .arrow-up').removeClass('none');
+                    $('.indis3').html(indicadoresDerecho(4));
+                });
+                $('.MedioAmbiente').on('click', function(){
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.MedioAmbiente .arrow-up').removeClass('none');
+                    $('.indis3').html(indicadoresDerecho(4));
+                });
+                $('.Trabajo').on('click', function(){
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Trabajo .arrow-up').removeClass('none');
+                    $('.indis3').html(indicadoresDerecho(4));
+                });
+                $('.Sindicales').on('click', function(){
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Sindicales .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(4));
+                });
+                 $('.Alimentacion').on('click', function(){
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Alimentacion .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(4));
+                });
+
+                
+            },
+            async:true
 		});
     
     
@@ -102,7 +148,6 @@ $(document).ready(function () {
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               tipoDer = data['results']['records'];
-              derechos();
               recepDer();
               recepDerMatriz();
               
@@ -180,8 +225,14 @@ $(document).ready(function () {
                                      '<div class="arrow-up none"></div>'+
                                   '</div>';
                       }
-                  
               }
+              
+//              for(var kl = 0; kl < valores.length; kl++){
+//                  valores[kl];
+//                  
+//              }
+              
+              
               $('#derechos').html(cuadroDer);
               
 		  },
@@ -197,8 +248,15 @@ $(document).ready(function () {
     
     function sinEspacios(dato){
         var contenido=dato;
-//        for (var i = 0; i < dato.length; i ++){
-//        contenido += (dato.charAt(i) == " ") ? "_" : dato.charAt(i);
+        contenido=contenido.replace(/ /g,"");
+        contenido=contenido.replace(/á/g,"a");
+        contenido=contenido.replace(/é/g,"e");
+        contenido=contenido.replace(/í/g,"i");
+        contenido=contenido.replace(/ó/g,"o");
+        contenido=contenido.replace(/ú/g,"u");
+        contenido=contenido.replace(/ñ/g,"n");
+//        for (var i = 0; i < contenido.length; i ++){
+//        contenido += (contenido.charAt(i) == " ") ? "" : contenido.charAt(i);
 //        }//fin del for
         return contenido;
     }
