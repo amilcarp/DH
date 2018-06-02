@@ -43,36 +43,51 @@ $(document).ready(function () {
     //console.log(nombreDerechos());  
     
     
-    nombreDerechos();
+    //nombreDerechos();
     
     
+    // Función para visualizar derechos disponibles
+        var nombres = []; 
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {      
+              countDer = data['fac.json']['array']['buckets'];
+                //console.log(countDer);
+              
+              for(var i = 0; i < countDer.length; i++){
+                  nombres.push(countDer[i]['val']);
+              }
+              
+                //inicial(nombres);
+              
+              for (var hh = 0; hh < nombres.length; hh++){
+                    console.log(nombres[hh]);
+                    switch(nombres[hh]){
+                        case 'Alimentación':
+                            getValores(4);
+                            console.log(nombres[hh]);
+                        break;
+                        case 'Medio Ambiente':
+                            getValores(5);
+                        break;
+                        case 'Culturales':
+                            getValores(6);
+                        break;
+                        case 'Trabajo':
+                            getValores(7);
+                        break;
+                        case 'Sindicales':
+                            getValores(8);
+                        break;
+                    }
+                }
+         
+		  },
+		  async:true
+		});
     
-     function inicial(valores){
-        
-        for (var hh = 0; hh < valores.length; hh++){
-            console.log(valores[hh]);
-            switch(valores[hh]){
-                case 'Alimentación':
-                    getValores(4);
-                    console.log(valores[hh]);
-                break;
-                case 'Medio Ambiente':
-                    getValores(5);
-                break;
-                case 'Culturales':
-                    getValores(6);
-                break;
-                case 'Trabajo':
-                    getValores(7);
-                break;
-                case 'Sindicales':
-                    getValores(8);
-                break;
-            }
-        }
-    }
-
-
     
     
    //getValores(5);
@@ -132,7 +147,7 @@ $(document).ready(function () {
                       if(h == 1 || h == 4 || h == 7 || h == 10 || h == 13 || h == 16){
                           cuadroDer += '<div class="row">';
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -143,7 +158,7 @@ $(document).ready(function () {
                                   '</div>';
                       }else if(h == 3 || h == 6 || h == 9 || h == 12 || h == 15 || h == 18 || h == countDer.length){
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -155,7 +170,7 @@ $(document).ready(function () {
                                cuadroDer += '</div><br /><div class="indis'+h+'"></div>';
                       }else{
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -175,25 +190,7 @@ $(document).ready(function () {
     }
     
     function nombreDerechos(){
-        // Función para visualizar derechos disponibles
-        var nombres = []; 
-        $.ajax({
-		  type: 'GET',
-		  url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
-		  data: {},
-		  success: function( data, textStatus, jqxhr ) {      
-              countDer = data['fac.json']['array']['buckets'];
-                //console.log(countDer);
-              
-              for(var i = 0; i < countDer.length; i++){
-                  nombres.push(countDer[i]['val']);
-              }
-              
-                inicial(nombres);
-         
-		  },
-		  async:true
-		});
+        
         //console.log(nombres);
       //  return nombres;
     }
@@ -218,9 +215,6 @@ $(document).ready(function () {
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
                    tablaIndContAR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
-                }else{
-                    console.log(tipoDer[i].guid);
-                    alert(tipoDer[i].guid);
                 }
             }else if(tipoDer[i].indicator_category_key == 'c'){
                 if(tipoDer[i].indicator_type_code === "E"){
