@@ -1,9 +1,11 @@
 //---- Variables
 var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
+var pathAPIGob = "https://api.datos.gob.mx/v1/";
 var datosDer = [];
 var acumula = [];
 var tablaInd =  '';
 var contenido, cuali, cuanti;
+var datoInd = [];
 
 var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
@@ -288,7 +290,7 @@ $(document).ready(function() {
 					  	'<ul class="nav nav-tabs">' +
                             '<li class="active"><a data-toggle="tab" href="#tab-011">Indicador</a></li>' +
                             '<li><a data-toggle="tab" href="#tab-022">Metadato</a></li>' +
-                            '<li><a data-toggle="tab" href="#tab-033">Datos para el cálculo</a></li>' +
+//                            '<li><a data-toggle="tab" href="#tab-033">Datos para el cálculo</a></li>' +
                         '</ul>' +
                         '<div class="tab-content">' +
                             '<div class="tab-pane active" id="tab-011">' +
@@ -362,9 +364,9 @@ $(document).ready(function() {
                                 
                             '</div>' +
                             
-                            '<div class="tab-pane" id="tab-033">' +
-                                '<h3>[Aquí iría una tabla que represente los datos para el cálculo]</h3>' +
-                            '</div>' +
+//                            '<div class="tab-pane" id="tab-033">' +
+//                                '<h3>[Aquí iría una tabla que represente los datos para el cálculo]</h3>' +
+//                            '</div>' +
                             
                         '</div>' +
 				      '</div>' +
@@ -372,6 +374,18 @@ $(document).ready(function() {
 			      '</div>' +
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
+        
+        var tados = data.breakdown_group;
+        
+        console.log(tados);
+        
+        for(var rrr = 0; rrr < tados.length; rrr++){
+            cuanti += data.breakdown_group[rrr].breakdown_group_name + '<br />';
+            cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result);
+            cuanti += '<br />';
+            cuanti += data.breakdown_group[rrr].breakdown_attribute + '<br />';
+            cuanti += '<br /><br />';
+        }
         
         cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto");
         
@@ -598,6 +612,27 @@ $(document).ready(function() {
         return graf;
     }
     
+    
+    function datosTabulado(resource, dataset, resultado){
+        datoInd = [];
+        console.log(resultado);
+        var res = resultado;
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?periodo=2016',
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {    
+            console.log(data['results'][0]['periodo']);
+              for (var pp=0; pp<data['results'].length;pp++){
+                  datoInd += data['results'][pp][res];
+                  console.log(datoInd);
+              }
+		  },
+		  async:false
+		});
+        
+        return datoInd;
+    }
     
     
 });
