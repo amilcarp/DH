@@ -6,6 +6,8 @@ var acumula = [];
 var tablaInd =  '';
 var contenido, cuali, cuanti;
 var datoInd = [];
+var todo = [];
+var res = '';
 
 var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
@@ -616,15 +618,17 @@ $(document).ready(function() {
     function datosTabulado(resource, dataset, resultado){
         datoInd = [];
         console.log(resultado);
-        var res = resultado;
+        res = resultado;
+        console.log(res);
         $.ajax({
 		  type: 'GET',
 		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?periodo=2016',
 		  data: {},
-		  success: function( data, textStatus, jqxhr ) {    
-            console.log(data['results'][0]['periodo']);
-              for (var pp=0; pp<data['results'].length;pp++){
-                  datoInd += data['results'][pp][res];
+		  success: function( data, textStatus, jqxhr ) {   
+              todo = data;
+            console.log(todo['results'][0]['periodo']);
+              for (var pp=0; pp<todo['results'].length;pp++){
+                  datoInd += todo['results'][pp][res];
                   console.log(datoInd);
               }
 		  },
