@@ -93,41 +93,226 @@ $(document).ready(function () {
                 $('.Culturales .arrow-up').removeClass('none');
                 $('#derechos').html(cuadroDer);
                 
+
+                
                 $('.Culturales').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
                     $('.internoDerecho').css('display','none');
                     $('.internoDerechoMatriz').css('display','none');
                     $('.col-md-4 .arrow-up').addClass('none');
                     $('.Culturales .arrow-up').removeClass('none');
-                    $('.indis3').html(indicadoresDerecho(4));
+                    $('.indis3').html(indicadoresDerecho(idC));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
                 });
                 $('.MedioAmbiente').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
                     $('.internoDerecho').css('display','none');
                     $('.internoDerechoMatriz').css('display','none');
                     $('.col-md-4 .arrow-up').addClass('none');
                     $('.MedioAmbiente .arrow-up').removeClass('none');
-                    $('.indis3').html(indicadoresDerecho(4));
+                    $('.indis3').html(indicadoresDerecho(idM));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
                 });
                 $('.Trabajo').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
                     $('.internoDerecho').css('display','none');
                     $('.internoDerechoMatriz').css('display','none');
                     $('.col-md-4 .arrow-up').addClass('none');
                     $('.Trabajo .arrow-up').removeClass('none');
-                    $('.indis3').html(indicadoresDerecho(4));
+                    $('.indis3').html(indicadoresDerecho(idT));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
                 });
                 $('.Sindicales').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
                     $('.internoDerecho').css('display','none');
                     $('.internoDerechoMatriz').css('display','none');
                     $('.col-md-4 .arrow-up').addClass('none');
                     $('.Sindicales .arrow-up').removeClass('none');
-                    $('.indis5').html(indicadoresDerecho(4));
+                    $('.indis5').html(indicadoresDerecho(idU));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
                 });
                  $('.Alimentacion').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
                     $('.internoDerecho').css('display','none');
                     $('.internoDerechoMatriz').css('display','none');
                     $('.col-md-4 .arrow-up').addClass('none');
                     $('.Alimentacion .arrow-up').removeClass('none');
-                    $('.indis5').html(indicadoresDerecho(4));
+                    $('.indis5').html(indicadoresDerecho(idA));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
                 });
+                $('.SeguridadSocial').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.SeguridadSocial .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idSS));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.Educacion').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Educacion .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idE));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.Salud').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Salud .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idS));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                
+                 
 
                 
             },
@@ -146,10 +331,64 @@ $(document).ready(function () {
 //		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
             url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
 		  data: {},
-		  success: function( data, textStatus, jqxhr ) {      
+		  success: function( data, textStatus, jqxhr ) {   
+              
+              tablaIndContAE = '';
+              tablaIndContAP = '';
+              tablaIndContAR = '';
+              tablaIndContCE = '';
+              tablaIndContCP = '';
+              tablaIndContCR = '';
+              tablaIndContDE = '';
+              tablaIndContDP = '';
+              tablaIndContDR = '';
+              tablaIndContFE = '';
+              tablaIndContFP = '';
+              tablaIndContFR = '';
+              tablaIndContIE = '';
+              tablaIndContIP = '';
+              tablaIndContIR = '';
+              tablaIndContJE = '';
+              tablaIndContJP = '';
+              tablaIndContJR = '';
+              
+              tablaIndContMatrizAE = '';
+              tablaIndContMatrizAP = '';
+              tablaIndContMatrizAR = '';
+              tablaIndContMatrizCE = '';
+              tablaIndContMatrizCP = '';
+              tablaIndContMatrizCR = '';
+              tablaIndContMatrizDE = '';
+              tablaIndContMatrizDP = '';
+              tablaIndContMatrizDR = '';
+              tablaIndContMatrizFE = '';
+              tablaIndContMatrizFP = '';
+              tablaIndContMatrizFR = '';
+              tablaIndContMatrizIE = '';
+              tablaIndContMatrizIP = '';
+              tablaIndContMatrizIR = '';
+              tablaIndContMatrizJE = '';
+              tablaIndContMatrizJP = '';
+              tablaIndContMatrizJR = '';
+              
               tipoDer = data['results']['records'];
               recepDer();
               recepDerMatriz();
+                
+                $('#recepDerA').html('');
+                $('#recepDerC').html('');
+                $('#recepDerD').html('');
+                $('#recepDerF').html('');
+                $('#recepDerI').html('');
+                $('#recepDerJ').html('');
+                $('#recepDerMatrizA').html('');
+                $('#recepDerMatrizC').html('');
+                $('#recepDerMatrizD').html('');
+                $('#recepDerMatrizF').html('');
+                $('#recepDerMatrizI').html('');
+                $('#recepDerMatrizJ').html('');
+              
+                
               
                 $('#recepDerA').html('<table class="table"><tbody>' + tablaIndContAE + tablaIndContAP + tablaIndContAR + '</tbody></table>' );
                 $('#recepDerC').html('<table class="table"><tbody>' + tablaIndContCE + tablaIndContCP + tablaIndContCR + '</tbody></table>' );
@@ -620,6 +859,7 @@ $(document).ready(function () {
                     '        </div>' + 
                     '  </div>' + 
                   '</div>';
+        getValores(derecho);
         return indis;
     }
     

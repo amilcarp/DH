@@ -428,6 +428,7 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js" ></script>
+        <script src="js/idDerechos.js" ></script>
         <script src="js/consultas.js" ></script>
 <!--			<script src="js/vue.js"></script>-->
 
@@ -435,26 +436,6 @@
 		    $gmx(document).ready(function() {
 			  // Inicia tooltips
 			  $('[data-toggle="tooltip"]').tooltip();
-
-			  $('.btnListado').hide();
-
-			  $('.internoDerecho').show();
-			  $('.internoDerechoMatriz').hide();
-
-			  $('.btnMatriz').on( "click", function() {
-				  $('.internoDerecho').hide();
-				  $('.internoDerechoMatriz').show();
-				  $('.btnMatriz').hide();
-				  $('.btnListado').show();
-				});
-
-				$('.btnListado').on( "click", function() {
-				  $('.internoDerecho').show();
-				  $('.internoDerechoMatriz').hide();
-				  $('.btnMatriz').show();
-				  $('.btnListado').hide();
-				});
-
 
 			});
 	    </script>
