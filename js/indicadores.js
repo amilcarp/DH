@@ -1,9 +1,11 @@
 //---- Variables
 var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
+var pathAPIGob = "https://api.datos.gob.mx/v1/";
 var datosDer = [];
 var acumula = [];
 var tablaInd =  '';
 var contenido, cuali, cuanti;
+var datoInd = [];
 
 var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
@@ -58,7 +60,7 @@ $(document).ready(function() {
             $('#fuenteInd').html(datosDer.evidence_name + ' - <a href="'+ datosDer.evidence_url + '">' + datosDer.evidence_url + '</a>');
             $('#descarDatos1').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
             $('#descarDatos2').html(datosDer.indicator_definition);
-            $('#descarDatos3').html(datosDer.institution_name_evidencie);
+            $('#descarDatos3').html(datosDer.responsible_institution);
               
               
 		  },
@@ -170,28 +172,28 @@ $(document).ready(function() {
                                 '<table class="table table-striped">' +
                                     '<tbody>' +
                                         '<tr>' +
-                                            '<td>Nombre</td>' +
-                                            '<td>' + data.indicator_name + '</td>' +
-                                        '</tr>' +
-                                       '<tr>' +
-                                            '<td>Clave</td>' +
-                                            '<td>' + data.indicator_code + '</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Descripción</td>' +
-                                            '<td>' + data.indicator_definition + '</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Tipo de Indicador</td>' +
-                                            '<td>' + data.indicator_type_short + '</td>' +
+                                            '<td>Derecho</td>' +
+                                            '<td>'+ data.right_name_short +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Categoría/Principio Transversal</td>' +
                                             '<td>'+ data.indicator_category_name +'</td>' +
                                         '</tr>' +
                                         '<tr>' +
-                                            '<td>Derecho</td>' +
-                                            '<td>'+ data.right_name_short +'</td>' +
+                                            '<td>Clave</td>' +
+                                            '<td>' + data.indicator_code + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                            '<td>Nombre</td>' +
+                                            '<td>' + data.indicator_name + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                            '<td>Tipo de Indicador</td>' +
+                                            '<td>' + data.indicator_type_short + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                            '<td>Descripción</td>' +
+                                            '<td>' + data.indicator_definition + '</td>' +
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
@@ -210,62 +212,45 @@ $(document).ready(function() {
                                             '<td>' + data.indicator_definition + '</td>' +
                                         '</tr>' +
                                         '<tr>' +
-                                            '<td>Evidencia</td>' +
-                                            '<td>' + data.evidence_name + '</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Unidad de Observación</td>' +
-                                            '<td>'+ data.observation_unit_name +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Firma</td>' +
-                                            '<td>'+ data.validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Aceptación</td>' +
-                                            '<td>'+ data.validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Promulgación</td>' +
-                                            '<td>'+ data.validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Adhesión</td>' +
-                                            '<td>'+ data.validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                           '<td>Fecha de Vinculación</td>' +
-                                            '<td>'+ data.validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Publicación</td>' +
-                                            '<td>'+ data.validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Entrada en Vigor</td>' +
-                                            '<td>'+ data.validity_date +'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>URL</td>' +
-                                            '<td><a href="' + data.evidence_url + '" target="_blank">' + data.evidence_url + '</a></td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fecha de Actualización</td>' +
-                                            '<td>' + data.update_date_lit + '</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Entidad Responsable de Validación</td>' +
-                                            '<td>' + data.institution_name_evidencie + '</td>' +
-                                        '</tr>' +
+                                            '<td>Evidencias</td><td style="line-height:1.2;">';
+            
+            for(var i = 0; i< data.evidence.length; i++){
+                var vigencia = data.evidence[i].validity_year_start - data.evidence[i].validity_end_start;
+                 cuali += '<p><b>Evidencia:</b> ' + data.evidence[i].evidence_name + '</p>' +
+                        '<p><b>Unidad de Observación:</b> ' + data.evidence[i].observation_unit_name + '</p>' +
+                        '<p><b>URL:</b> ' + '<a href="' + data.evidence[i].evidence_url + '" target="_blank">' + data.evidence[i].evidence_url + '</a>' + '</p>' +
+                        '<p><b>Entidad que valida:</b> ' + data.evidence[i].institution_name_evidencie  + '</p>' +
+                        '<p><b>Vigencia:</b> ' + vigencia + '</p>' +
+                        '<p><b>Fecha de actualización de la evidencia:</b> ' + data.evidence[i].update_date + '</p>';
+                if(typeof data.evidence[i].validity_date_evidence !== 'undefined'){
+                    for(var j = 0; j< data.evidence[i].validity_date_evidence.length; j++){
+                        cuali += '<p><b>Fecha de '+ data.evidence[i].validity_date_evidence[j].date_type_name +':</b> ' + data.evidence[i].validity_date_evidence[j].validity_date + '</p>';
+                    }
+                }
+                if(typeof data.evidence[i].objective !== 'undefined'){
+                    for(var k = 0; k< data.evidence[i].objective.length; k++){
+                        cuali += (data.evidence[i].objective[k].objective_sequence === null) ? '' : '<p><b>Objetivo '+ data.evidence[i].objective[k].objective_sequence +':</b> ' + data.evidence[i].objective[k].objective_name + '</p>';
+                        cuali += (data.evidence[i].objective[k].strategy_sequence === null) ? '' : '<p><b>Estrategia '+ data.evidence[i].objective[k].strategy_sequence +':</b> ' + data.evidence[i].objective[k].strategy_name + '</p>';
+                        cuali += (data.evidence[i].objective[k].action_line_sequence === null) ? '' : '<p><b>Línea de acción '+ data.evidence[i].objective[k].action_line_sequence +':</b> ' + data.evidence[i].objective[k].action_line_name + '</p>';
+                    }
+                }
+                if(typeof data.evidence[i].complementary_attribute !== 'undefined'){
+                    for(var l = 0; l < data.evidence[i].complementary_attribute.length; l++){
+                        cuali += (data.evidence[i].complementary_attribute[l].objective_sequence === null) ? '' : '<p><b>'+ data.evidence[i].complementary_attribute[l].complementary_attribute_name +':</b> ' + data.evidence[i].complementary_attribute[l].complementary_attribute_description + '</p>';
+                    }
+                }
+                if(typeof data.evidence[i].paper !== 'undefined'){
+                    for(var m = 0; m < data.evidence[i].paper.length; m++){
+                        cuali += (data.evidence[i].paper[m].paper_sequence === null) ? '' : '<p><b>Artículo '+ data.evidence[i].paper[m].paper_sequence +':</b> ' + data.evidence[i].paper[m].paper_name + '</p>';
+                    }
+                }
+                
+                cuali += '<hr>';
+            }
+                              
+                                       cuali += '</td></tr>' +
                                     '</tbody>' +
                                 '</table>' +
-                                '<div class="row">' +
-                                    '<div class="col-md-10">' +
-//                                        '<p><b>Nota: </b> [Aquí va la nota de los datos del indicador, sí es que la hay]</p>' +
-                                        '<p><b>Fuente: </b> ' + data.evidence_name + ' - <a href="' + data.evidence_url + '" target="_blank">' + data.evidence_url + '</a></p>' +
-                                        '<p><b>Fecha de actualización: </b> '+ data.update_date_lit +'</p>' +
-                                    '</div>' +
-                                '</div>' +
                             '</div>'
                         '</div>' +
 				      '</div>' +
@@ -293,7 +278,7 @@ $(document).ready(function() {
     
     function indicadorCuanti(data){
 
-        var formCalculo = data[0].indicator_calculation_element;
+        var formCalculo = data.indicator_calculation_element;
         var res = formCalculo.split("$* ");
 
         cuanti = '<!-- Inicia Bloque -->' +
@@ -305,7 +290,7 @@ $(document).ready(function() {
 					  	'<ul class="nav nav-tabs">' +
                             '<li class="active"><a data-toggle="tab" href="#tab-011">Indicador</a></li>' +
                             '<li><a data-toggle="tab" href="#tab-022">Metadato</a></li>' +
-                            '<li><a data-toggle="tab" href="#tab-033">Datos para el cálculo</a></li>' +
+//                            '<li><a data-toggle="tab" href="#tab-033">Datos para el cálculo</a></li>' +
                         '</ul>' +
                         '<div class="tab-content">' +
                             '<div class="tab-pane active" id="tab-011">' +
@@ -328,6 +313,18 @@ $(document).ready(function() {
                                 '<table class="table table-striped">' +
                                     '<tbody>' +
                                         '<tr>' +
+                                            '<td>Derecho</td>' +
+                                            '<td>' + data.indicator_name + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                            '<td>Categoría conceptual / Principio Transversal</td>' +
+                                            '<td>' + data.indicator_category_name + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                            '<td>Tipo de indicador</td>' +
+                                            '<td>' + data.indicator_type + '</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
                                             '<td>Definición</td>' +
                                             '<td>' + data.indicator_definition + '</td>' +
                                         '</tr>' +
@@ -344,25 +341,32 @@ $(document).ready(function() {
                                             '<td>'+data.indicator_source_formule+'</td>' +
                                         '</tr>' +
                                         '<tr>' +
-                                            '<td>Estado de Validación de la fórmula</td>' +
-                                            '<td>En datos.gob.mx</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
                                             '<td>Unidad de Medida</td>' +
                                             '<td>'+data.indicator_measure_unit+'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Referencia</td>' +
                                             '<td>'+data.indicator_reference+'</td>' +
+                                        '</tr>';
+        
+        
+                            cuanti += (data.indicator_observation === null) ? '': '<tr><td>Observaciones</td><td>'+data.indicator_observation+'</td></tr>';
+                            cuanti += '<tr>' +
+                                            '<td>Fecha de actualización</td>' +
+                                            '<td>'+data.lastmodified+'</td>' +
+                                        '</tr>' +
+                                        '<tr>' +
+                                            '<td>Entidad responsable del indicador</td>' +
+                                            '<td>'+data.responsible_institution+'</td>' +
                                         '</tr>' +
                                     '</tbody>' +
                                 '</table>' +
                                 
                             '</div>' +
                             
-                            '<div class="tab-pane" id="tab-033">' +
-                                '<h3>[Aquí iría una tabla que represente los datos para el cálculo]</h3>' +
-                            '</div>' +
+//                            '<div class="tab-pane" id="tab-033">' +
+//                                '<h3>[Aquí iría una tabla que represente los datos para el cálculo]</h3>' +
+//                            '</div>' +
                             
                         '</div>' +
 				      '</div>' +
@@ -370,6 +374,18 @@ $(document).ready(function() {
 			      '</div>' +
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
+        
+        var tados = data.breakdown_group;
+        
+        console.log(tados);
+        
+        for(var rrr = 0; rrr < tados.length; rrr++){
+            cuanti += data.breakdown_group[rrr].breakdown_group_name + '<br />';
+            cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result);
+            cuanti += '<br />';
+            cuanti += data.breakdown_group[rrr].breakdown_attribute + '<br />';
+            cuanti += '<br /><br />';
+        }
         
         cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto");
         
@@ -596,6 +612,27 @@ $(document).ready(function() {
         return graf;
     }
     
+    
+    function datosTabulado(resource, dataset, resultado){
+        datoInd = [];
+        console.log(resultado);
+        var res = resultado;
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?periodo=2016',
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {    
+            console.log(data['results'][0]['periodo']);
+              for (var pp=0; pp<data['results'].length;pp++){
+                  datoInd += data['results'][pp][res];
+                  console.log(datoInd);
+              }
+		  },
+		  async:false
+		});
+        
+        return datoInd;
+    }
     
     
 });

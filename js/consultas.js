@@ -2,20 +2,13 @@
 var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
 var tipoDer = [];
 var countDer = [];
-var acumula = [];
-var tablaInd, cuadroDer =  '';
-var tablaIndContA, tablaIndContAE = '', tablaIndContAP = '', tablaIndContAR = '';
-var tablaIndContC, tablaIndContCE = '', tablaIndContCP = '', tablaIndContCR = '';
-var tablaIndContD, tablaIndContDE = '', tablaIndContDP = '', tablaIndContDR = '';
-var tablaIndContF, tablaIndContFE = '', tablaIndContFP = '', tablaIndContFR = '';
-var tablaIndContI, tablaIndContIE = '', tablaIndContIP = '', tablaIndContIR = '';
-var tablaIndContJ, tablaIndContJE = '', tablaIndContJP = '', tablaIndContJR = '';
-var tablaIndContMatrizA = '';
-var tablaIndContMatrizC = '';
-var tablaIndContMatrizD = '';
-var tablaIndContMatrizF = '';
-var tablaIndContMatrizI = '';
-var tablaIndContMatrizJ = '';
+var cuadroDer =  '';
+var tablaIndContAE = '', tablaIndContAP = '', tablaIndContAR = '';
+var tablaIndContCE = '', tablaIndContCP = '', tablaIndContCR = '';
+var tablaIndContDE = '', tablaIndContDP = '', tablaIndContDR = '';
+var tablaIndContFE = '', tablaIndContFP = '', tablaIndContFR = '';
+var tablaIndContIE = '', tablaIndContIP = '', tablaIndContIR = '';
+var tablaIndContJE = '', tablaIndContJP = '', tablaIndContJR = '';
 var tablaIndContMatrizAE = '';
 var tablaIndContMatrizCE = '';
 var tablaIndContMatrizDE = '';
@@ -34,39 +27,368 @@ var tablaIndContMatrizDR = '';
 var tablaIndContMatrizFR = '';
 var tablaIndContMatrizIR = '';
 var tablaIndContMatrizJR = '';
-var contenido;
+
 
 $(document).ready(function () {
+    //derechos();
+    // Función para visualizar derechos disponibles
+        var nombres = []; 
+        $.ajax({
+            type:'GET',
+            url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+            data: {},
+            success: function( data, textStatus, jqxhr ) {  
+                
+              countDer = data['fac.json']['array']['buckets'];
+                //console.log(countDer);
+              
+              for(var i = 0; i < countDer.length; i++){
+                  nombres.push(countDer[i]['val']);
+              }
+              
+                
+                var k = 3;
+              
+              for(var i = 0; i < countDer.length; i++){
+                  var h = i+1;
+                  //console.log(countDer[i]['val']);
+                      if(h == 1 || h == 4 || h == 7 || h == 10 || h == 13 || h == 16){
+                          cuadroDer += '<div class="row">';
+                          cuadroDer += '<div class="col-md-4 ' + sinEspacios(countDer[i]['val']) + '">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="">'+
+                                         '<div class="cuadro-derechos b'+h+'">'+
+                                             '<div class="d'+h+'">' +
+                                                 '<h2>'+ countDer[i]['val']+'</h2>'+
+                                              '</div>'+
+                                        '</div>'+
+                                     '</a>'+
+                                     '<div class="arrow-up none"></div>'+
+                                  '</div>';
+                      }else if(h == 3 || h == 6 || h == 9 || h == 12 || h == 15 || h == 18 || h == countDer.length){
+                          cuadroDer += '<div class="col-md-4 ' + sinEspacios(countDer[i]['val']) + '">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="">'+
+                                         '<div class="cuadro-derechos b'+h+'">'+
+                                             '<div class="d'+h+'">' +
+                                                 '<h2>'+ countDer[i]['val']+'</h2>'+
+                                              '</div>'+
+                                        '</div>'+
+                                     '</a>'+
+                                     '<div class="arrow-up none"></div>'+
+                                  '</div>';
+                               cuadroDer += '</div><br /><div class="indis'+h+'"></div>';
+                      }else{
+                          cuadroDer += '<div class="col-md-4 ' + sinEspacios(countDer[i]['val']) + '">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
+                                         '<div class="cuadro-derechos b'+h+'">'+
+                                             '<div class="d'+h+'">' +
+                                                 '<h2>'+ countDer[i]['val']+'</h2>'+
+                                              '</div>'+
+                                        '</div>'+
+                                     '</a>'+
+                                     '<div class="arrow-up none"></div>'+
+                                  '</div>';
+                      }
+                  
+              }
+                $('.Culturales .arrow-up').removeClass('none');
+                $('#derechos').html(cuadroDer);
+                
+
+                
+                $('.Culturales').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Culturales .arrow-up').removeClass('none');
+                    $('.indis3').html(indicadoresDerecho(idC));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.MedioAmbiente').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.MedioAmbiente .arrow-up').removeClass('none');
+                    $('.indis3').html(indicadoresDerecho(idM));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.Trabajo').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Trabajo .arrow-up').removeClass('none');
+                    $('.indis3').html(indicadoresDerecho(idT));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.Sindicales').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Sindicales .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idU));
+                    $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                 $('.Alimentacion').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Alimentacion .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idA));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.SeguridadSocial').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.SeguridadSocial .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idSS));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.Educacion').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Educacion .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idE));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                $('.Salud').on('click', function(){
+                    $('.indis3').html('');
+                    $('.indis5').html('');
+                    $('.internoDerecho').css('display','none');
+                    $('.internoDerechoMatriz').css('display','none');
+                    $('.col-md-4 .arrow-up').addClass('none');
+                    $('.Salud .arrow-up').removeClass('none');
+                    $('.indis5').html(indicadoresDerecho(idS));
+                     $('.btnListado').hide();
+
+                      $('.internoDerecho').show();
+                      $('.internoDerechoMatriz').hide();
+
+                      $('.btnMatriz').on( "click", function() {
+                          $('.internoDerecho').hide();
+                          $('.internoDerechoMatriz').show();
+                          $('.btnMatriz').hide();
+                          $('.btnListado').show();
+                        });
+
+                        $('.btnListado').on( "click", function() {
+                          $('.internoDerecho').show();
+                          $('.internoDerechoMatriz').hide();
+                          $('.btnMatriz').show();
+                          $('.btnListado').hide();
+                        });
+                });
+                
+                 
+
+                
+            },
+            async:true
+		});
     
-    console.log(nombreDerechos());  
     
-    function init(){
-        var x;
-         var valores = nombreDerechos();
-        //var valores = nombreDerechos();
-        //console.log(valores);
-        for (x = 0; x < valores.length; x++){
-            //getValores(valores[i]);
-            console.log(valores[x]);
-        }
-    }
     
-    init();
-   //getValores('Alimentación');
-//
-   //function getValores(derecho){
-        var derecho = "Medio Ambiente";
-        var id_derecho = 5;
+   //getValores(5);
+
+   function getValores(derecho){
+        //var derecho = "Medio Ambiente";
+        //var id_derecho = 5;
          $.ajax({
 		  type: 'GET',
 //		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
-            url: pathAPI + "search?q=right_id:"+id_derecho+"&rows=100",
+            url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
 		  data: {},
-		  success: function( data, textStatus, jqxhr ) {      
+		  success: function( data, textStatus, jqxhr ) {   
+              
+              tablaIndContAE = '';
+              tablaIndContAP = '';
+              tablaIndContAR = '';
+              tablaIndContCE = '';
+              tablaIndContCP = '';
+              tablaIndContCR = '';
+              tablaIndContDE = '';
+              tablaIndContDP = '';
+              tablaIndContDR = '';
+              tablaIndContFE = '';
+              tablaIndContFP = '';
+              tablaIndContFR = '';
+              tablaIndContIE = '';
+              tablaIndContIP = '';
+              tablaIndContIR = '';
+              tablaIndContJE = '';
+              tablaIndContJP = '';
+              tablaIndContJR = '';
+              
+              tablaIndContMatrizAE = '';
+              tablaIndContMatrizAP = '';
+              tablaIndContMatrizAR = '';
+              tablaIndContMatrizCE = '';
+              tablaIndContMatrizCP = '';
+              tablaIndContMatrizCR = '';
+              tablaIndContMatrizDE = '';
+              tablaIndContMatrizDP = '';
+              tablaIndContMatrizDR = '';
+              tablaIndContMatrizFE = '';
+              tablaIndContMatrizFP = '';
+              tablaIndContMatrizFR = '';
+              tablaIndContMatrizIE = '';
+              tablaIndContMatrizIP = '';
+              tablaIndContMatrizIR = '';
+              tablaIndContMatrizJE = '';
+              tablaIndContMatrizJP = '';
+              tablaIndContMatrizJR = '';
+              
               tipoDer = data['results']['records'];
-              derechos();
               recepDer();
               recepDerMatriz();
+                
+                $('#recepDerA').html('');
+                $('#recepDerC').html('');
+                $('#recepDerD').html('');
+                $('#recepDerF').html('');
+                $('#recepDerI').html('');
+                $('#recepDerJ').html('');
+                $('#recepDerMatrizA').html('');
+                $('#recepDerMatrizC').html('');
+                $('#recepDerMatrizD').html('');
+                $('#recepDerMatrizF').html('');
+                $('#recepDerMatrizI').html('');
+                $('#recepDerMatrizJ').html('');
+              
+                
               
                 $('#recepDerA').html('<table class="table"><tbody>' + tablaIndContAE + tablaIndContAP + tablaIndContAR + '</tbody></table>' );
                 $('#recepDerC').html('<table class="table"><tbody>' + tablaIndContCE + tablaIndContCP + tablaIndContCR + '</tbody></table>' );
@@ -84,7 +406,7 @@ $(document).ready(function () {
 		  },
 		  async:true
 		});
-    //}
+    }
     
     
     function getTipoIndicador(tipoIndicador){
@@ -109,7 +431,7 @@ $(document).ready(function () {
                       if(h == 1 || h == 4 || h == 7 || h == 10 || h == 13 || h == 16){
                           cuadroDer += '<div class="row">';
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -120,7 +442,7 @@ $(document).ready(function () {
                                   '</div>';
                       }else if(h == 3 || h == 6 || h == 9 || h == 12 || h == 15 || h == 18 || h == countDer.length){
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -132,7 +454,7 @@ $(document).ready(function () {
                                cuadroDer += '</div><br /><div class="indis'+h+'"></div>';
                       }else{
                           cuadroDer += '<div class="col-md-4">'+
-                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'">'+
+                                     '<a href="#'+ sinEspacios(countDer[i]['val']) +'" class="' + sinEspacios(countDer[i]['val']) + '">'+
                                          '<div class="cuadro-derechos b'+h+'">'+
                                              '<div class="d'+h+'">' +
                                                  '<h2>'+ countDer[i]['val']+'</h2>'+
@@ -142,8 +464,14 @@ $(document).ready(function () {
                                      '<div class="arrow-up none"></div>'+
                                   '</div>';
                       }
-                  
               }
+              
+//              for(var kl = 0; kl < valores.length; kl++){
+//                  valores[kl];
+//                  
+//              }
+              
+              
               $('#derechos').html(cuadroDer);
               
 		  },
@@ -152,32 +480,22 @@ $(document).ready(function () {
     }
     
     function nombreDerechos(){
-        // Función para visualizar derechos disponibles
-        var nombres = []; 
-        $.ajax({
-		  type: 'GET',
-		  url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
-		  data: {},
-		  success: function( data, textStatus, jqxhr ) {      
-              countDer = data['fac.json']['array']['buckets'];
-                //console.log(countDer);
-              
-              for(var i = 0; i < countDer.length; i++){
-                  nombres.push(countDer[i]['val']);
-              }
-              
-         
-		  },
-		  async:true
-		});
+        
         //console.log(nombres);
-        return nombres;
+      //  return nombres;
     }
     
     function sinEspacios(dato){
         var contenido=dato;
-//        for (var i = 0; i < dato.length; i ++){
-//        contenido += (dato.charAt(i) == " ") ? "_" : dato.charAt(i);
+        contenido=contenido.replace(/ /g,"");
+        contenido=contenido.replace(/á/g,"a");
+        contenido=contenido.replace(/é/g,"e");
+        contenido=contenido.replace(/í/g,"i");
+        contenido=contenido.replace(/ó/g,"o");
+        contenido=contenido.replace(/ú/g,"u");
+        contenido=contenido.replace(/ñ/g,"n");
+//        for (var i = 0; i < contenido.length; i ++){
+//        contenido += (contenido.charAt(i) == " ") ? "" : contenido.charAt(i);
 //        }//fin del for
         return contenido;
     }
@@ -194,9 +512,6 @@ $(document).ready(function () {
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
                    tablaIndContAR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
-                }else{
-                    console.log(tipoDer[i].guid);
-                    alert(tipoDer[i].guid);
                 }
             }else if(tipoDer[i].indicator_category_key == 'c'){
                 if(tipoDer[i].indicator_type_code === "E"){
@@ -544,6 +859,7 @@ $(document).ready(function () {
                     '        </div>' + 
                     '  </div>' + 
                   '</div>';
+        getValores(derecho);
         return indis;
     }
     
