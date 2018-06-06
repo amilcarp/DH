@@ -5,6 +5,8 @@ var countDer = [];
 var acumula = [];
 var tablaInd, cuadroDer =  '';
 var contenido;
+var uno = "";
+var cuan = '';
 
 $(document).ready(function () {
     
@@ -45,33 +47,32 @@ $(document).ready(function () {
         //Disponible = Si hay indicadores cualitativos y cuantitativos en el derecho
         //Parcial = Si solo hay indicadores cualitativos
         //Próximamente = Si no hay indicadores
-        var cuantis = '';
-        var uno = "";
         
         $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=0&fac.json={array:{type:%22terms%22,field:%22is_cuantitative%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}},nombres: {type:%22terms%22,field:%22right_name_short_lit%22,limit:20,facet:{unique_indicators: %22unique(indicator_name_lit)%22,indicators_null: {type: %22query%22,q: %22-indicator_name:[*%20TO%20*]%22}}}}",
+		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100&fac.json={array:{type:%22terms%22,field:%22is_cuantitative%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}},nombres: {type:%22terms%22,field:%22right_name_short_lit%22,limit:20,facet:{unique_indicators: %22unique(indicator_name_lit)%22,indicators_null: {type: %22query%22,q: %22-indicator_name:[*%20TO%20*]%22}}}}",
 		  data: {},
-		  success: function( data, textStatus, jqxhr ) {      
-              cuantis = data['fac.json']['array']['buckets'];
+		  success: function( data, textStatus, jqxhr ) {
+              console.log(data['fac.json']);
+              cuan = data['fac.json']['array']['buckets'];
               nombre = data['fac.json']['nombres']['buckets'];
                 //console.log(countDer);
               
-              if(cuantis[0]['val'] === "false" && cuantis[0]['count'] > 1 && cuantis[1]['val'] === "true" && cuantis[1]['count'] > 1){
+              if(cuan[0]['val'] === "false" && cuan[0]['count'] > 1 && cuan[1]['val'] === "true" && cuan[1]['count'] > 1){
                   uno = "Disponible";
-              }else if(cuantis[0]['val'] === "false" && cuantis[0]['count'] > 1 || cuantis[1]['val'] === "true" && cuantis[1]['count'] > 1){
+              }else if(cuan[0]['val'] === "false" && cuan[0]['count'] > 1 || cuan[1]['val'] === "true" && cuan[1]['count'] > 1){
                     uno = "Parcial";
               }else{
                     uno = "Próximamente";
               }
               
               console.log(uno);
-              console.log(cuantis[0]['val']);
+              console.log(cuan[0]['val']);
               
               return uno;
               
 		  },
-		  async:true
+		  async:false
 		});
 
     }
@@ -102,7 +103,7 @@ $(document).ready(function () {
                                               '</div>'+
                                         '</div>'+
                                      '</a>'+
-                                     '<p><a href="#'+ countDer[i]['val']+'" data-toggle="modal" data-target="#'+ countDer[i]['val']+'"><b>'+estatus(countDer[i]['val'])+'</b></a></p>'+
+                                     '<p><a href="#'+ sinEspacios(countDer[i]['val']) +'" data-toggle="modal" data-target="#'+ countDer[i]['val']+'"><b>'+estatus(countDer[i]['val'])+'</b></a></p>'+
                                   '</div>';
                       }else if(h == 3 || h == 6 || h == 9 || h == 12 || h == 15 || h == 18 || h == countDer.length){
                           cuadroDer += '<div class="col-md-4">'+
@@ -113,7 +114,7 @@ $(document).ready(function () {
                                               '</div>'+
                                         '</div>'+
                                      '</a>'+
-                                     '<p><a href="#'+ countDer[i]['val']+'" data-toggle="modal" data-target="#'+ countDer[i]['val']+'"><b>'+estatus(countDer[i]['val'])+'</b></a></p>'+
+                                     '<p><a href="#'+ sinEspacios(countDer[i]['val']) +'" data-toggle="modal" data-target="#'+ countDer[i]['val']+'"><b>'+estatus(countDer[i]['val'])+'</b></a></p>'+
                                   '</div>';
                                cuadroDer += '</div><br /><div class="indis'+h+'"></div>';
                       }else{
@@ -125,7 +126,7 @@ $(document).ready(function () {
                                               '</div>'+
                                         '</div>'+
                                      '</a>'+
-                                     '<p><a href="#'+ countDer[i]['val']+'" data-toggle="modal" data-target="#'+ countDer[i]['val']+'"><b>'+estatus(countDer[i]['val'])+'</b></a></p>'+
+                                     '<p><a href="#'+ sinEspacios(countDer[i]['val']) +'" data-toggle="modal" data-target="#'+ countDer[i]['val']+'"><b>'+estatus(countDer[i]['val'])+'</b></a></p>'+
                                   '</div>';
                       }
                   
@@ -162,8 +163,15 @@ $(document).ready(function () {
     
     function sinEspacios(dato){
         var contenido=dato;
-//        for (var i = 0; i < dato.length; i ++){
-//        contenido += (dato.charAt(i) == " ") ? "_" : dato.charAt(i);
+        contenido=contenido.replace(/ /g,"");
+        contenido=contenido.replace(/á/g,"a");
+        contenido=contenido.replace(/é/g,"e");
+        contenido=contenido.replace(/í/g,"i");
+        contenido=contenido.replace(/ó/g,"o");
+        contenido=contenido.replace(/ú/g,"u");
+        contenido=contenido.replace(/ñ/g,"n");
+//        for (var i = 0; i < contenido.length; i ++){
+//        contenido += (contenido.charAt(i) == " ") ? "" : contenido.charAt(i);
 //        }//fin del for
         return contenido;
     }
