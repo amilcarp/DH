@@ -287,11 +287,25 @@ $(document).ready(function() {
                                 //'<h2>' + data.indicator_definition + '</h2>' +
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
-                                        '<p><a href="#">Ver gráfica</a> | <a href="#">Ver tabla</a></p>' +
+                                        '<button type="button" class="btn btn-primary">Ver Gráfica</button> <button type="button" class="btn btn-primary">Ver Tabla</button>' +
                                     '</div>' +
-                                '</div>' +
+                                '</div>';
+        
+                                var tados = data.breakdown_group;
                                 
-                                '<svg id="graph" width="960" height="500"></svg>' +
+                                cuanti += '<select name="breakdown" id="breakdown">';
+                                for (var m=0;m<tados.length;m++){
+                                    cuanti += '<option value="' + data.breakdown_group[m].breakdown_group_name + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+                                }
+                                cuanti += '</select>';
+
+                                for(var rrr = 0; rrr < tados.length; rrr++){
+                                    cuanti += '<h3>' + data.breakdown_group[rrr].breakdown_group_name + '</h3><br />';
+                                    cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result, data.breakdown_group[rrr].breakdown_attribute, data.breakdown_group[rrr].breakdown_group_year, data.breakdown_group[rrr].breakdown_resource_name);
+                                    cuanti += '<br /><br />';
+                                }
+                                
+                                cuanti += '<svg id="graph" width="960" height="500"></svg>' +
                                 
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
@@ -368,16 +382,6 @@ $(document).ready(function() {
 			      '</div>' +
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
-        
-        var tados = data.breakdown_group;
-        
-        console.log(tados);
-        
-        for(var rrr = 0; rrr < tados.length; rrr++){
-            cuanti += data.breakdown_group[rrr].breakdown_group_name + '<br />';
-            cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result, data.breakdown_group[rrr].breakdown_attribute, data.breakdown_group[rrr].breakdown_group_year, data.breakdown_group[rrr].breakdown_resource_name);
-            cuanti += '<br /><br />';
-        }
         
         cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto");
         
@@ -622,65 +626,37 @@ $(document).ready(function() {
         datoInd2 = [];
         datoInd3 = [];
         dat1 = '';
-        //console.log(resultado);
         rec = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
         res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         var inf = [];
-        //datoInd = apiGobGrupo(resource,dataset,clas,rec);
         for(var yy=0;yy<rec.length;yy++){
-            //console.log(apiGobGrupo(resource,dataset,clas,rec[yy]));
-            datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy]));
-            
-            
-            //inf += datoInd;
-            
-//            for(var ff=0;ff<datoInd.length;ff++){
-//                datoInd2 += datoInd[ff]; 
-//                //console.log(datoInd2);
-//            }
+            datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
         }
-        console.log(datoInd);
-    
-        for(var ll=0;ll<datoInd.length;ll++){
+        
             dat1 += '<table class="table">';
             dat1 += '<thead><th>Periodo</th>';
-            for(var hh=0;hh<datoInd[ll].length;hh++){
-                dat1 += '<th>'+datoInd[ll][hh][rec]+'</th>';
+            for(var hh=0;hh<rec.length;hh++){
+                dat1 += '<th>'+rec[hh]+'</th>';
             }
             
+            var periodos = [];
+            for(var jj=0; jj < datoInd[0].length; jj++){
+                periodos.push(datoInd[0][jj].periodo);
+            }
             
             dat1 += '</thead><tbody>';
-            for(var gg=0;gg<datoInd[ll].length;gg++){
+            for(var gg=0;gg<periodos.length;gg++){
                 dat1 += '<tr>';
-                dat1 += '<td>'+datoInd[ll][gg]['periodo']+'</td>'+'<td>'+datoInd[ll][gg][res] + '</td>';
+                    dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                for(var ii = 0; ii < datoInd.length; ii++){
+                    dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+                } 
                 dat1 += '</tr>';
             }
-            dat1 += '</tbody></table>';
-        }
+            dat1 += '</tbody>';
+            dat1 += '</table>';
         
-        console.log(dat1);
-        
-//        $.ajax({
-//		  type: 'GET',
-//		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource,
-//		  data: {},
-//		  success: function( data, textStatus, jqxhr ) {
-//              todo = data;
-//                console.log(todo['results'][0]['periodo']);
-//              for (var pp=0; pp < todo['results'].length;pp++){
-//                  datoInd += todo['results'][pp][res] + '<br />';
-//                  foo1.push(todo['results'][pp][res]);
-////                  for (var tt=0;tt<periodos.length;tt++){
-////                      datoInd += todo['results'][pp]['periodo'] + '<br />';
-////                      datoInd += todo['results'][pp][clas] + '<br />';
-////                  }
-//                  datoInd += todo['results'][pp]['periodo'] + '<br />';
-//                  datoInd += todo['results'][pp][clas] + '<br /><br />';
-//              }
-//		  },
-//		  async:false
-//		});
         
         return dat1;
     }
@@ -695,7 +671,6 @@ $(document).ready(function() {
 		  },
 		  async:false
 		});
-        
         return gob;
     }
     
@@ -708,13 +683,10 @@ $(document).ready(function() {
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {
               gobGrupo = data['results'];
-              //console.log(gobGrupo);
-       
 		  },
 		  async:false
 		});
-               return gobGrupo;
-        
+        return gobGrupo;
     }
     
     
