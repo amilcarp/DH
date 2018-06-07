@@ -6,6 +6,12 @@ var acumula = [];
 var tablaInd =  '';
 var contenido, cuali, cuanti;
 var datoInd = [];
+var todo = [];
+var gob = [];
+//var gobGrupo = [];
+var res = '';
+var rec = '';
+var clas = '';
 
 var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
@@ -72,25 +78,7 @@ $(document).ready(function() {
         return tipoIndicador === "E" ? '<p class="tipoIndicador colorE" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p>' :  tipoIndicador === "P" ? '<p class="tipoIndicador colorP" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p>':  tipoIndicador === "R" ? '<p class="tipoIndicador colorR" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p>': 'N/D';
     }
    
-    
-    function getMetadatos(){
-        
-    }
 
-    
-//    function reemplazaChar(string){
-//            string = string.replace(/\r\n/g,"\n");
-//            var utftex= "";
-//            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ"];
-//            var cambio = ["\acute{a}","\acute{e}","\acute{i}","\acute{o}","\acute{u}","\acute{A}","\acute{E}","\acute{I}","\acute{O}","\acute{U}","\tilde{n}","\tilde{N}"];
-//
-//            for(var v = 0; v < string.length; v++)
-//            {
-//                utftex += string[v].replace(letr[v], cambio[v]);
-//            }
-//        
-//            return utftex;
-//    }
     
     var Utf8 = {
         // public method for url encoding
@@ -276,6 +264,31 @@ $(document).ready(function() {
         return img;
     }
     
+    function muestraDatos(array){
+        var dato = '';
+        for(var i=0;i<array.length;i++){
+            dato += array[i];
+        }
+        return dato;
+    }
+    
+    function iuio(tados){
+        for(var rrr = 0; rrr < tados.length; rrr++){
+            cuanti += '<div class="tabulado'+rrr+'">';
+            cuanti += '<h3>' + tados[rrr].breakdown_group_name + '</h3><br />';
+            cuanti += datosTabulado(tados[rrr].resource_id, tados[rrr].variable_dataset_id, tados[rrr].breakdown_attribute_result, tados[rrr].breakdown_attribute, tados[rrr].breakdown_group_year, tados[rrr].breakdown_resource_name);
+            cuanti += '</div>';
+        }
+    }
+    
+    
+    function llamaDatos(key){
+            cuanti += '<div class="tabulado'+key+'">';
+            cuanti += '<h3>' + tados[key].breakdown_group_name + '</h3><br />';
+            cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name);
+            cuanti += '</div>';
+    }
+    
     function indicadorCuanti(data){
 
         var formCalculo = data.indicator_calculation_element;
@@ -295,14 +308,45 @@ $(document).ready(function() {
                         '<div class="tab-content">' +
                             '<div class="tab-pane active" id="tab-011">' +
                                 
-                                '<h2>' + data.indicator_definition + '</h2>' +
-                                
-                                '<svg id="graph" width="960" height="500"></svg>' +
-                                
+                                //'<h2>' + data.indicator_definition + '</h2>' +
                                 '<div class="row">' +
                                     '<div class="col-md-10">' +
+                                        '<button type="button" class="btn btn-primary">Ver Gráfica</button> <button type="button" class="btn btn-primary">Ver Tabla</button>' +
+                                    '</div>' +
+                                '</div>';
+        
+                                var tados = data.breakdown_group;
+                                
+                                cuanti += '<div class="divTabla">';
+                                cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
+                                for (var m=0;m<tados.length;m++){
+                                    cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+                                }
+                                cuanti += '</select>';
+
+                                //iuio(tados);
+        
+                                //llamaDatos(key);
+        
+        
+                                
+//                                for(var rrr = 0; rrr < tados.length; rrr++){
+//                                    cuanti += '<div class="tabulado'+rrr+'">';
+//                                    cuanti += '<h3>' + data.breakdown_group[rrr].breakdown_group_name + '</h3><br />';
+//                                    cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result, data.breakdown_group[rrr].breakdown_attribute, data.breakdown_group[rrr].breakdown_group_year, data.breakdown_group[rrr].breakdown_resource_name);
+//                                    cuanti += '</div>';
+//                                }
+        
+                                cuanti += '</div>';
+        
+                                cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
+                                
+                                cuanti += '<script>$(".tabulado0").show();$("#breakdown").on("change", function() { console.log("Si jaló ------------------------"); });</script>';
+        
+                                cuanti += '<div class="row">' +
+                                    '<div class="col-md-10">' +
                                         '<p><b>Nota: </b> ' + data.indicator_reference + '</p>' +
-                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data.indicator_reference+'</span></p>' +
+//                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data.indicator_reference+'</span></p>' +
                                     '</div>' +
                                 '</div>' +
                                 
@@ -374,18 +418,6 @@ $(document).ready(function() {
 			      '</div>' +
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
-        
-        var tados = data.breakdown_group;
-        
-        console.log(tados);
-        
-        for(var rrr = 0; rrr < tados.length; rrr++){
-            cuanti += data.breakdown_group[rrr].breakdown_group_name + '<br />';
-            cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result);
-            cuanti += '<br />';
-            cuanti += data.breakdown_group[rrr].breakdown_attribute + '<br />';
-            cuanti += '<br /><br />';
-        }
         
         cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto");
         
@@ -612,26 +644,85 @@ $(document).ready(function() {
         return graf;
     }
     
+    function parseAPI(string){
+        var contenido=string;
+        string=string.replace(/_/g,"-");
+        return string;
+    }
     
-    function datosTabulado(resource, dataset, resultado){
+    //Esta función muestra los datos en una tabla de acuerdo a los siguiente criterios
+    //resource: resource_id de los datos del indicador a consultar en API datos.gob.mx
+    //dataset: Dataset del indicador a consultar en API datos.gob.mx
+    //resultado: Nombre del campo con el valor a graficar o tabular para consultarse en la API de datos.gob.mx. Ej. porc_pob_carencia_alim
+    //clasificacion: Atributo a llamar de la API de datos.gob.mx Ej. grupo-especifico
+    //periodos: Periodos que se van a consultar para el indicador, según reporte la API y consumido desde la variable breakdown_group_year
+    //recurso: Nombre del recurso para la clasificación y el periodo a consultar. Ej. poblacion_con_menos_de_18_anios
+    function datosTabulado(resource, dataset, resultado, clasificacion, periodos, recurso){
         datoInd = [];
-        console.log(resultado);
-        var res = resultado;
+        datoInd2 = [];
+        datoInd3 = [];
+        dat1 = '';
+        rec = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
+        res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
+        clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
+        var inf = [];
+        for(var yy=0;yy<rec.length;yy++){
+            datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+        }
+        
+            dat1 += '<table class="table">';
+            dat1 += '<thead><th>Periodo</th>';
+            for(var hh=0;hh<rec.length;hh++){
+                dat1 += '<th>'+rec[hh]+'</th>';
+            }
+            
+            var periodos = [];
+            for(var jj=0; jj < datoInd[0].length; jj++){
+                periodos.push(datoInd[0][jj].periodo);
+            }
+            
+            dat1 += '</thead><tbody>';
+            for(var gg=0;gg<periodos.length;gg++){
+                dat1 += '<tr>';
+                    dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                for(var ii = 0; ii < datoInd.length; ii++){
+                    dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+                } 
+                dat1 += '</tr>';
+            }
+            dat1 += '</tbody>';
+            dat1 += '</table>';
+        
+        
+        return dat1;
+    }
+    
+    function apiGOB(resource, dataset, page, total){
         $.ajax({
 		  type: 'GET',
-		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?periodo=2016',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?page='+page+'',
 		  data: {},
-		  success: function( data, textStatus, jqxhr ) {    
-            console.log(data['results'][0]['periodo']);
-              for (var pp=0; pp<data['results'].length;pp++){
-                  datoInd += data['results'][pp][res];
-                  console.log(datoInd);
-              }
+		  success: function( data, textStatus, jqxhr ) {
+              gob = data;
 		  },
 		  async:false
 		});
-        
-        return datoInd;
+        return gob;
+    }
+    
+    
+    function apiGobGrupo(resource, dataset, atributo, variable){
+        var gobGrupo = [];
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?'+atributo+'='+variable,
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {
+              gobGrupo = data['results'];
+		  },
+		  async:false
+		});
+        return gobGrupo;
     }
     
     
