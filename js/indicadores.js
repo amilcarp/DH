@@ -264,6 +264,30 @@ $(document).ready(function() {
         return img;
     }
     
+    function muestraDatos(array){
+        var dato = '';
+        for(var i=0;i<array.length;i++){
+            dato += array[i];
+        }
+        return dato;
+    }
+    
+    function iuio(tados){
+        for(var rrr = 0; rrr < tados.length; rrr++){
+            cuanti += '<div class="tabulado'+rrr+'">';
+            cuanti += '<h3>' + tados[rrr].breakdown_group_name + '</h3><br />';
+            cuanti += datosTabulado(tados[rrr].resource_id, tados[rrr].variable_dataset_id, tados[rrr].breakdown_attribute_result, tados[rrr].breakdown_attribute, tados[rrr].breakdown_group_year, tados[rrr].breakdown_resource_name);
+            cuanti += '</div>';
+        }
+    }
+    
+    
+    function llamaDatos(key){
+            cuanti += '<div class="tabulado'+key+'">';
+            cuanti += '<h3>' + tados[key].breakdown_group_name + '</h3><br />';
+            cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name);
+            cuanti += '</div>';
+    }
     
     function indicadorCuanti(data){
 
@@ -293,21 +317,33 @@ $(document).ready(function() {
         
                                 var tados = data.breakdown_group;
                                 
-                                cuanti += '<select name="breakdown" id="breakdown">';
+                                cuanti += '<div class="divTabla">';
+                                cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
                                 for (var m=0;m<tados.length;m++){
-                                    cuanti += '<option value="' + data.breakdown_group[m].breakdown_group_name + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+                                    cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
                                 }
                                 cuanti += '</select>';
 
-                                for(var rrr = 0; rrr < tados.length; rrr++){
-                                    cuanti += '<h3>' + data.breakdown_group[rrr].breakdown_group_name + '</h3><br />';
-                                    cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result, data.breakdown_group[rrr].breakdown_attribute, data.breakdown_group[rrr].breakdown_group_year, data.breakdown_group[rrr].breakdown_resource_name);
-                                    cuanti += '<br /><br />';
-                                }
+                                //iuio(tados);
+        
+                                //llamaDatos(key);
+        
+        
                                 
-                                cuanti += '<svg id="graph" width="960" height="500"></svg>' +
+//                                for(var rrr = 0; rrr < tados.length; rrr++){
+//                                    cuanti += '<div class="tabulado'+rrr+'">';
+//                                    cuanti += '<h3>' + data.breakdown_group[rrr].breakdown_group_name + '</h3><br />';
+//                                    cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result, data.breakdown_group[rrr].breakdown_attribute, data.breakdown_group[rrr].breakdown_group_year, data.breakdown_group[rrr].breakdown_resource_name);
+//                                    cuanti += '</div>';
+//                                }
+        
+                                cuanti += '</div>';
+        
+                                cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
-                                '<div class="row">' +
+                                cuanti += '<script>$(".tabulado0").show();$("#breakdown").on("change", function() { console.log("Si jaló ------------------------"); });</script>';
+        
+                                cuanti += '<div class="row">' +
                                     '<div class="col-md-10">' +
                                         '<p><b>Nota: </b> ' + data.indicator_reference + '</p>' +
 //                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data.indicator_reference+'</span></p>' +
