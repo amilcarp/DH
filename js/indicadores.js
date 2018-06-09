@@ -743,7 +743,6 @@ $(document).ready(function() {
             dat1 += '</tbody>';
             dat1 += '</table>';
         
-        
         return dat1;
     }
     
