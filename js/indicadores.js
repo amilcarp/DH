@@ -469,9 +469,9 @@ $(document).ready(function() {
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
         
-        cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto");
+        //cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto");
         
-        console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto"));
+        //console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto"));
 //        cuanti += '<script>' +
 //                'var svg = d3.select("#graph"),' +
 //                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
@@ -486,14 +486,14 @@ $(document).ready(function() {
 //
 //                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
 //
-//                'd3.json("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", function(d) {' +
-//                'd.Porcentaje = +d.Porcentaje * 100;' +
+//                'd3.json("AaR02.json", function(d) {' +
+//                'd.poblacion_de_18_anios_o_mas = +d.poblacion_de_18_anios_o_mas * 100;' +
 //                'return d;' +
 //                '}, function(error, data) {' +
 //                'if (error) throw error;' +
 //
-//                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
-//                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
+//                'x.domain(data.map(function(d) { return d.Periodo; }));' +
+//                'y.domain([0, d3.max(data, function(d) { return d.poblacion_de_18_anios_o_mas; })]);' +
 //
 //                'g.append("g")' +
 //                '.attr("class", "axis axis--x")' +
@@ -508,7 +508,7 @@ $(document).ready(function() {
 //                '.attr("y", 6)' +
 //                '.attr("dy", "0.71em")' +
 //                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
+//                '.text("poblacion_de_18_anios_o_mas");' +
 //
 //                'g.append("g")' +
 //                '.call(d3.axisLeft(y))' +
@@ -518,13 +518,13 @@ $(document).ready(function() {
 //                '.attr("y", 6)' +
 //                '.attr("dy", "0.71em")' +
 //                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
+//                '.text("poblacion_de_18_anios_o_mas");' +
 //
 //                'g.selectAll(".bar")' +
 //                '.data(data)' +
 //                '.enter().append("rect")' +
 //                '.attr("class", "bar")' +
-//                '.attr("x", function(d) { return x(d.Legislatura); })' +
+//                '.attr("x", function(d) { return x(d.Periodo); })' +
 //                '.attr("y", function(d) { return height; })' +
 //                '.attr("width", x.bandwidth())' +
 //                '.attr("height", function(d) { return 0})' +
@@ -533,16 +533,108 @@ $(document).ready(function() {
 //                '.style("left", d3.event.pageX - 25 + "px")' +
 //                '.style("top", d3.event.pageY - 40 + "px")' +
 //                '.style("display", "inline-block")' +
-//                '.text(d.Porcentaje);' +
+//                '.text(d.poblacion_de_18_anios_o_mas);' +
 //                '})' +
 //                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
 //                '.transition()' +
 //                '.delay(function(d,i){ return i*100 })' +
 //                '.duration(2000)' +
-//                '.attr("y", function(d){ return y(d.Porcentaje)})' +
-//                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
+//                '.attr("y", function(d){ return y(d.poblacion_de_18_anios_o_mas)})' +
+//                '.attr("height", function(d){ return height - y(d.poblacion_de_18_anios_o_mas) });' +
 //                '});' +
 //                '</script>';
+        
+        cuanti += '<script>' +
+            ' var svg = d3.select("svg"),' +
+            ' margin = {top: 20, right: 20, bottom: 30, left: 50},' +
+        '    width = +svg.attr("width") - margin.left - margin.right,' +
+       '     height = +svg.attr("height") - margin.top - margin.bottom,' +
+      '      g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
+
+     '   var parseTime = d3.timeParse("%Y");' +
+
+     '   var x = d3.scaleTime()' +
+    '        .range([0, width]);' +
+
+
+   '     //var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);' +
+
+  '      var y = d3.scaleLinear()' +
+ '           .rangeRound([height, 0]);' +
+
+
+ '       var line = d3.line()' +
+'            .x(function(d) { return x(d.Periodo); })' +
+  '          .y(function(d) { return y(d.poblacion_de_18_anios_o_mas); });' +
+
+ '       var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
+
+
+'        d3.json("AaR02.json", function(d) {' +
+ '         d.Periodo = parseTime(d.Periodo);' +
+'          d.poblacion_de_18_anios_o_mas = +d.poblacion_de_18_anios_o_mas;' +
+      '    return d;' +
+     '   }, function(error, data) {' +
+    '      if (error) throw error;' +
+
+   '      x.domain(d3.extent(data, function(d) { return d.Periodo; }));' +
+  '          //x.domain(data.map(function(d) {return d.Periodo;}));' +
+ '           //x.domain(data.map(function(d){ return d.Periodo; }));' +
+'          y.domain(d3.extent(data, function(d) { return d.poblacion_de_18_anios_o_mas; }));' +
+
+     '     g.append("g")' +
+    '          .attr("transform", "translate(0," + height + ")")' +
+   '           .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")))' +
+  '          .select(".domain");' +
+
+ '         g.append("g")' +
+'              .call(d3.axisLeft(y))' +
+  '          .append("text")' +
+ '             .attr("fill", "#000")' +
+'              .attr("transform", "rotate(-90)")' +
+'              .attr("y", 6)' +
+'              .attr("dy", "0.71em")' +
+'              .attr("text-anchor", "end")' +
+'              .text("Total por fecha de ingreso");' +
+
+
+        '     g.append("path")' +
+        '      .datum(data)' +
+        '        .attr("class","line")' +
+        '      .attr("fill", "none")' +
+          '    .attr("stroke", "#a1b5c0")' +
+         '     .attr("stroke-linejoin", "round")' +
+        '      .attr("stroke-linecap", "round")' +
+           '   .attr("stroke-width", 5)' +
+           '   .attr("d", line);' +
+
+
+           ' g.selectAll("circle")' +
+           '.data(data).enter().append("svg:circle")' +
+           '.attr("cx", function(d) { return x(d.Periodo);})' +
+           '.attr("cy", function(d) {return y(d.poblacion_de_18_anios_o_mas)})' +
+           '.attr("fill", "#a1b5c0")' +
+           ' .attr("fill-opacity","0").attr("r", 6)' +
+           ' .on("mouseover", function(d,i) {  ' + 
+                
+           '         tooltip ' + 
+           '           .style("left", d3.event.pageX - 25 + "px")' +
+           '           .style("top", d3.event.pageY - 30 + "px")' +
+           '           .style("display", "inline-block")' +
+           '         .text(d.poblacion_de_18_anios_o_mas);' +
+
+           ' })' +
+           ' .on("mouseout", function(d){ tooltip.style("display", "none");}); ' +
+
+        '});' +
+            '</script>';
+        
+        
+        
+        
+        
+        
+        
 //        
 //        cuanti += '<script>' +
 //                'var svg = d3.select("#graph"),' +
@@ -635,7 +727,8 @@ $(document).ready(function() {
 
                 'd3.json("'+fuente+'", function(d) {' +
                 'd'+ejeY+' = +d'+ejeY+' * 100;' +
-                'return d;' +
+                'console.log(d.results[0]);' +
+                'return d.results[0];' +
                 '}, function(error, data) {' +
                 'if (error) throw error;' +
 
