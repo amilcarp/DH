@@ -379,20 +379,6 @@ $(document).ready(function() {
                                 cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
         
-                                //Script de opciones para mostrar y ocultar gráficas y tablas según lo que se esté visualizando
-//                                cuanti += '<script>$(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();$(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});$(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});';
-//        
-//        
-//        cuanti += 'function armaTabla(data, str){' +
-//        'var cua = "";' +
-//            ' cua += \'<div class="tabulado\'+str+\'">\';' +
-//            'cua += \'<h3>\' + data.breakdown_group[str].breakdown_group_name + \'</h3><br />\';' +
-//            'cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);' +
-//            'cua += \'</div>\';' + 
-//        'console.log(cua);' +
-//        'return cua;' +
-//    '}$(".tabulado0").show();$("#breakdown").on("change", function() { console.log("Si jaló ------------------------");  str = $(this).val(); console.log(str); console.log(datosDer); $(".verTabla").html(armaTabla(datosDer,str));console.log("Aquí hace algo!!!"); });</script>';
-        
                                 cuanti += '<div class="row">' +
                                     '<div class="col-md-10">' +
                                         '<p><b>Nota: </b> ' + data.indicator_reference + '</p>' +
@@ -469,9 +455,9 @@ $(document).ready(function() {
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
         
-        //cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto");
+        cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto");
         
-        //console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto"));
+        console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto"));
 //        cuanti += '<script>' +
 //                'var svg = d3.select("#graph"),' +
 //                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
@@ -543,94 +529,7 @@ $(document).ready(function() {
 //                '.attr("height", function(d){ return height - y(d.poblacion_de_18_anios_o_mas) });' +
 //                '});' +
 //                '</script>';
-        
-//        cuanti += '<script>' +
-//            ' var svg = d3.select("svg"),' +
-//            ' margin = {top: 20, right: 20, bottom: 30, left: 50},' +
-//        '    width = +svg.attr("width") - margin.left - margin.right,' +
-//       '     height = +svg.attr("height") - margin.top - margin.bottom,' +
-//      '      g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
-//
-//     '   var parseTime = d3.timeParse("%Y");' +
-//
-//     '   var x = d3.scaleTime()' +
-//    '        .range([0, width]);' +
-//
-//
-//   '     //var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);' +
-//
-//  '      var y = d3.scaleLinear()' +
-// '           .rangeRound([height, 0]);' +
-//
-//
-// '       var line = d3.line()' +
-//'            .x(function(d) { return x(d.Periodo); })' +
-//  '          .y(function(d) { return y(d.poblacion_de_18_anios_o_mas); });' +
-//
-// '       var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
-//
-//
-//'        d3.csv("AaR02_Linea.csv", function(error, d) {' +
-//            
-// '         d.Periodo = parseTime(d.Periodo);' +
-//'          d.poblacion_de_18_anios_o_mas = +d.poblacion_de_18_anios_o_mas;' +
-//            'console.log(d);' +
-//      '    return d;' +
-//     '   }, function(error, data) {' +
-//    '      if (error) throw error;' +
-//
-//   '      x.domain(d3.extent(data, function(d) { return d.Periodo; }));' +
-//  '          //x.domain(data.map(function(d) {return d.Periodo;}));' +
-// '           //x.domain(data.map(function(d){ return d.Periodo; }));' +
-//'          y.domain(d3.extent(data, function(d) { return d.poblacion_de_18_anios_o_mas; }));' +
-//
-//     '     g.append("g")' +
-//    '          .attr("transform", "translate(0," + height + ")")' +
-//   '           .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")))' +
-//  '          .select(".domain");' +
-//
-// '         g.append("g")' +
-//'              .call(d3.axisLeft(y))' +
-//  '          .append("text")' +
-// '             .attr("fill", "#000")' +
-//'              .attr("transform", "rotate(-90)")' +
-//'              .attr("y", 6)' +
-//'              .attr("dy", "0.71em")' +
-//'              .attr("text-anchor", "end")' +
-//'              .text("Total por fecha de ingreso");' +
-//
-//
-//        '     g.append("path")' +
-//        '      .datum(data)' +
-//        '        .attr("class","line")' +
-//        '      .attr("fill", "none")' +
-//          '    .attr("stroke", "#a1b5c0")' +
-//         '     .attr("stroke-linejoin", "round")' +
-//        '      .attr("stroke-linecap", "round")' +
-//           '   .attr("stroke-width", 5)' +
-//           '   .attr("d", line);' +
-//
-//
-//           ' g.selectAll("circle")' +
-//           '.data(data).enter().append("svg:circle")' +
-//           '.attr("cx", function(d) { return x(d.Periodo);})' +
-//           '.attr("cy", function(d) {return y(d.poblacion_de_18_anios_o_mas)})' +
-//           '.attr("fill", "#a1b5c0")' +
-//           ' .attr("fill-opacity","0").attr("r", 6)' +
-//           ' .on("mouseover", function(d,i) {  ' + 
-//                
-//           '         tooltip ' + 
-//           '           .style("left", d3.event.pageX - 25 + "px")' +
-//           '           .style("top", d3.event.pageY - 30 + "px")' +
-//           '           .style("display", "inline-block")' +
-//           '         .text(d.poblacion_de_18_anios_o_mas);' +
-//
-//           ' })' +
-//           ' .on("mouseout", function(d){ tooltip.style("display", "none");}); ' +
-//
-//        '});' +
-//            '</script>';
-        
+                
         
 
 //        

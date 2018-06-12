@@ -124,74 +124,82 @@
 <!--        <script src="https://d3js.org/d3.v4.min.js"></script>-->
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script>
-        $(document).ready(function() {
-            $(".btnGrafica").show();
-            $(".btnTabla").hide();
-            $(".divGrafica").hide();
-            $(".divTabla").show();
-            $(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});
-            $(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});
-        
-        
-        function armaTabla(data, str){
-            var cua = "";
-            cua += '<div class="tabulado'+str+'">';
-            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
-            cua += '</div>'; 
-            console.log(cua);
-            return cua;
-        }
-            $(".tabulado0").show();
-            $("#breakdown").on("change", function() { 
-                console.log("Si jaló ------------------------");  
-                str = $(this).val(); 
-                console.log(str);
-                console.log(datosDer); 
-                $(".verTabla").html(armaTabla(datosDer,str));
-                console.log("Aquí hace algo!!!"); 
-            });
-            
-        });
+//        $(document).ready(function() {
+//            $(".btnGrafica").hide();
+//            //$(".btnGrafica").show();
+//            $(".btnTabla").hide();
+//            $(".divGrafica").hide();
+//            $(".divTabla").show();
+//            $(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});
+//            $(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});
+//        
+//        
+//        function armaTabla(data, str){
+//            var cua = "";
+//            cua += '<div class="tabulado'+str+'">';
+//            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+//            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+//            cua += '</div>';
+//            console.log(cua);
+//            return cua;
+//        }
+//            $(".tabulado0").show();
+//            $("#breakdown").on("change", function() {
+//                console.log("Si jaló ------------------------");
+//                str = $(this).val();
+//                console.log(str);
+//                console.log(datosDer);
+//                $(".verTabla").html(armaTabla(datosDer,str));
+//                console.log("Aquí hace algo!!!");
+//            });
+//            
+//        });
         </script>
 <script>
-var svg = d3.select("svg"),
- margin = {top: 20, right: 20, bottom: 30, left: 50},
-   width = +svg.attr("width") - margin.left - margin.right,
-    height = +svg.attr("height") - margin.top - margin.bottom,
-      g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    /* Configuración del tamaño de la caja del canvas o SVG */
+    var svg = d3.select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-   var parseTime = d3.timeParse("%Y");
+    
+    // Se definen las variables de los ejes X y Y
+    var parseTime = d3.timeParse("%Y");
+    var x = d3.scaleTime().range([0, width]);
+    //var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+    //var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+    var y = d3.scaleLinear().rangeRound([height, 0]);
 
-  var x = d3.scaleTime()
-       .range([0, width]);
-
-   //var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
-
-     var y = d3.scaleLinear()
-           .rangeRound([height, 0]);
-
-
-      var line = d3.line()
-           .x(function(d) { return x(d['Periodo']); })
+    // Se crea la variable de la línea con las variables que va a graficar en cada eje
+    var line = d3.line()
+        .x(function(d) { return x(d['Periodo']); })
         .y(function(d) { return y(d['poblacion_de_18_anios_o_mas']); });
 
-      var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+    // Se crea la variable que mostrará el tooltip
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
-
-    d3.csv("AaR02_Linea.csv", function(error, d) {
-           
-       d['Periodo'] = parseTime(d['Periodo']);
-        d['poblacion_de_18_anios_o_mas'] = +d['poblacion_de_18_anios_o_mas'];
-console.log(d);
-    return d;
-   }, function(error, data) {
-      if (error) throw error;
-
-     x.domain(d3.extent(data, function(d) { return d['Periodo']; }));
-        //x.domain(data.map(function(d) {return d.Periodo;}));
+    // Cargamos los datos del JSON
+    d3.json("AaR02.json", function(error, data) {
+        if (error) throw error;
+        console.log(data);
+        // Se llama a la función que construye el gráfico
+        
+        //d['Periodo'] = d['Periodo'];
+        //['poblacion_de_18_anios_o_mas'] = +d['poblacion_de_18_anios_o_mas'];
+        
+        data.forEach(function(d) {
+            d['Periodo'] = parseTime(d['Periodo']);
+            d['poblacion_de_18_anios_o_mas'] = +d['poblacion_de_18_anios_o_mas'];
+            console.log(d['Periodo']);
+          });
+        
+        //console.log(d);
+        
+        x.domain(d3.extent(data, function(d) { return d['Periodo']; }));
+        //x.domain(data.map(function(d) {return d['Periodo'];}));
         //x.domain(data.map(function(d){ return d.Periodo; }));
-    y.domain(d3.extent(data, function(d) { return d['poblacion_de_18_anios_o_mas']; }));
+        y.domain(d3.extent(data, function(d) { return d['poblacion_de_18_anios_o_mas']; }));
 
     g.append("g")
          .attr("transform", "translate(0," + height + ")")
@@ -206,7 +214,7 @@ console.log(d);
             .attr("y", 6)
             .attr("dy", "0.71em")
            .attr("text-anchor", "end")
-             .text("Total por fecha de ingreso");
+             .text("Unidades");
 
     g.append("path")
       .datum(data)
@@ -235,96 +243,10 @@ console.log(d);
  .on("mouseout", function(d){ 
      tooltip.style("display", "none");
  });
-
-});
-   </script>
         
-<!--
-        <script>
-
-        var svg = d3.select("#graph"),
-            margin = {top: 20, right: 20, bottom:130, left: 40},
-            width = +svg.attr("width") - margin.left - margin.right,
-            height = +svg.attr("height") - margin.top - margin.bottom;
-
-        var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
-            y = d3.scaleLinear().rangeRound([height, 0]);
-
-        var g = svg.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            
-        var tooltip = d3.select("body").append("div").attr("class", "toolTip");
-
-        d3.csv("CcE04_Barras.csv", function(d) {
-          d.Porcentaje = +d.Porcentaje * 100;
-          return d;
-        }, function(error, data) {
-          if (error) throw error;
-
-          x.domain(data.map(function(d) { return d.Legislatura; }));
-          y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);
-
-          g.append("g")
-              .attr("class", "axis axis--x")
-              .attr("transform", "translate(0," + height  + ")")
-              .call(d3.axisBottom(x));
-
-          g.append("g")
-              .attr("class", "axis axis--y")
-              .call(d3.axisLeft(y))
-            .append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 6)
-              .attr("dy", "0.71em")
-              .attr("text-anchor", "end")
-              .text("Porcentaje");
-
-            g.append("g")
-              .call(d3.axisLeft(y))
-            .append("text")
-              .attr("fill", "#000")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 6)
-              .attr("dy", "0.71em")
-              .attr("text-anchor", "end")
-              .text("Porcentaje");
-
-          g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-              .attr("class", "bar")
-              .attr("x", function(d) { return x(d.Legislatura); })
-              .attr("y", function(d) { return height; })
-              .attr("width", x.bandwidth())
-              .attr("height", function(d) { return 0})
-            .on("mousemove", function(d){
-                    tooltip
-                      .style("left", d3.event.pageX - 25 + "px")
-                      .style("top", d3.event.pageY - 40 + "px")
-                      .style("display", "inline-block")
-                    .text(d.Porcentaje);
-                })
-                .on("mouseout", function(d){ tooltip.style("display", "none");})
-               .transition()
-               .delay(function(d,i){ return i*100 })
-               .duration(2000)
-                .attr('y', function(d){ return y(d.Porcentaje)})
-               .attr('height', function(d){ return height - y(d.Porcentaje) });
-//            });
-            
-//            g.selectAll(".bar")
-//            .data(data)
-//            .enter().append("text")
-//            .attr("x", function(d) { return x(d.Legislatura); })
-//            .attr("y", function(d) { return height; })
-//            .text(d.Porcentaje);
-//            
-            
-
-        });
-
-        </script>
--->
-		
+        
+ });
+    
+   </script>
 	</body>
 </html>
