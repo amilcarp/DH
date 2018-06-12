@@ -47,53 +47,48 @@
         //x.domain(data.map(function(d){ return d.Periodo; }));
         y.domain(d3.extent(data, function(d) { return d['poblacion_de_18_anios_o_mas']; }));
 
-    g.append("g")
-         .attr("transform", "translate(0," + height + ")")
-         .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")))
-        .select(".domain");
+        g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")))
+            .select(".domain");
 
-     g.append("g")
-             .call(d3.axisLeft(y))
-         .append("text")
-          .attr("fill", "#000")
-             .attr("transform", "rotate(-90)")
-            .attr("y", 6)
+        g.append("g")
+            .call(d3.axisLeft(y))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -50)
             .attr("dy", "0.71em")
-           .attr("text-anchor", "end")
-             .text("Unidades");
+            .attr("text-anchor", "end")
+            .text("Unidades");
 
-    g.append("path")
-      .datum(data)
-       .attr("class","line")
-     .attr("fill", "none")
-   .attr("stroke", "#a1b5c0")
-   .attr("stroke-linejoin", "round")
-      .attr("stroke-linecap", "round")
-   .attr("stroke-width", 5)
-   .attr("d", line);
+        g.append("path")
+            .datum(data)
+            .attr("class","line")
+            .attr("fill", "none")
+            .attr("stroke", "#a1b5c0")
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke-width", 5)
+            .attr("d", line);
 
-
- g.selectAll("circle")
-.data(data).enter().append("svg:circle")
-.attr("cx", function(d) { return x(d['Periodo']);})
-.attr("cy", function(d) {return y(d['poblacion_de_18_anios_o_mas'])})
-.attr("fill", "#a1b5c0")
- .attr("fill-opacity","0").attr("r", 6)
-.on("mouseover", function(d,i) {  
-         tooltip
-           .style("left", d3.event.pageX - 25 + "px")
-           .style("top", d3.event.pageY - 30 + "px")
-           .style("display", "inline-block")
-         .text(d['poblacion_de_18_anios_o_mas']);
- })
- .on("mouseout", function(d){ 
-     tooltip.style("display", "none");
- });
+        g.selectAll("circle")
+            .data(data).enter().append("svg:circle")
+            .attr("cx", function(d) { return x(d['Periodo']);})
+            .attr("cy", function(d) {return y(d['poblacion_de_18_anios_o_mas'])})
+            .attr("fill", "#a1b5c0")
+            .attr("fill-opacity","0").attr("r", 6)
+            .on("mouseover", function(d,i) {  
+                tooltip
+                    .style("left", d3.event.pageX - 25 + "px")
+                    .style("top", d3.event.pageY - 30 + "px")
+                    .style("display", "inline-block")
+                    .text(d['poblacion_de_18_anios_o_mas']);
+            })
+            .on("mouseout", function(d){
+                tooltip.style("display", "none");
+            });
         
-        
- });
+    });
     
-    
-    
-
    </script>
