@@ -1,18 +1,22 @@
 [
     {
         "Periodo":2010,
-        "poblacion_de_18_anios_o_mas":22.3
+        "poblacion_de_18_anios_o_mas":22.3,
+        "poblacion_con_menos_de_18_anios":29.4
     },
     {
         "Periodo":2012,
-        "poblacion_de_18_anios_o_mas":20.9
+        "poblacion_de_18_anios_o_mas":20.9,
+        "poblacion_con_menos_de_18_anios":28.2
     },
     {
         "Periodo":2014, 
-        "poblacion_de_18_anios_o_mas":21.3
+        "poblacion_de_18_anios_o_mas":21.3,
+        "poblacion_con_menos_de_18_anios":27.6
     },
     {
         "Periodo":2016,
-        "poblacion_de_18_anios_o_mas":18.5
+        "poblacion_de_18_anios_o_mas":18.5,
+        "poblacion_con_menos_de_18_anios":23.3
     }
 ]
