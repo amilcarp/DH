@@ -1,5 +1,6 @@
 <style>
 
+/*
         .bar {
           fill: #a1b5c0;
         }
@@ -7,6 +8,7 @@
         .bar:hover {
           fill: #DAE3E8;
         }
+*/
 
         .axis--x path {
           display: none;
@@ -100,9 +102,52 @@
 	}
 	.tipsy {  padding: 5px; z-index: 100000;top:0;right:0; }
 	.tipsy-inner {  text-align: center; position:absolute; }
+    
+    /* PARA ANIMAR GráFICA DE LINEA */
+
+.line {
+    fill: none;
+    /*stroke: #aaa;
+    stroke: #43484c;
+    stroke: #405275;
+    stroke: rgba(40, 53, 79, .95);
+    stroke: #161719;
+    stroke: #f99e1a;*/
+    stroke: #a1b5c0;
+    stroke-width: 5px;
+    stroke-dasharray:1400;
+    stroke-dashoffset: 1400;
+    animation: dash 3.5s 1 linear normal;
+    -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+    animation-fill-mode: forwards;
+
+
+}
+
+@keyframes dash{
+    0%{
+        stroke-dashoffset: 1400;
+    }
+    100%{
+        stroke-dashoffset:  0;
+    }
+}
+
+
+.toolTip {
+  position: absolute;
+  display: none;
+  min-width: 50px;
+  height: auto;
+  background: none repeat scroll 0 0 #ffffff;
+  border: 1px solid #a1b5c0;
+  padding: 5px;
+  text-align: center;
+    font-size: 12px;
+}
 
 	</style>
-<svg id="graph" width="960" height="500"></svg>
+<div id="graph"><svg width="960" height="500"></svg></div>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 
 <script>
@@ -141,10 +186,15 @@
 //    var x = d3.scaleLinear().range([0, width]);
 //    var y = d3.scaleLinear().rangeRound([height, 0]);
     
-    var y = d3.scaleTime().range([height, 0]);
-    var x = d3.scaleLinear().range([0, width]);
+    //var y = d3.scaleOrdinal().range([height, 0]);
+    //var x = d3.scaleLinear().range([0, width]);
+    
+    // -------------------------------------
     
     
+    // Valores para Columna agrupada
+    var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+    var y = d3.scaleLinear().rangeRound([height, 0]);
     
     
 //    var xAxis = d3.svg.axis()
@@ -179,7 +229,10 @@
         //barras(data);
         
         // Llama a función de Dotplot
-        dotplot(data);
+        //dotplot(data);
+        
+        // Llama a función de Columna agrupada
+        columnAgrupada(data);
         
         
     });
@@ -317,7 +370,7 @@
 //		});
         
         data.forEach(function(d) {
-            d['Periodo'] = +d['Periodo'];
+            d['Periodo'] = d['Periodo'];
             d['poblacion_de_18_anios_o_mas'] = +d['poblacion_de_18_anios_o_mas'];
             d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
             console.log(d['Periodo']);
@@ -329,7 +382,7 @@
 //		y.domain(data.map(function(d) { return d['Periodo']; } ));
         
         //y.domain(data.map(function(d) { return d['Periodo']; }));
-        y.domain(data.map(function(d) { return d['Periodo']; } ));
+        y.domain(data.map(function(d) { return d['Periodo']; }));
         x.domain([0, d3.max(data, function(d) { return d['poblacion_de_18_anios_o_mas']; })]);
 
 
@@ -343,9 +396,10 @@
 		linesGrid.attr("class", "grid")
 			.attr("x1", margin.left)
 			.attr("y1", function(d) {
+            var dum = y(d['Periodo']) + y.range()/2;
             
-            console.log(y);
-				return y(d['Periodo']) + y.range()/2;
+            console.log(dum);
+				return dum;//y(d['Periodo']) + y.range()/2;
                 //return 50;
 			})
 			.attr("x2", function(d) {
@@ -576,6 +630,208 @@ Se agregan Leyendas
 	     .attr("fill", "black");
         
     }
+    
+    
+    
+    
+    var chartWidth, chartHeight;
+        
+        var axisLayer = svg.append("g").classed("axisLayer", true);
+        var chartLayer = svg.append("g").classed("chartLayer", true);
+
+
+        var xScale = d3.scaleBand();
+
+        var xInScale = d3.scaleBand();
+
+        var yScale = d3.scaleLinear();
+
+        var color = d3.scaleOrdinal()
+            .range(["#d0743c", "#ff8c00"]);
+    
+    function columnAgrupada(data){
+    
+//        var chartWidth, chartHeight;
+//        
+//        var axisLayer = svg.append("g").classed("axisLayer", true);
+//        var chartLayer = svg.append("g").classed("chartLayer", true);
+//
+//
+//        var xScale = d3.scaleBand();
+//
+//        var xInScale = d3.scaleBand();
+//
+//        var yScale = d3.scaleLinear();
+//
+//        var color = d3.scaleOrdinal()
+//            .range(["#5DDEC9", "#EF64AD", "#7b6888", "#BA67E5", "#E0E23B", "#d0743c", "#ff8c00"]);
+        
+    
+        var nested = d3.nest()
+            .rollup(function(d){ delete d[0].Periodo; return d[0] })
+            .key(function(d){ return d.Periodo })
+            .entries(data);
+
+        
+        
+        nested.forEach(function(d){
+            d.age = Object.keys(d.value).map(function(key){
+                return {key:key, value:d.value[key]}
+            });
+        });
+        
+        console.log(nested);
+
+        setSize(nested);
+        drawAxis();
+        drawChart(nested);
+        
+        
+    }
+    
+    function cast(data) {
+        Object.keys(d).forEach(function(key){
+            if (!isNaN(+d[key])) d[key] = +d[key]
+        })
+        return d;
+    }
+    
+    
+    function setSize(nested) {
+
+        width = document.querySelector("#graph").clientWidth;
+        height = document.querySelector("#graph").clientHeight;
+
+        margin = {top:0, left:100, bottom:40, right:30 };
+        
+        
+        chartWidth = width - (margin.left+margin.right);
+        chartHeight = height - (margin.top+margin.bottom);
+        
+        svg.attr("width", width).attr("height", height);
+        
+        axisLayer.attr("width", width).attr("height", height);
+        
+        chartLayer
+            .attr("width", chartWidth)
+            .attr("height", chartHeight)
+            .attr("transform", "translate("+[margin.left+10, margin.top]+")");
+            
+        
+                
+        xScale.domain(nested.map(function(d) { return d.key }))
+            .range([0, chartWidth]).paddingInner(0.1);
+            
+        
+        var ageNames = Object.keys(nested[0].value);
+        
+        xInScale.domain(ageNames).range([0, xScale.bandwidth()]);
+        
+        var yMax = d3.max(nested.map(function(d){
+            var values = Object.keys(d.value).map(function(key){
+                return d.value[key];
+            })
+            return d3.max(values);
+        }))
+
+        yScale.domain([0, yMax]).range([chartHeight, 0]);
+
+            
+    }
+    
+    function drawChart(nested) {
+        var t = d3.transition()
+            .duration(1000)
+            .ease(d3.easeLinear);
+
+        
+        var contry = chartLayer.selectAll(".contry")
+            .data(nested);
+            
+        var newCountry = contry.enter().append("g").attr("class", "contry");
+        
+
+        contry.merge(newCountry)
+            .attr("transform", function(d) { return "translate(" + [xScale(d.key), 0] + ")"; });
+
+        
+        var bar = newCountry.selectAll(".bar")
+            .data(function(d){ return d.age });
+
+        var newBar = bar.enter().append("rect").attr("class", "bar");
+
+                        
+        bar.merge(newBar)
+            .attr("width", xInScale.bandwidth()-60)
+            .attr("height", 0)
+            .attr("fill", function(d) { return color(d.key); })
+            .attr("transform", function(d) { return "translate(" + [xInScale(d.key), chartHeight] + ")" }).on("mousemove", function(d){
+                    tooltip
+                      .style("left", d3.event.pageX - 25 + "px")
+                      .style("top", d3.event.pageY - 40 + "px")
+                      .style("display", "inline-block")
+                    .text(d.value);
+                })
+                .on("mouseout", function(d){ tooltip.style("display", "none");});
+//               .transition()
+//               .delay(function(d,i){ return i*100 })
+//               .duration(2000)
+//                .attr('y', function(d){ return y(d.value)})
+//               .attr('height', function(d){ return height - y(d.value) });
+
+        
+        
+        //アニメーション
+       bar.merge(newBar).transition(t)
+            .attr("height", function(d) { return chartHeight - yScale(d.value)-3; })
+            .attr("transform", function(d) { return "translate(" + [xInScale(d.key), yScale(d.value)] + ")" });
+        
+        console.log(nested);
+        var tor = nested[0];
+        console.log(tor);
+        
+         //Legend
+        var legend = svg.selectAll(".legend")
+          .data(nested.map(function(d) { console.log(d.age[0].key); return d.age[0].key; }).reverse())
+        .enter().append("g")
+          .attr("class", "legend")
+          .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
+          .style("opacity","0");
+
+        legend.append("rect")
+          .attr("x", width - 18)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", function(d) { return color(d); });
+
+        legend.append("text")
+          .attr("x", width - 24)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .text(function(d) {return d; });
+
+        legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
+        
+    }
+    
+    function drawAxis(){
+        var yAxis = d3.axisLeft(yScale)
+            .tickSizeInner(-chartWidth);
+        
+        axisLayer.append("g")
+            .attr("transform", "translate("+[margin.left, margin.top]+")")
+            .attr("class", "axis y")
+            .call(yAxis);
+            
+        var xAxis = d3.axisBottom(xScale);
+    
+        axisLayer.append("g")
+            .attr("class", "axis x")
+            .attr("transform", "translate("+[margin.left, chartHeight]+")")
+            .call(xAxis);
+        
+    }   
     
     
    </script>
