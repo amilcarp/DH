@@ -17,25 +17,9 @@
 
         </style>
 <style type="text/css">
-@font-face {
-    font-family: 'galanogrotesque-bold';
-    src: url('../../home/fonts/galano/galano-grotesque-bold-webfont.woff2') format('woff2'),
-         url('../../home/fonts/galano/galano-grotesque-bold-webfont.woff') format('woff');
-    font-weight: 200;
-    font-style: normal;
-
-}
-@font-face {
-    font-family: 'galanogrotesque';
-    src: url('../../home/fonts/galano/galano-grotesque-webfont.woff2') format('woff2'),
-         url('../../home/fonts/galano/galano-grotesque-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-
-}
 	body {
 		background-color: #ffffff;
-		font-family: 'galanogrotesque-bold';
+		font-family: 'galanogrotesque-bold',serif;
 	}
 	
 	h3 {
@@ -86,12 +70,12 @@
 	}
 	
 	.axis text {
-		font-family: 'galanogrotesque';
+		font-family: 'galanogrotesque', serif;
 		font-size: 11px;
 	}
 	
 	.xlabel {
-		font-famile: 'galanogrotesque';
+		font-famile: 'galanogrotesque', serif;
 		font-size: 11px;
 		color: gray;
 	}
@@ -229,10 +213,10 @@
         //barras(data);
         
         // Llama a función de Dotplot
-        //dotplot(data);
+        dotplot(data);
         
         // Llama a función de Columna agrupada
-        columnAgrupada(data);
+        //columnAgrupada(data);
         
         
     });
@@ -365,9 +349,9 @@
     
     function dotplot(data){
         
-//        data.sort(function(a, b) {
-//			return d3.descending(+a.puntos_m, +b.puntos_m);
-//		});
+        data.sort(function(a, b) {
+			return d3.descending(+a.poblacion_de_18_anios_o_mas, +b.poblacion_de_18_anios_o_mas);
+		});
         
         data.forEach(function(d) {
             d['Periodo'] = d['Periodo'];
@@ -382,10 +366,10 @@
 //		y.domain(data.map(function(d) { return d['Periodo']; } ));
         
         //y.domain(data.map(function(d) { return d['Periodo']; }));
-        y.domain(data.map(function(d) { return d['Periodo']; }));
-        x.domain([0, d3.max(data, function(d) { return d['poblacion_de_18_anios_o_mas']; })]);
+        y.domain(data.map(function(d) { return d.Periodo; }));
+        x.domain([0, d3.max(data, function(d) { return d.poblacion_de_18_anios_o_mas; })]);
 
-
+        console.log(y);
 		// Make the faint lines from y labels to highest dot
 
 		var linesGrid = svg.selectAll("lines.grid")
@@ -396,19 +380,19 @@
 		linesGrid.attr("class", "grid")
 			.attr("x1", margin.left)
 			.attr("y1", function(d) {
-            var dum = y(d['Periodo']) + y.range()/2;
+            var dum = y(d.Periodo) + y.range()/2;
             
             console.log(dum);
 				return dum;//y(d['Periodo']) + y.range()/2;
                 //return 50;
 			})
 			.attr("x2", function(d) {
-				return margin.left + x(+d['poblacion_de_18_anios_o_mas']);
+				return margin.left + x(+d.poblacion_de_18_anios_o_mas);
 
 			})
 			.attr("y2", function(d) {
-				//return y(d['Periodo']) + y.range()/2;
-                return 340;
+				return y(d.Periodo) + y.range()/2;
+                //return 340;
 			});
 
 		// Make the dotted lines between the dots
@@ -420,18 +404,18 @@
 
 		linesBetween.attr("class", "between")
 			.attr("x1", function(d) {
-				return margin.left + x(+d['poblacion_con_menos_de_18_anios']);
+				return margin.left + x(+d.poblacion_con_menos_de_18_anios);
 			})
 			.attr("y1", function(d) {
-				//return y(d['Periodo']) + y.range()/2;
-                return 250;
+				return y(d.Periodo) + y.range()/2;
+                //return 250;
 			})
 			.attr("x2", function(d) {
-				return margin.left + x(d['poblacion_de_18_anios_o_mas']);
+				return margin.left + x(d.poblacion_de_18_anios_o_mas);
 			})
 			.attr("y2", function(d) {
 				//return y(d['Periodo']) + y.range()/2;
-                return 430;
+                return y(d['Periodo']) + y.range()/2;;
 			})
 			.attr("stroke-dasharray", "1,3")
 			.attr("stroke-width", function(d, i) {
@@ -453,15 +437,15 @@
 		puntos_mujeres
 			.attr("class", "mujeres")
 			.attr("cx", function(d) {
-				return margin.left + x(+d['poblacion_con_menos_de_18_anios']);
+				return margin.left + x(+d.poblacion_con_menos_de_18_anios);
 			})
 			.attr("r", 7)//y.range()/2)
 			.attr("cy", function(d) {
-				//return y(d['Periodo']) + y.range()/2;
-                return 270;
+				return y(d.Periodo) + y.range()/2;
+                //return 270;
 			})
 			.style("stroke", function(d){
-				if (d['Periodo'] === "Promedio OCDE") {
+				if (d.Periodo === "Promedio OCDE") {
 					return "black";
 				}
 			})
@@ -481,7 +465,7 @@
 		puntos_hombres
 			.attr("class", "hombres")
 			.attr("cx", function(d) {
-				return margin.left + x(+d['poblacion_de_18_anios_o_mas']);
+				return margin.left + x(+d.poblacion_de_18_anios_o_mas);
 			})
 			.attr("r",7)// y.range()/2)
 			.attr("cy", function(d) {
@@ -500,7 +484,7 @@
 			})
 			.append("title")
 			.text(function(d) {
-				return d['Periodo'] + ": " + d['poblacion_de_18_anios_o_mas'] + "%";
+				return d.Periodo + ": " + d.poblacion_de_18_anios_o_mas + "%";
 			});
 
 			// add the axes
@@ -558,12 +542,12 @@
        	// Style one of the Y labels bold:
 
         // a hack that works if you can unravel the selections - to style "The World" bold in the axis label, which is the 8th element:
-        var allYAxisLabels = d3.selectAll("g.y.axis g.tick text")[0]; // un-nest array
-        console.log(allYAxisLabels);
-        d3.select(allYAxisLabels[4]).style("font-weight", "normal");
+//        var allYAxisLabels = d3.selectAll("g.y.axis g.tick text")[0]; // un-nest array
+//        console.log(allYAxisLabels);
+//        d3.select(allYAxisLabels[4]).style("font-weight", "normal");
         	// You could also use tick formatting to get a % sign on each axis tick
 
-        console.log(allYAxisLabels);
+//        console.log(allYAxisLabels);
         
         
 			//});
