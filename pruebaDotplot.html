@@ -3,9 +3,10 @@
 <head>
 	<meta charset="utf-8">
 	<title>Dotplot</title>
-	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
+<!--	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
 	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
-    <script type="text/javascript" src="jquery.tipsy.js"></script>
+<!--    <script type="text/javascript" src="jquery.tipsy.js"></script>-->
 	<style type="text/css">
 	body {
 		background-color: #ffffff;
@@ -93,27 +94,38 @@
 	var width = 950 - margin.left - margin.right,
 	height = 500 - margin.top - margin.bottom;
 
-	var widthScale = d3.scale.linear()
-						.range([ 0, width]);
+	var widthScale = d3.scaleLinear().range([ 0, width]);
 
-	var heightScale = d3.scale.ordinal()
-						.rangeRoundBands([ margin.top, height], 0.2);
-
-	var xAxis = d3.svg.axis()
-					.scale(widthScale)
-					.orient("bottom");
-
-	var yAxis = d3.svg.axis()
-					.scale(heightScale)
-					.orient("left")
-					.innerTickSize(-width)
-					.outerTickSize(0)
-					.tickPadding(10);
-
-	var svg = d3.select("body")
+	//var heightScale = d3.scaleOrdinal().range([ margin.top, height], 0.2);
+    
+    //var heightScale = d3.scaleBand().rangeRound([ margin.top, height], 0.2);
+    var heightScale = d3.scaleOrdinal().range([height, 0], 0.2);
+    
+//	var xAxis = d3.svg.axis()
+//					.scale(widthScale)
+//					.orient("bottom");
+//
+//	var yAxis = d3.svg.axis()
+//					.scale(heightScale)
+//					.orient("left")
+//					.innerTickSize(-width)
+//					.outerTickSize(0)
+//					.tickPadding(10);
+    
+    
+    var svg = d3.select("body")
 				.append("svg")
 				.attr("width", fullwidth)
 				.attr("height", fullheight);
+
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(widthScale));
+    
+    
+    svg.append("g")
+      .call(d3.axisLeft(heightScale));
+    
 
 
 	d3.json("AaR02.json", function(error, data) {
@@ -127,11 +139,18 @@
 		});
 
 		
-		widthScale.domain([0,32]);
+		//widthScale.domain([0,32]);
+        widthScale.domain([0,32]);
 
+        
 		// js map: will make a new array out of all the d.pais fields
-		heightScale.domain(data.map(function(d) { return d.Periodo; } ));
-
+		heightScale.domain(data.map(function(d) { return d.Periodo; }));
+        //heightScale.domain([height, 0]);
+        
+        
+        console.log(heightScale.range());
+        
+        var escala = heightScale.range();
 
 		// Make the faint lines from y labels to highest dot
 
@@ -143,14 +162,18 @@
 		linesGrid.attr("class", "grid")
 			.attr("x1", margin.left)
 			.attr("y1", function(d) {
-				return heightScale(d.Periodo) + heightScale.rangeBand()/2;
+                //return heightScale.range();
+                console.log(escala[0]/2);
+                console.log(heightScale(d.Periodo) + heightScale.range()/2);
+				return escala[0]/2;
 			})
 			.attr("x2", function(d) {
 				return margin.left + widthScale(+d.poblacion_de_18_anios_o_mas);
-
 			})
 			.attr("y2", function(d) {
-				return heightScale(d.Periodo) + heightScale.rangeBand()/2;
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
 			});
 
 		// Make the dotted lines between the dots
@@ -165,13 +188,17 @@
 				return margin.left + widthScale(+d.poblacion_con_menos_de_18_anios);
 			})
 			.attr("y1", function(d) {
-				return heightScale(d.Periodo) + heightScale.rangeBand()/2;
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
 			})
 			.attr("x2", function(d) {
 				return margin.left + widthScale(d.poblacion_de_18_anios_o_mas);
 			})
 			.attr("y2", function(d) {
-				return heightScale(d.Periodo) + heightScale.rangeBand()/2;
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
 			})
 			.attr("stroke-dasharray", "1,3")
 			.attr("stroke-width", function(d, i) {
@@ -198,7 +225,9 @@
 			//.attr("r", heightScale.rangeBand()/4)
             .attr("r", 15)
 			.attr("cy", function(d) {
-				return heightScale(d.Periodo) + heightScale.rangeBand()/2;
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
 			})
 			.style("stroke", function(d){
 				if (d.Periodo === "Promedio OCDE") {
@@ -226,7 +255,9 @@
 			//.attr("r", heightScale.rangeBand()/4)
             .attr("r", 15)
 			.attr("cy", function(d) {
-				return heightScale(d.Periodo) + heightScale.rangeBand()/2;
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
 			})
 			.style("stroke", function(d){
 				if (d.Periodo === "Promedio OCDE") {
@@ -240,20 +271,8 @@
 			})
 			.append("title")
 			.text(function(d) {
-				return d.Periodo + " en 2015: " + d.poblacion_de_18_anios_o_mas + "%";
+				return d.Periodo + ": " + d.poblacion_de_18_anios_o_mas + "%";
 			});
-
-			// add the axes
-
-		svg.append("g")
-			.attr("class", "x axis")
-			.attr("transform", "translate(" + margin.left + "," + height + ")")
-			.call(xAxis);
-
-		svg.append("g")
-			.attr("class", "y axis")
-			.attr("transform", "translate(" + margin.left + ",0)")
-			.call(yAxis);
 
 		svg.append("text")
 			.attr("class", "xlabel")
