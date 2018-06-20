@@ -8,6 +8,7 @@ var contenido, cuali, cuanti;
 var datoInd = [];
 var todo = [];
 var gob = [];
+var muestraGrafica = false;
 //var gobGrupo = [];
 var res = '';
 var rec = '';
@@ -87,7 +88,11 @@ $(document).ready(function() {
             if(datosDer.is_cuantitative == false){
                 $('#indicadores').html(indicadorCuali(datosDer));
             }else{
-                $('#indicadores').html(indicadorCuanti(datosDer));
+                if(datosDer.breakdown_group != null){
+                    $('#indicadores').html(indicadorCuanti(datosDer,true));
+                }else{
+                    $('#indicadores').html(indicadorCuanti(datosDer,false));
+                }
             }
               
             $('#claveInd').html(datosDer.indicator_code);
@@ -100,8 +105,8 @@ $(document).ready(function() {
             $('#descarDatos3').html(datosDer.responsible_institution);
               
 
-              //Muestra u oculta botones para las gráficas y los tabulados
-              $(".btnGrafica").show();
+            //Muestra u oculta botones para las gráficas y los tabulados
+            $(".btnGrafica").show();
             //$(".btnGrafica").show();
             $(".btnTabla").hide();
             $(".divGrafica").hide();
@@ -125,10 +130,29 @@ $(document).ready(function() {
                 str = $(this).val();
                 console.log(str);
                 console.log(datosDer);
-                $(".verTabla").html(armaTabla(datosDer,str));
-                console.log("Aquí hace algo!!!");
+                if($('.btnGrafica').show()){
+                    muestraGrafica = true;
+                    $(".divGrafica").hide();
+                    $(".divTabla").show();
+                    $(".btnGrafica").show();
+                    $(".btnTabla").hide();
+                    $(".verTabla").html(armaTabla(datosDer,str));
+                }else{
+                    muestraGrafica = false;
+                    $(".divGrafica").show();
+                    $(".divTabla").hide();
+                    $(".btnGrafica").hide();
+                    $(".btnTabla").show();
+                    $(".verGrafica").html(graficaCuanti(datosDer,str));
+                }
+                //$(".verTabla").html(armaTabla(datosDer,str));
+//                $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+//                $(".verGrafica").append(graficaCuanti(datosDer,str));
+                //$(".verGrafica").html(graficaCuanti(datosDer,str));
+                console.log("Aquí hace algo------------------");
             });
             
+            // Mostramos
               $('#breakdown').val('0').change();
               
 		  },
@@ -362,7 +386,7 @@ $(document).ready(function() {
     }
     
     
-    function indicadorCuanti(data){
+    function indicadorCuanti(data,tieneBreakdown){
 
         var formCalculo = data.indicator_calculation_element;
         var res = formCalculo.split("$* ");
@@ -380,21 +404,25 @@ $(document).ready(function() {
                         '</ul>' +
                         '<div class="tab-content">' +
                             '<div class="tab-pane active" id="tab-011">' +
-                                
-                                //'<h2>' + data.indicator_definition + '</h2>' +
-                                '<div class="row">' +
-                                    '<div class="col-md-10">';
-                                    var tados = data.breakdown_group;
+                                '<div class="row">';
+        
+                                    if(tieneBreakdown === true){
+                                        cuanti += '<div class="col-md-10">';
+                                        var tados = data.breakdown_group;
                                         cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
                                         for (var m=0;m<tados.length;m++){
                                             cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
                                         }
-                                cuanti += '</select>'+
-                                    '</div>' +
-                                    '<div class="col-md-2">' +
-                                        '<button type="button" class="btn btn-primary btnGrafica">Ver Gráfica</button> <button type="button" class="btn btn-primary btnTabla">Ver Tabla</button>' +
-                                    '</div>' +
-                                '</div>';
+                                        cuanti += '</select>';
+                                        cuanti += '</div>' +
+                                                '<div class="col-md-2">' +
+                                                    '<button type="button" class="btn btn-primary btnGrafica">Ver Gráfica</button> <button type="button" class="btn btn-primary btnTabla">Ver Tabla</button>' +
+                                                '</div>';
+                                    }else{
+                                        cuanti += '<h3>El indicador no reporta datos del breakdown_group.</h3>';
+                                    }
+
+                                    cuanti += '</div>';
         
                                 //var tados = data.breakdown_group;
                                 
@@ -436,12 +464,14 @@ $(document).ready(function() {
                                 //}
         
                                 cuanti += '</div>';
+                                
+                                cuanti += '<div class="verGrafica"></div>';
         
-                                cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
+                                //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
         
                                 cuanti += '<div class="row">' +
-                                    '<div class="col-md-10">' +
+                                    '<div class="col-md-12">' +
                                         '<p><b>Nota: </b> ' + data.indicator_reference + '</p>' +
 //                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data.indicator_reference+'</span></p>' +
                                     '</div>' +
@@ -591,85 +621,13 @@ $(document).ready(function() {
 //                '});' +
 //                '</script>';
                 
-        
-
-//        
-//        cuanti += '<script>' +
-//                'var svg = d3.select("#graph"),' +
-//                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
-//                'width = +svg.attr("width") - margin.left - margin.right,' +
-//                'height = +svg.attr("height") - margin.top - margin.bottom;' +
-//
-//                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
-//                'y = d3.scaleLinear().rangeRound([height, 0]);' +
-//
-//                'var g = svg.append("g")' +
-//                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
-//
-//                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
-//
-//                'd3.csv("CcE04_Barras.csv", function(d) {' +
-//                'd.Porcentaje = +d.Porcentaje * 100;' +
-//                'return d;' +
-//                '}, function(error, data) {' +
-//                'if (error) throw error;' +
-//
-//                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
-//                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--x")' +
-//                '.attr("transform", "translate(0," + height  + ")")' +
-//                '.call(d3.axisBottom(x));' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--y")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
-//
-//                'g.append("g")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("fill", "#000")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
-//
-//                'g.selectAll(".bar")' +
-//                '.data(data)' +
-//                '.enter().append("rect")' +
-//                '.attr("class", "bar")' +
-//                '.attr("x", function(d) { return x(d.Legislatura); })' +
-//                '.attr("y", function(d) { return height; })' +
-//                '.attr("width", x.bandwidth())' +
-//                '.attr("height", function(d) { return 0})' +
-//                '.on("mousemove", function(d){' +
-//                'tooltip' +
-//                '.style("left", d3.event.pageX - 25 + "px")' +
-//                '.style("top", d3.event.pageY - 40 + "px")' +
-//                '.style("display", "inline-block")' +
-//                '.text(d.Porcentaje);' +
-//                '})' +
-//                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
-//                '.transition()' +
-//                '.delay(function(d,i){ return i*100 })' +
-//                '.duration(2000)' +
-//                '.attr("y", function(d){ return y(d.Porcentaje)})' +
-//                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
-//                '});' +
-//                '</script>';
         return cuanti;
     }
     
     function graficaCuanti(fuente, tipoGrafica, ejeX, ejeY, color, datos){
-        var graf = '<script>' +
+        var graf = '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
+            
+            graf += '<script>' +
                 'var svg = d3.select("#graph"),' +
                 'margin = {top: 20, right: 20, bottom:130, left: 40},' +
                 'width = +svg.attr("width") - margin.left - margin.right,' +
