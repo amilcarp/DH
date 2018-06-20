@@ -3,14 +3,14 @@ $(document).ready(function() {
     //---- Variables
     
      //$(".btnGrafica").hide();
-            $(".btnGrafica").show();
-            $(".btnTabla").hide();
-            $(".divGrafica").hide();
-            $(".divTabla").show();
-            console.log('Muestra algo------');
-            $(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});
-            $(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});
-        
+//            $(".btnGrafica").show();
+//            $(".btnTabla").hide();
+//            $(".divGrafica").hide();
+//            $(".divTabla").show();
+//            console.log('Muestra algo------');
+//            $(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});
+//            $(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});
+//        
         
         function armaTabla(data, str){
             var cua = "";

@@ -25,7 +25,37 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 
-$(document).ready(function() {
+
+function apiGOB(resource, dataset, page, total){
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?page='+page+'',
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {
+              gob = data;
+		  },
+		  async:false
+		});
+        return gob;
+    }
+    
+    
+    function apiGobGrupo(resource, dataset, atributo, variable){
+        var gobGrupo = [];
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?'+atributo+'='+variable,
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {
+              gobGrupo = data['results'];
+		  },
+		  async:false
+		});
+        return gobGrupo;
+    }
+
+
+$(document).ready(function() {    
     
        function reemplazaChar(string){
             //string = string.replace(/\r\n/g,"\n");
@@ -69,6 +99,37 @@ $(document).ready(function() {
             $('#descarDatos2').html(datosDer.indicator_definition);
             $('#descarDatos3').html(datosDer.responsible_institution);
               
+
+              //Muestra u oculta botones para las gráficas y los tabulados
+              $(".btnGrafica").show();
+            //$(".btnGrafica").show();
+            $(".btnTabla").hide();
+            $(".divGrafica").hide();
+            $(".divTabla").show();
+            $(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});
+            $(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});
+        
+        
+        function armaTabla(data, str){
+            var cua = "";
+            cua += '<div class="tabulado'+str+'">';
+            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += '</div>';
+            console.log(cua);
+            return cua;
+        }
+              
+            $("#breakdown").on("change", function() {
+                console.log("Si jaló ------------------------");
+                str = $(this).val();
+                console.log(str);
+                console.log(datosDer);
+                $(".verTabla").html(armaTabla(datosDer,str));
+                console.log("Aquí hace algo!!!");
+            });
+            
+              $('#breakdown').val('0').change();
               
 		  },
 		  async:true
@@ -325,9 +386,9 @@ $(document).ready(function() {
                                     '<div class="col-md-10">';
                                     var tados = data.breakdown_group;
                                         cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
-                                for (var m=0;m<tados.length;m++){
-                                    cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
-                                }
+                                        for (var m=0;m<tados.length;m++){
+                                            cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+                                        }
                                 cuanti += '</select>'+
                                     '</div>' +
                                     '<div class="col-md-2">' +
@@ -455,9 +516,9 @@ $(document).ready(function() {
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
         
-        cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto");
+        //cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto");
         
-        console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto"));
+        //console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto"));
 //        cuanti += '<script>' +
 //                'var svg = d3.select("#graph"),' +
 //                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
