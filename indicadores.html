@@ -51,7 +51,7 @@
 			      <ul class="nav navbar-nav navbar-right">
 			        <li><a href="acerca.html" >Acerca de</a></li>
 			        <li class="active"><a href="derechos.html">Derechos</a></li>
-			        <li><a href="calendario.html">Calendario</a></li>
+<!--			        <li><a href="calendario.html">Calendario</a></li>-->
 			        <li><a href="descarga.html">Descarga masiva</a></li>
 			        <li><a href="contacto.html">Contacto</a></li>
 			        <li><a href="busqueda.html"><span class="icon-search" aria-hidden="true"></span></a></li>
@@ -115,99 +115,109 @@
 	    </main>
 	
 	    <!-- JS -->
-	    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
-	    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
+	    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+	    
+        <script src="js/main.js"></script>
         <script src="js/indicadores.js"></script>
-	    <script src="js/main.js"></script>
+<!--        <script src="https://d3js.org/d3.v4.min.js"></script>-->
         <script src="https://d3js.org/d3.v4.min.js"></script>
 <!--
-        <script>
+<script>
+    /* Configuración del tamaño de la caja del canvas o SVG */
+    var svg = d3.select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-        var svg = d3.select("#graph"),
-            margin = {top: 20, right: 20, bottom:130, left: 40},
-            width = +svg.attr("width") - margin.left - margin.right,
-            height = +svg.attr("height") - margin.top - margin.bottom;
+    
+    // Se definen las variables de los ejes X y Y
+    var parseTime = d3.timeParse("%Y");
+    var x = d3.scaleTime().range([0, width]);
+    //var x = d3.scale.ordinal().rangeRoundBands([0, width], .1);
+    //var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+    var y = d3.scaleLinear().rangeRound([height, 0]);
 
-        var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),
-            y = d3.scaleLinear().rangeRound([height, 0]);
+    // Se crea la variable de la línea con las variables que va a graficar en cada eje
+    var line = d3.line()
+        .x(function(d) { return x(d['Periodo']); })
+        .y(function(d) { return y(d['poblacion_de_18_anios_o_mas']); });
 
-        var g = svg.append("g")
-            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-            
-        var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+    // Se crea la variable que mostrará el tooltip
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
 
-        d3.csv("CcE04_Barras.csv", function(d) {
-          d.Porcentaje = +d.Porcentaje * 100;
-          return d;
-        }, function(error, data) {
-          if (error) throw error;
+    // Cargamos los datos del JSON
+    d3.json("AaR02.json", function(error, data) {
+        if (error) throw error;
+        console.log(data);
+        // Se llama a la función que construye el gráfico
+        
+        //d['Periodo'] = d['Periodo'];
+        //['poblacion_de_18_anios_o_mas'] = +d['poblacion_de_18_anios_o_mas'];
+        
+        data.forEach(function(d) {
+            d['Periodo'] = parseTime(d['Periodo']);
+            d['poblacion_de_18_anios_o_mas'] = +d['poblacion_de_18_anios_o_mas'];
+            console.log(d['Periodo']);
+          });
+        
+        //console.log(d);
+        
+        x.domain(d3.extent(data, function(d) { return d['Periodo']; }));
+        //x.domain(data.map(function(d) {return d['Periodo'];}));
+        //x.domain(data.map(function(d){ return d.Periodo; }));
+        y.domain(d3.extent(data, function(d) { return d['poblacion_de_18_anios_o_mas']; }));
 
-          x.domain(data.map(function(d) { return d.Legislatura; }));
-          y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);
+    g.append("g")
+         .attr("transform", "translate(0," + height + ")")
+         .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")))
+        .select(".domain");
 
-          g.append("g")
-              .attr("class", "axis axis--x")
-              .attr("transform", "translate(0," + height  + ")")
-              .call(d3.axisBottom(x));
+     g.append("g")
+             .call(d3.axisLeft(y))
+         .append("text")
+          .attr("fill", "#000")
+             .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", "0.71em")
+           .attr("text-anchor", "end")
+             .text("Unidades");
 
-          g.append("g")
-              .attr("class", "axis axis--y")
-              .call(d3.axisLeft(y))
-            .append("text")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 6)
-              .attr("dy", "0.71em")
-              .attr("text-anchor", "end")
-              .text("Porcentaje");
+    g.append("path")
+      .datum(data)
+       .attr("class","line")
+     .attr("fill", "none")
+   .attr("stroke", "#a1b5c0")
+   .attr("stroke-linejoin", "round")
+      .attr("stroke-linecap", "round")
+   .attr("stroke-width", 5)
+   .attr("d", line);
 
-            g.append("g")
-              .call(d3.axisLeft(y))
-            .append("text")
-              .attr("fill", "#000")
-              .attr("transform", "rotate(-90)")
-              .attr("y", 6)
-              .attr("dy", "0.71em")
-              .attr("text-anchor", "end")
-              .text("Porcentaje");
 
-          g.selectAll(".bar")
-            .data(data)
-            .enter().append("rect")
-              .attr("class", "bar")
-              .attr("x", function(d) { return x(d.Legislatura); })
-              .attr("y", function(d) { return height; })
-              .attr("width", x.bandwidth())
-              .attr("height", function(d) { return 0})
-            .on("mousemove", function(d){
-                    tooltip
-                      .style("left", d3.event.pageX - 25 + "px")
-                      .style("top", d3.event.pageY - 40 + "px")
-                      .style("display", "inline-block")
-                    .text(d.Porcentaje);
-                })
-                .on("mouseout", function(d){ tooltip.style("display", "none");})
-               .transition()
-               .delay(function(d,i){ return i*100 })
-               .duration(2000)
-                .attr('y', function(d){ return y(d.Porcentaje)})
-               .attr('height', function(d){ return height - y(d.Porcentaje) });
-//            });
-            
-//            g.selectAll(".bar")
-//            .data(data)
-//            .enter().append("text")
-//            .attr("x", function(d) { return x(d.Legislatura); })
-//            .attr("y", function(d) { return height; })
-//            .text(d.Porcentaje);
-//            
-            
-
-        });
-
-        </script>
+ g.selectAll("circle")
+.data(data).enter().append("svg:circle")
+.attr("cx", function(d) { return x(d['Periodo']);})
+.attr("cy", function(d) {return y(d['poblacion_de_18_anios_o_mas'])})
+.attr("fill", "#a1b5c0")
+ .attr("fill-opacity","0").attr("r", 6)
+.on("mouseover", function(d,i) {  
+         tooltip
+           .style("left", d3.event.pageX - 25 + "px")
+           .style("top", d3.event.pageY - 30 + "px")
+           .style("display", "inline-block")
+         .text(d['poblacion_de_18_anios_o_mas']);
+ })
+ .on("mouseout", function(d){ 
+     tooltip.style("display", "none");
+ });
+        
+        
+ });
+    
+   </script>
 -->
-		
 	</body>
 </html>

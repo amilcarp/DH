@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Dotplot</title>
+<!--	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>-->
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.2.min.js"></script> 
+<!--    <script type="text/javascript" src="jquery.tipsy.js"></script>-->
+	<style type="text/css">
+	body {
+		background-color: #fff;
+		font-family: sans-serif;
+	}
+	
+	h3 {
+		margin-left: 200px;
+	}
+	
+	p {
+		margin-left: 200px;
+		font-size: 11pt;
+		color: gray;
+	}
+	
+	svg {
+		background-color: #fff;
+	}
+	
+	circle {
+		stroke-width: 1;
+	}
+	
+	circle.hombres {
+		fill: #999;
+	}
+	
+	circle.mujeres {
+		fill: #721dac;
+		opacity: 1;
+	}
+	
+	circle:hover {
+		stroke-width: 3;
+		stroke: white;
+	}
+	
+	line.grid {
+		stroke: #eee;
+	}
+	
+	line.between {
+		stroke: black;
+	}
+	
+	.axis path,
+	.axis line {
+		fill: none;
+		stroke: black;
+		shape-rendering: crispEdges;
+	}
+	
+	.axis text {
+		font-family: sans-serif;
+		font-size: 11px;
+	}
+	
+	.xlabel {
+		font-famile: sans-serif;
+		font-size: 11px;
+		color: gray;
+	}
+	
+	.tick line{
+	  opacity: 0.1;
+	  stroke-width: 0.5;
+	}
+	.tipsy {  padding: 5px; z-index: 100000;top:0;right:0; }
+	.tipsy-inner {  text-align: center; position:absolute; }
+
+	</style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+	// this is the size of the svg container -- the white part
+	var fullwidth = 950,
+		fullheight = 500;
+
+	// these are the margins around the graph. Axes labels go in margins.
+	var margin = {top: 20, right: 25, bottom: 20, left: 120};
+
+	var width = 950 - margin.left - margin.right,
+	height = 500 - margin.top - margin.bottom;
+
+	var widthScale = d3.scaleLinear().range([ 0, width]);
+
+	//var heightScale = d3.scaleOrdinal().range([ margin.top, height], 0.2);
+    
+    //var heightScale = d3.scaleBand().rangeRound([ margin.top, height], 0.2);
+    var heightScale = d3.scaleOrdinal().range([height, 0], 0.2);
+    
+//	var xAxis = d3.svg.axis()
+//					.scale(widthScale)
+//					.orient("bottom");
+//
+//	var yAxis = d3.svg.axis()
+//					.scale(heightScale)
+//					.orient("left")
+//					.innerTickSize(-width)
+//					.outerTickSize(0)
+//					.tickPadding(10);
+    
+    
+    var svg = d3.select("body")
+				.append("svg")
+				.attr("width", fullwidth)
+				.attr("height", fullheight);
+
+    svg.append("g")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(widthScale));
+    
+    
+    svg.append("g")
+      .call(d3.axisLeft(heightScale));
+    
+
+
+	d3.json("AaR02.json", function(error, data) {
+
+		if (error) {
+			console.log("error reading file");
+		}
+
+		data.sort(function(a, b) {
+			return d3.descending(+a.poblacion_con_menos_de_18_anios, +b.poblacion_con_menos_de_18_anios);
+		});
+
+		
+		//widthScale.domain([0,32]);
+        widthScale.domain([0,32]);
+
+        
+		// js map: will make a new array out of all the d.pais fields
+		heightScale.domain(data.map(function(d) { return d.Periodo; }));
+        //heightScale.domain([height, 0]);
+        
+        
+        console.log(heightScale.range());
+        
+        var escala = heightScale.range();
+
+		// Make the faint lines from y labels to highest dot
+
+		var linesGrid = svg.selectAll("lines.grid")
+			.data(data)
+			.enter()
+			.append("line");
+
+		linesGrid.attr("class", "grid")
+			.attr("x1", margin.left)
+			.attr("y1", function(d) {
+                //return heightScale.range();
+                console.log(escala[0]/2);
+                console.log(heightScale(d.Periodo) + heightScale.range()/2);
+				return escala[0]/2;
+			})
+			.attr("x2", function(d) {
+				return margin.left + widthScale(+d.poblacion_de_18_anios_o_mas);
+			})
+			.attr("y2", function(d) {
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
+			});
+
+		// Make the dotted lines between the dots
+
+		var linesBetween = svg.selectAll("lines.between")
+			.data(data)
+			.enter()
+			.append("line");
+
+		linesBetween.attr("class", "between")
+			.attr("x1", function(d) {
+				return margin.left + widthScale(+d.poblacion_con_menos_de_18_anios);
+			})
+			.attr("y1", function(d) {
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
+			})
+			.attr("x2", function(d) {
+				return margin.left + widthScale(d.poblacion_de_18_anios_o_mas);
+			})
+			.attr("y2", function(d) {
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
+			})
+			.attr("stroke-dasharray", "1,3")
+			.attr("stroke-width", function(d, i) {
+				if (i == 7) {
+					return "1";
+				} else {
+					return "0.5";
+				}
+			});
+
+
+		// Puntos para porcentaje de mujeres
+
+		var puntos_mujeres = svg.selectAll("circle.mujeres")
+				.data(data)
+				.enter()
+				.append("circle");
+
+		puntos_mujeres
+			.attr("class", "mujeres")
+			.attr("cx", function(d) {
+				return margin.left + widthScale(+d.poblacion_con_menos_de_18_anios);
+			})
+			//.attr("r", heightScale.rangeBand()/4)
+            .attr("r", 15)
+			.attr("cy", function(d) {
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
+			})
+			.style("stroke", function(d){
+				if (d.Periodo === "Promedio OCDE") {
+					return "black";
+				}
+			})
+			.style("fill", function(d){
+				if (d.Periodo === "Promedio OCDE") {
+					return "#721dac";
+				}
+			});
+
+		// Puntos para porcentaje de hombres
+
+		var puntos_hombres = svg.selectAll("circle.hombres")
+				.data(data)
+				.enter()
+				.append("circle");
+
+		puntos_hombres
+			.attr("class", "hombres")
+			.attr("cx", function(d) {
+				return margin.left + widthScale(+d.poblacion_de_18_anios_o_mas);
+			})
+			//.attr("r", heightScale.rangeBand()/4)
+            .attr("r", 15)
+			.attr("cy", function(d) {
+                //return heightScale.range();
+				//return heightScale(d.Periodo) + heightScale.range();
+                return escala[0]/2;
+			})
+			.style("stroke", function(d){
+				if (d.Periodo === "Promedio OCDE") {
+					return "black";
+				}
+			})
+			.style("fill", function(d){
+				if (d.Periodo === "Promedio OCDE") {
+					return "#999";
+				}
+			})
+			.append("title")
+			.text(function(d) {
+				return d.Periodo + ": " + d.poblacion_de_18_anios_o_mas + "%";
+			});
+
+		svg.append("text")
+			.attr("class", "xlabel")
+        	.attr("transform", "translate(" + (margin.left + width / 2) + " ," +
+        				(height + margin.bottom) + ")")
+        	.style("text-anchor", "middle")
+        	.attr("dy", "18")
+        	.text("Miles");
+        	
+        	var dot;
+        	
+        	svg.selectAll("circle")
+	         .data(data)
+	       .enter().append("svg:circle")
+	         .attr("stroke", "#fff")
+	         .attr("fill", function(d, i) { return '#f00'; })
+	         .attr("cx", function(d, i) { return d.x; })
+	         .attr("cy", function(d, i) { return d.y; })
+	         .attr("r", function(d, i) { dot = d.r/2; console.log(dot); return dot;  });
+        
+      
+
+//	        $('svg circle').tipsy({ 
+//	        trigger: 'hover',
+//	        delayOut: 1000,
+//	        fade: true,
+//	        gravity: 'w', 
+//	        html: true,
+//	        opacity: 1,
+//	        title: function() {
+//	          var d = this.__data__, c = '#f00';
+//	          var brecha = d.poblacion_de_18_anios_o_mas-d.poblacion_con_menos_de_18_anios;
+//	          $('#tooltip').html("<div style='background:#fff;color:#C0DAEF;padding:10px;left:665px;box-shadow:2px 2px 5px #bbb;padding:0px !important;width:260px;text-align:center;position:absolute;top:330px;'><h2 style='margin-top:0px;background:#111;color:#fff;padding:8px;font-family:galanogrotesque-bold;'>" + d.Periodo + "</h2><p style='background:#fff;color:#333;font-family:galanogrotesque-bold;margin-left:5px;padding-right:10px;padding-top:0px;margin-top:-10px;'>Puntaje promedio niñas: " + d.poblacion_con_menos_de_18_anios + "</p><p style='background:#fff;color:#333;font-family:galanogrotesque-bold;margin-left:5px;padding-right:10px;padding-bottom:0px;margin-top:-10px;'>Puntaje promedio niños: " + d.poblacion_de_18_anios_o_mas + "</p><p style='background:#fff;color:#333;font-family:galanogrotesque-bold;margin-left:5px;padding-right:10px;padding-bottom:0px;margin-top:-10px;'>Brecha: " + brecha.toFixed(1) + "</p></div>");
+//	          //return "<div style='background:#fff;color:#C0DAEF;padding:10px;right:0;bottom:0;box-shadow:2px 2px 5px #bbb;padding:0px !important;width:300px;text-align:center;'><h2 style='background:#111;color:#fff;padding:8px;font-family:galanogrotesque-bold;'>" + d.pais + "</h2><p style='background:#fff;color:#333;font-family:galanogrotesque-bold;margin-left:5px;padding-right:10px;padding-top:0px;margin-top:-10px;'>% mujeres: " + d.puntos_m + "</p><p style='background:#fff;color:#333;font-family:galanogrotesque-bold;margin-left:5px;padding-right:10px;padding-bottom:10px;margin-top:-10px;'>% hombres: " + d.puntos_h + "</p></div>";
+//	          return "";
+//	
+//	        }
+//	      	});
+//
+//
+//       	// Style one of the Y labels bold:
+//
+//        // a hack that works if you can unravel the selections - to style "The World" bold in the axis label, which is the 8th element:
+//        var allYAxisLabels = d3.selectAll("g.y.axis g.tick text")[0]; // un-nest array
+//        d3.select(allYAxisLabels[13]).style("font-weight", "normal");
+//        	// You could also use tick formatting to get a % sign on each axis tick
+//
+//			});
+
+/*
+
+Se agregan Leyendas
+*/
+//
+//		svg.append('text')
+//		.attr("x", 850)
+//		.attr("y", 273)
+//		.attr("fill","#721dac")
+//		.text(".")
+//		.attr("font-family", "Comic Sans")
+//	    .attr("font-size", "102px")
+//		.attr("stroke", "#721dac");
+//		
+//		svg.append('text')
+//		.attr("x", 850)
+//		.attr("y", 294)
+//		.attr("fill","#999")
+//		.text(".")
+//		.attr("font-family", "Comic Sans")
+//	    .attr("font-size", "102px")
+//		.attr("stroke", "#999");
+//		
+//		svg.append('text')
+//		.attr("x", 860)
+//		.attr("y", 310)
+//		.attr("fill","#721dac")
+//		.text(". . .")
+//		.attr("font-family", "Helvetica Neue")
+//		.attr("font-weight", "900")
+//	    .attr("font-size", "11px")
+//		.attr("stroke", "#999");
+//
+//		
+//		
+//
+//	   svg.append("text")
+//	     .attr("x", 885)
+//	     .attr("y", 273)
+//	     .text("Niñas")                        
+//	     .attr("font-family", "Helvetica Neue")
+//	     .attr("font-size", "11px")
+//	     .attr("fill", "black");
+//	     
+//	     
+//   	   svg.append("text")
+//	     .attr("x", 885)
+//	     .attr("y", 293)
+//	     .text("Niños")                        
+//	     .attr("font-family", "Helvetica Neue")
+//	     .attr("font-size", "11px")
+//	     .attr("fill", "black");	
+//	     
+//   	   svg.append("text")
+//	     .attr("x", 885)
+//	     .attr("y", 313)
+//	     .text("Diferencia")                        
+//	     .attr("font-family", "Helvetica Neue")
+//	     .attr("font-size", "11px")
+//	     .attr("fill", "black");
+        
+
+    });
+
+// Código basado en: https://bl.ocks.org/arnicas/9d5d5eb998051caa36c5
+
+</script>
+<div id="tooltip"></div>
+</body>
+</html>

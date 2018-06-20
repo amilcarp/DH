@@ -8,10 +8,12 @@ var contenido, cuali, cuanti;
 var datoInd = [];
 var todo = [];
 var gob = [];
+var muestraGrafica = false;
 //var gobGrupo = [];
 var res = '';
 var rec = '';
 var clas = '';
+var str = "0";
 
 var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
@@ -24,7 +26,37 @@ String.prototype.replaceAll = function(search, replacement) {
 };
 
 
-$(document).ready(function() {
+
+function apiGOB(resource, dataset, page, total){
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?page='+page+'',
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {
+              gob = data;
+		  },
+		  async:false
+		});
+        return gob;
+    }
+    
+    
+    function apiGobGrupo(resource, dataset, atributo, variable){
+        var gobGrupo = [];
+        $.ajax({
+		  type: 'GET',
+		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?'+atributo+'='+variable,
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {
+              gobGrupo = data['results'];
+		  },
+		  async:false
+		});
+        return gobGrupo;
+    }
+
+
+$(document).ready(function() {    
     
        function reemplazaChar(string){
             //string = string.replace(/\r\n/g,"\n");
@@ -56,7 +88,11 @@ $(document).ready(function() {
             if(datosDer.is_cuantitative == false){
                 $('#indicadores').html(indicadorCuali(datosDer));
             }else{
-                $('#indicadores').html(indicadorCuanti(datosDer));
+                if(datosDer.breakdown_group != null){
+                    $('#indicadores').html(indicadorCuanti(datosDer,true));
+                }else{
+                    $('#indicadores').html(indicadorCuanti(datosDer,false));
+                }
             }
               
             $('#claveInd').html(datosDer.indicator_code);
@@ -68,6 +104,56 @@ $(document).ready(function() {
             $('#descarDatos2').html(datosDer.indicator_definition);
             $('#descarDatos3').html(datosDer.responsible_institution);
               
+
+            //Muestra u oculta botones para las gráficas y los tabulados
+            $(".btnGrafica").show();
+            //$(".btnGrafica").show();
+            $(".btnTabla").hide();
+            $(".divGrafica").hide();
+            $(".divTabla").show();
+            $(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});
+            $(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});
+        
+        
+        function armaTabla(data, str){
+            var cua = "";
+            cua += '<div class="tabulado'+str+'">';
+            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += '</div>';
+            console.log(cua);
+            return cua;
+        }
+              
+            $("#breakdown").on("change", function() {
+                console.log("Si jaló ------------------------");
+                str = $(this).val();
+                console.log(str);
+                console.log(datosDer);
+                if($('.btnGrafica').show()){
+                    muestraGrafica = true;
+                    $(".divGrafica").hide();
+                    $(".divTabla").show();
+                    $(".btnGrafica").show();
+                    $(".btnTabla").hide();
+                    $(".verTabla").html(armaTabla(datosDer,str));
+                }else{
+                    muestraGrafica = false;
+                    $(".divGrafica").show();
+                    $(".divTabla").hide();
+                    $(".btnGrafica").hide();
+                    $(".btnTabla").show();
+                    $(".verGrafica").html(graficaCuanti(datosDer,str));
+                }
+                //$(".verTabla").html(armaTabla(datosDer,str));
+//                $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+//                $(".verGrafica").append(graficaCuanti(datosDer,str));
+                //$(".verGrafica").html(graficaCuanti(datosDer,str));
+                console.log("Aquí hace algo------------------");
+            });
+            
+            // Mostramos
+              $('#breakdown').val('0').change();
               
 		  },
 		  async:true
@@ -282,14 +368,25 @@ $(document).ready(function() {
     }
     
     
-    function llamaDatos(key){
+    function llamaDatos(data, key){
             cuanti += '<div class="tabulado'+key+'">';
             cuanti += '<h3>' + tados[key].breakdown_group_name + '</h3><br />';
             cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name);
             cuanti += '</div>';
     }
     
-    function indicadorCuanti(data){
+    function armaTabla(data, str){
+        var cua = '';
+            cua += '<div class="tabulado'+str+'">';
+            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += '</div>';
+        console.log(cua);
+        return cua;
+    }
+    
+    
+    function indicadorCuanti(data,tieneBreakdown){
 
         var formCalculo = data.indicator_calculation_element;
         var res = formCalculo.split("$* ");
@@ -307,44 +404,74 @@ $(document).ready(function() {
                         '</ul>' +
                         '<div class="tab-content">' +
                             '<div class="tab-pane active" id="tab-011">' +
-                                
-                                //'<h2>' + data.indicator_definition + '</h2>' +
-                                '<div class="row">' +
-                                    '<div class="col-md-10">' +
-                                        '<button type="button" class="btn btn-primary">Ver Gráfica</button> <button type="button" class="btn btn-primary">Ver Tabla</button>' +
-                                    '</div>' +
-                                '</div>';
+                                '<div class="row">';
         
-                                var tados = data.breakdown_group;
+                                    if(tieneBreakdown === true){
+                                        cuanti += '<div class="col-md-10">';
+                                        var tados = data.breakdown_group;
+                                        cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
+                                        for (var m=0;m<tados.length;m++){
+                                            cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+                                        }
+                                        cuanti += '</select>';
+                                        cuanti += '</div>' +
+                                                '<div class="col-md-2">' +
+                                                    '<button type="button" class="btn btn-primary btnGrafica">Ver Gráfica</button> <button type="button" class="btn btn-primary btnTabla">Ver Tabla</button>' +
+                                                '</div>';
+                                    }else{
+                                        cuanti += '<h3>El indicador no reporta datos del breakdown_group.</h3>';
+                                    }
+
+                                    cuanti += '</div>';
+        
+                                //var tados = data.breakdown_group;
                                 
                                 cuanti += '<div class="divTabla">';
-                                cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
-                                for (var m=0;m<tados.length;m++){
-                                    cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
-                                }
-                                cuanti += '</select>';
+                                cuanti += '<div class="verTabla"></div>';
+//                                cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
+//                                for (var m=0;m<tados.length;m++){
+//                                    cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+//                                }
+//                                cuanti += '</select>';
 
                                 //iuio(tados);
         
                                 //llamaDatos(key);
-        
-        
+//                                var str = "0";
+//                                $("select#breakdown option:selected").each(function() {
+//                                  str = $(this).val();
+//                                });
+//                                console.log(str);
                                 
-//                                for(var rrr = 0; rrr < tados.length; rrr++){
-//                                    cuanti += '<div class="tabulado'+rrr+'">';
-//                                    cuanti += '<h3>' + data.breakdown_group[rrr].breakdown_group_name + '</h3><br />';
-//                                    cuanti += datosTabulado(data.breakdown_group[rrr].resource_id, data.breakdown_group[rrr].variable_dataset_id, data.breakdown_group[rrr].breakdown_attribute_result, data.breakdown_group[rrr].breakdown_attribute, data.breakdown_group[rrr].breakdown_group_year, data.breakdown_group[rrr].breakdown_resource_name);
+                                    
+                                //$("#breakdown").on("change", function() { 
+                                    //var str = "0";
+                                    
+                                    //console.log(str);
+                                    
+//                                    cuanti += '<div class="tabulado'+str+'">';
+//                                    cuanti += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+//                                    cuanti += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
 //                                    cuanti += '</div>';
-//                                }
+                                
+                                //});
+        
+                                //for(var rrr = 0; rrr < tados.length; rrr++){
+//                                    cuanti += '<div class="tabulado'+str+'">';
+//                                    cuanti += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+//                                    cuanti += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+//                                    cuanti += '</div>';
+                                //}
         
                                 cuanti += '</div>';
-        
-                                cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
-                                cuanti += '<script>$(".tabulado0").show();$("#breakdown").on("change", function() { console.log("Si jaló ------------------------"); });</script>';
+                                cuanti += '<div class="verGrafica"></div>';
+        
+                                //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
+                                
         
                                 cuanti += '<div class="row">' +
-                                    '<div class="col-md-10">' +
+                                    '<div class="col-md-12">' +
                                         '<p><b>Nota: </b> ' + data.indicator_reference + '</p>' +
 //                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data.indicator_reference+'</span></p>' +
                                     '</div>' +
@@ -419,9 +546,9 @@ $(document).ready(function() {
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
         
-        cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto");
+        //cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto");
         
-        console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", "Barras", "['results'][0]['grupo-especifico']", "['results'][0]['pob-con-carencia-alim-miles']", "#898989", "Abierto"));
+        //console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto"));
 //        cuanti += '<script>' +
 //                'var svg = d3.select("#graph"),' +
 //                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
@@ -436,14 +563,14 @@ $(document).ready(function() {
 //
 //                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
 //
-//                'd3.json("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?periodo=2016", function(d) {' +
-//                'd.Porcentaje = +d.Porcentaje * 100;' +
+//                'd3.json("AaR02.json", function(d) {' +
+//                'd.poblacion_de_18_anios_o_mas = +d.poblacion_de_18_anios_o_mas * 100;' +
 //                'return d;' +
 //                '}, function(error, data) {' +
 //                'if (error) throw error;' +
 //
-//                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
-//                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
+//                'x.domain(data.map(function(d) { return d.Periodo; }));' +
+//                'y.domain([0, d3.max(data, function(d) { return d.poblacion_de_18_anios_o_mas; })]);' +
 //
 //                'g.append("g")' +
 //                '.attr("class", "axis axis--x")' +
@@ -458,7 +585,7 @@ $(document).ready(function() {
 //                '.attr("y", 6)' +
 //                '.attr("dy", "0.71em")' +
 //                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
+//                '.text("poblacion_de_18_anios_o_mas");' +
 //
 //                'g.append("g")' +
 //                '.call(d3.axisLeft(y))' +
@@ -468,13 +595,13 @@ $(document).ready(function() {
 //                '.attr("y", 6)' +
 //                '.attr("dy", "0.71em")' +
 //                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
+//                '.text("poblacion_de_18_anios_o_mas");' +
 //
 //                'g.selectAll(".bar")' +
 //                '.data(data)' +
 //                '.enter().append("rect")' +
 //                '.attr("class", "bar")' +
-//                '.attr("x", function(d) { return x(d.Legislatura); })' +
+//                '.attr("x", function(d) { return x(d.Periodo); })' +
 //                '.attr("y", function(d) { return height; })' +
 //                '.attr("width", x.bandwidth())' +
 //                '.attr("height", function(d) { return 0})' +
@@ -483,93 +610,24 @@ $(document).ready(function() {
 //                '.style("left", d3.event.pageX - 25 + "px")' +
 //                '.style("top", d3.event.pageY - 40 + "px")' +
 //                '.style("display", "inline-block")' +
-//                '.text(d.Porcentaje);' +
+//                '.text(d.poblacion_de_18_anios_o_mas);' +
 //                '})' +
 //                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
 //                '.transition()' +
 //                '.delay(function(d,i){ return i*100 })' +
 //                '.duration(2000)' +
-//                '.attr("y", function(d){ return y(d.Porcentaje)})' +
-//                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
+//                '.attr("y", function(d){ return y(d.poblacion_de_18_anios_o_mas)})' +
+//                '.attr("height", function(d){ return height - y(d.poblacion_de_18_anios_o_mas) });' +
 //                '});' +
 //                '</script>';
-//        
-//        cuanti += '<script>' +
-//                'var svg = d3.select("#graph"),' +
-//                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
-//                'width = +svg.attr("width") - margin.left - margin.right,' +
-//                'height = +svg.attr("height") - margin.top - margin.bottom;' +
-//
-//                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
-//                'y = d3.scaleLinear().rangeRound([height, 0]);' +
-//
-//                'var g = svg.append("g")' +
-//                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
-//
-//                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
-//
-//                'd3.csv("CcE04_Barras.csv", function(d) {' +
-//                'd.Porcentaje = +d.Porcentaje * 100;' +
-//                'return d;' +
-//                '}, function(error, data) {' +
-//                'if (error) throw error;' +
-//
-//                'x.domain(data.map(function(d) { return d.Legislatura; }));' +
-//                'y.domain([0, d3.max(data, function(d) { return d.Porcentaje; })]);' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--x")' +
-//                '.attr("transform", "translate(0," + height  + ")")' +
-//                '.call(d3.axisBottom(x));' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--y")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
-//
-//                'g.append("g")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("fill", "#000")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
-//
-//                'g.selectAll(".bar")' +
-//                '.data(data)' +
-//                '.enter().append("rect")' +
-//                '.attr("class", "bar")' +
-//                '.attr("x", function(d) { return x(d.Legislatura); })' +
-//                '.attr("y", function(d) { return height; })' +
-//                '.attr("width", x.bandwidth())' +
-//                '.attr("height", function(d) { return 0})' +
-//                '.on("mousemove", function(d){' +
-//                'tooltip' +
-//                '.style("left", d3.event.pageX - 25 + "px")' +
-//                '.style("top", d3.event.pageY - 40 + "px")' +
-//                '.style("display", "inline-block")' +
-//                '.text(d.Porcentaje);' +
-//                '})' +
-//                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
-//                '.transition()' +
-//                '.delay(function(d,i){ return i*100 })' +
-//                '.duration(2000)' +
-//                '.attr("y", function(d){ return y(d.Porcentaje)})' +
-//                '.attr("height", function(d){ return height - y(d.Porcentaje) });' +
-//                '});' +
-//                '</script>';
+                
         return cuanti;
     }
     
     function graficaCuanti(fuente, tipoGrafica, ejeX, ejeY, color, datos){
-        var graf = '<script>' +
+        var graf = '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
+            
+            graf += '<script>' +
                 'var svg = d3.select("#graph"),' +
                 'margin = {top: 20, right: 20, bottom:130, left: 40},' +
                 'width = +svg.attr("width") - margin.left - margin.right,' +
@@ -585,7 +643,8 @@ $(document).ready(function() {
 
                 'd3.json("'+fuente+'", function(d) {' +
                 'd'+ejeY+' = +d'+ejeY+' * 100;' +
-                'return d;' +
+                'console.log(d.results[0]);' +
+                'return d.results[0];' +
                 '}, function(error, data) {' +
                 'if (error) throw error;' +
 
@@ -693,37 +752,9 @@ $(document).ready(function() {
             dat1 += '</tbody>';
             dat1 += '</table>';
         
-        
         return dat1;
     }
     
-    function apiGOB(resource, dataset, page, total){
-        $.ajax({
-		  type: 'GET',
-		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?page='+page+'',
-		  data: {},
-		  success: function( data, textStatus, jqxhr ) {
-              gob = data;
-		  },
-		  async:false
-		});
-        return gob;
-    }
-    
-    
-    function apiGobGrupo(resource, dataset, atributo, variable){
-        var gobGrupo = [];
-        $.ajax({
-		  type: 'GET',
-		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?'+atributo+'='+variable,
-		  data: {},
-		  success: function( data, textStatus, jqxhr ) {
-              gobGrupo = data['results'];
-		  },
-		  async:false
-		});
-        return gobGrupo;
-    }
     
     
 });
