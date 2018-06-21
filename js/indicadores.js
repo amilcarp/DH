@@ -419,11 +419,20 @@ $(document).ready(function() {
                                     if(tieneBreakdown === true){
                                         cuanti += '<div class="col-md-10">';
                                         var tados = data.breakdown_group;
-                                        cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
-                                        for (var m=0;m<tados.length;m++){
-                                            cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
-                                        }
-                                        cuanti += '</select>';
+                                        if(tados.length > 1){
+                                            cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
+                                            for (var m=0;m<tados.length;m++){
+                                                cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+                                            }
+                                            cuanti += '</select>';
+                                           }else{
+                                               cuanti += '<select name="breakdown" id="breakdown" style="visibility:hidden">';
+                                                for (var m=0;m<tados.length;m++){
+                                                    cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
+                                                }
+                                                cuanti += '</select>';
+                                           }
+                                        
                                         cuanti += '</div>' +
                                                 '<div class="col-md-2">' +
                                                     '<button type="button" class="btn btn-primary btnGrafica">Ver Gráfica</button> <button type="button" class="btn btn-primary btnTabla">Ver Tabla</button>' +
@@ -438,40 +447,6 @@ $(document).ready(function() {
                                 
                                 cuanti += '<div class="divTabla">';
                                 cuanti += '<div class="verTabla"></div>';
-//                                cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
-//                                for (var m=0;m<tados.length;m++){
-//                                    cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
-//                                }
-//                                cuanti += '</select>';
-
-                                //iuio(tados);
-        
-                                //llamaDatos(key);
-//                                var str = "0";
-//                                $("select#breakdown option:selected").each(function() {
-//                                  str = $(this).val();
-//                                });
-//                                console.log(str);
-                                
-                                    
-                                //$("#breakdown").on("change", function() { 
-                                    //var str = "0";
-                                    
-                                    //console.log(str);
-                                    
-//                                    cuanti += '<div class="tabulado'+str+'">';
-//                                    cuanti += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-//                                    cuanti += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
-//                                    cuanti += '</div>';
-                                
-                                //});
-        
-                                //for(var rrr = 0; rrr < tados.length; rrr++){
-//                                    cuanti += '<div class="tabulado'+str+'">';
-//                                    cuanti += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-//                                    cuanti += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
-//                                    cuanti += '</div>';
-                                //}
         
                                 cuanti += '</div>';
                                 
@@ -480,17 +455,12 @@ $(document).ready(function() {
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
         
-                                cuanti += '<div class="row">' +
-                                    '<div class="col-md-12">' +
-                                        '<p><b>Nota: </b> ' + data.indicator_reference + '</p>' +
-//                                        '<p><b>Fuente: </b> <span id="fuenteInd">'+data.indicator_reference+'</span></p>' +
-                                    '</div>' +
-                                '</div>' +
-                                
+                                cuanti += '<div class="row"><div class="col-md-12">';
+                                cuanti += (tieneBreakdown === false) ? '' : '<p><b>Nota: </b> ' + data.indicator_reference + '</p>';
+
+                                cuanti += '</div></div>' +
                             '</div>' +
-                            
                             '<div class="tab-pane" id="tab-022">' +
-                            
                                 '<table class="table table-striped">' +
                                     '<tbody>' +
                                         '<tr>' +
@@ -518,7 +488,7 @@ $(document).ready(function() {
                                             '<td>'+formulas(res)+'</td>' +
                                         '</tr>';
                                     
-                                    cuanti += (data.indicator_source_formule === null) ? '' : '<tr><td>>Fuente de la fórmula</td><td>'+data.indicator_source_formule+'</td></tr>';
+                                    cuanti += (data.indicator_source_formule === null) ? '' : '<tr><td>Fuente de la fórmula</td><td>'+data.indicator_source_formule+'</td></tr>';
                                         
                                         cuanti += '<tr>' +
                                             '<td>Unidad de Medida</td>' +
