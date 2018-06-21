@@ -338,14 +338,19 @@ $(document).ready(function() {
     function formulas(formula){
         var img = '';
         var j = 2;
-        for(var i = 0; i < formula.length; i++){
+        
+        if(formula !== null){
+            for(var i = 0; i < formula.length; i++){
             i++;
-            if(formula[i] == null){
+            if(formula[i] === null){
                 
             }else{
                 img += '<img src="http://latex.codecogs.com/svg.latex?'+formula[i]+'" border="0" style="" /> <span>'+formula[i+1]+'</span><br/>';
 //                console.log(formula[i]);
             }
+           }
+        }else{
+            img += 'Sin información';
         }
         return img;
     }
@@ -389,7 +394,12 @@ $(document).ready(function() {
     function indicadorCuanti(data,tieneBreakdown){
 
         var formCalculo = data.indicator_calculation_element;
-        var res = formCalculo.split("$* ");
+        var res;
+        if(formCalculo === null){
+            res = null;
+        }else{
+         res = formCalculo.split("$* ");   
+        }
 
         cuanti = '<!-- Inicia Bloque -->' +
 		      '<div class="row">' +
@@ -419,7 +429,7 @@ $(document).ready(function() {
                                                     '<button type="button" class="btn btn-primary btnGrafica">Ver Gráfica</button> <button type="button" class="btn btn-primary btnTabla">Ver Tabla</button>' +
                                                 '</div>';
                                     }else{
-                                        cuanti += '<h3>El indicador no reporta datos del breakdown_group.</h3>';
+                                        cuanti += '<h3>Sin información disponible.</h3>';
                                     }
 
                                     cuanti += '</div>';
