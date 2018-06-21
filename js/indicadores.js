@@ -516,12 +516,11 @@ $(document).ready(function() {
                                         '<tr>' +
                                             '<td>Elementos del cálculo</td>' +
                                             '<td>'+formulas(res)+'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
-                                            '<td>Fuente de la fórmula</td>' +
-                                            '<td>'+data.indicator_source_formule+'</td>' +
-                                        '</tr>' +
-                                        '<tr>' +
+                                        '</tr>';
+                                    
+                                    cuanti += (data.indicator_source_formule === null) ? '' : '<tr><td>>Fuente de la fórmula</td><td>'+data.indicator_source_formule+'</td></tr>';
+                                        
+                                        cuanti += '<tr>' +
                                             '<td>Unidad de Medida</td>' +
                                             '<td>'+data.indicator_measure_unit+'</td>' +
                                         '</tr>' +
