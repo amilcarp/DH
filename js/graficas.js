@@ -1,4 +1,310 @@
-  /* Configuración del tamaño de la caja del canvas o SVG */
+function lineas(URLJSON, ejeX, ejeY, color){
+    /* Configuración del tamaño de la caja del canvas o SVG */
+    var svg = d3.select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    // Se definen las variables de los ejes X y Y
+    var parseTime = d3.timeParse("%Y");
+    
+    // Valores para Líneas
+    var x = d3.scaleTime().range([0, width]);
+    var y = d3.scaleLinear().rangeRound([height, 0]);
+    
+    // Se crea la variable de la línea con las variables que va a graficar en cada eje
+    var line = d3.line()
+        .x(function(d) { return x(d[ejeX]); })
+        .y(function(d) { return y(d[ejeY]); });
+    
+    // Se crea la variable que mostrará el tooltip
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+    
+    var url = URLJSON;
+    
+    // Cargamos los datos del JSON
+    d3.json(URLJSON, function(error, data) {
+        if (error) throw error;
+        console.log(data);
+        
+        // Aquí cargamos los datos
+        data.forEach(function(d) {
+            d[ejeX] = parseTime(d[ejeX]);
+            d[ejeY] = +d[ejeY];
+            //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
+            console.log(d[ejeX]);
+          });
+        
+        // Aquí se define el dominio de los ejes X y Y
+        x.domain(d3.extent(data, function(d) { return d[ejeX]; }));
+        //x.domain(data.map(function(d) {return d['Periodo'];}));
+        //x.domain(data.map(function(d){ return d.Periodo; }));
+        y.domain(d3.extent(data, function(d) { return d[ejeY]; }));
+
+        // Dibuja el eje X
+        g.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x).tickFormat(d3.timeFormat("%Y")))
+            .select(".domain");
+
+        // Dibuja el eje Y y anota el atributo del eje
+        g.append("g")
+            .call(d3.axisLeft(y))
+            .append("text")
+            .attr("fill", "#000")
+            .attr("transform", "rotate(-90)")
+            .attr("y", -50)
+            .attr("dy", "0.71em")
+            .attr("text-anchor", "end")
+            .text("Unidades");
+
+        // Dibuja la línea
+        g.append("path")
+            .datum(data)
+            .attr("class","line")
+            .attr("fill", "none")
+            .attr("stroke", color)
+            .attr("stroke-linejoin", "round")
+            .attr("stroke-linecap", "round")
+            .attr("stroke-width", 5)
+            .attr("d", line);
+
+        // Dibuja círculos en la línea
+        g.selectAll("circle")
+            .data(data).enter().append("svg:circle")
+            .attr("cx", function(d) { return x(d[ejeX]);})
+            .attr("cy", function(d) {return y(d[ejeY])})
+            .attr("fill", color)
+            .attr("fill-opacity","0").attr("r", 6)
+            .on("mouseover", function(d,i) {  
+                tooltip
+                    .style("left", d3.event.pageX - 25 + "px")
+                    .style("top", d3.event.pageY - 30 + "px")
+                    .style("display", "inline-block")
+                    .text(d[ejeY]);
+            })
+            .on("mouseout", function(d){
+                tooltip.style("display", "none");
+            });
+        
+    });
+
+} 
+
+function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
+    /* Configuración del tamaño de la caja del canvas o SVG */
+    var svg = d3.select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    
+    // Se definen las variables de los ejes X y Y
+    var parseTime = d3.timeParse("%Y");
+    
+    // Valores para Columna agrupada
+    var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+    var y = d3.scaleLinear().rangeRound([height, 0]);
+    
+    var chartWidth, chartHeight;
+        
+        var axisLayer = svg.append("g").classed("axisLayer", true);
+        var chartLayer = svg.append("g").classed("chartLayer", true);
+
+
+        var xScale = d3.scaleBand();
+
+        var xInScale = d3.scaleBand();
+
+        var yScale = d3.scaleLinear();
+
+        var color = d3.scaleOrdinal()
+            .range(["#d0743c", "#ff8c00"]);
+    
+    var nested = d3.nest()
+            .rollup(function(d){ delete d[0].Periodo; return d[0] })
+            .key(function(d){ return d.Periodo })
+            .entries(data);
+
+        
+        
+        nested.forEach(function(d){
+            d.age = Object.keys(d.value).map(function(key){
+                return {key:key, value:d.value[key]}
+            });
+        });
+        
+        console.log(nested);
+
+        setSize(nested);
+        drawAxis();
+        drawChart(nested);
+    
+     function cast(data) {
+        Object.keys(d).forEach(function(key){
+            if (!isNaN(+d[key])) d[key] = +d[key]
+        })
+        return d;
+    }
+    
+    
+    function setSize(nested) {
+
+        width = document.querySelector("#graph").clientWidth;
+        height = document.querySelector("#graph").clientHeight;
+
+        margin = {top:0, left:100, bottom:40, right:30 };
+        
+        
+        chartWidth = width - (margin.left+margin.right);
+        chartHeight = height - (margin.top+margin.bottom);
+        
+        svg.attr("width", width).attr("height", height);
+        
+        axisLayer.attr("width", width).attr("height", height);
+        
+        chartLayer
+            .attr("width", chartWidth)
+            .attr("height", chartHeight)
+            .attr("transform", "translate("+[margin.left+10, margin.top]+")");
+            
+        
+                
+        xScale.domain(nested.map(function(d) { return d.key }))
+            .range([0, chartWidth]).paddingInner(0.1);
+            
+        
+        var ageNames = Object.keys(nested[0].value);
+        
+        xInScale.domain(ageNames).range([0, xScale.bandwidth()]);
+        
+        var yMax = d3.max(nested.map(function(d){
+            var values = Object.keys(d.value).map(function(key){
+                return d.value[key];
+            })
+            return d3.max(values);
+        }))
+
+        yScale.domain([0, yMax]).range([chartHeight, 0]);
+
+            
+    }
+    
+    function drawChart(nested) {
+        var t = d3.transition()
+            .duration(1000)
+            .ease(d3.easeLinear);
+
+        
+        var contry = chartLayer.selectAll(".contry")
+            .data(nested);
+            
+        var newCountry = contry.enter().append("g").attr("class", "contry");
+        
+
+        contry.merge(newCountry)
+            .attr("transform", function(d) { return "translate(" + [xScale(d.key), 0] + ")"; });
+
+        
+        var bar = newCountry.selectAll(".bar")
+            .data(function(d){ return d.age });
+
+        var newBar = bar.enter().append("rect").attr("class", "bar");
+
+                        
+        bar.merge(newBar)
+            .attr("width", xInScale.bandwidth()-60)
+            .attr("height", 0)
+            .attr("fill", function(d) { return color(d.key); })
+            .attr("transform", function(d) { return "translate(" + [xInScale(d.key), chartHeight] + ")" }).on("mousemove", function(d){
+                    tooltip
+                      .style("left", d3.event.pageX - 25 + "px")
+                      .style("top", d3.event.pageY - 40 + "px")
+                      .style("display", "inline-block")
+                    .text(d.value);
+                })
+                .on("mouseout", function(d){ tooltip.style("display", "none");});
+//               .transition()
+//               .delay(function(d,i){ return i*100 })
+//               .duration(2000)
+//                .attr('y', function(d){ return y(d.value)})
+//               .attr('height', function(d){ return height - y(d.value) });
+
+        
+        
+        //アニメーション
+       bar.merge(newBar).transition(t)
+            .attr("height", function(d) { return chartHeight - yScale(d.value)-3; })
+            .attr("transform", function(d) { return "translate(" + [xInScale(d.key), yScale(d.value)] + ")" });
+        
+        console.log(nested);
+        var tor = nested[0];
+        console.log(tor);
+        
+         //Legend
+        var legend = svg.selectAll(".legend")
+          .data(nested.map(function(d) { console.log(d.age[0].key); return d.age[0].key; }).reverse())
+        .enter().append("g")
+          .attr("class", "legend")
+          .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
+          .style("opacity","0");
+
+        legend.append("rect")
+          .attr("x", width - 18)
+          .attr("width", 18)
+          .attr("height", 18)
+          .style("fill", function(d) { return color(d); });
+
+        legend.append("text")
+          .attr("x", width - 24)
+          .attr("y", 9)
+          .attr("dy", ".35em")
+          .style("text-anchor", "end")
+          .text(function(d) {return d; });
+
+        legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
+        
+    }
+    
+    function drawAxis(){
+        var yAxis = d3.axisLeft(yScale)
+            .tickSizeInner(-chartWidth);
+        
+        axisLayer.append("g")
+            .attr("transform", "translate("+[margin.left, margin.top]+")")
+            .attr("class", "axis y")
+            .call(yAxis);
+            
+        var xAxis = d3.axisBottom(xScale);
+    
+        axisLayer.append("g")
+            .attr("class", "axis x")
+            .attr("transform", "translate("+[margin.left, chartHeight]+")")
+            .call(xAxis);
+        
+    }   
+    
+    
+}
+
+function barras(){
+    
+}
+
+function dotplot(){
+    
+}
+
+function mapa(){
+    
+}
+
+
+
+
+/* Configuración del tamaño de la caja del canvas o SVG */
     var svg = d3.select("svg"),
         margin = {top: 20, right: 20, bottom: 30, left: 50},
         width = +svg.attr("width") - margin.left - margin.right,
@@ -86,7 +392,7 @@
     
     
     
-    function lineas(data){
+    function lineasJSON(data){
         // Aquí cargamos los datos
         data.forEach(function(d) {
             d['Periodo'] = parseTime(d['Periodo']);
@@ -496,7 +802,7 @@ Se agregan Leyendas
         var color = d3.scaleOrdinal()
             .range(["#d0743c", "#ff8c00"]);
     
-    function columnAgrupada(data){
+    function columnAgrupadaJSON(data){
     
 //        var chartWidth, chartHeight;
 //        
