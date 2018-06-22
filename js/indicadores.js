@@ -143,7 +143,7 @@ $(document).ready(function() {
                     $(".divTabla").hide();
                     $(".btnGrafica").hide();
                     $(".btnTabla").show();
-                    $(".verGrafica").html(graficaCuanti(datosDer,str));
+                    $(".verGrafica").html(graficaCuanti(datosDer,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos
                 }
                 //$(".verTabla").html(armaTabla(datosDer,str));
 //                $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
@@ -164,68 +164,7 @@ $(document).ready(function() {
         return tipoIndicador === "E" ? '<p class="tipoIndicador colorE" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p>' :  tipoIndicador === "P" ? '<p class="tipoIndicador colorP" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p>':  tipoIndicador === "R" ? '<p class="tipoIndicador colorR" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p>': 'N/D';
     }
    
-
-    
-    var Utf8 = {
-        // public method for url encoding
-        encode : function (string) {
-            string = string.replace(/\r\n/g,"\n");
-            var utftext = "";
-
-            for (var n = 0; n < string.length; n++) {
-                var c = string.charCodeAt(n);
-                if (c < 128) {
-                    utftext += String.fromCharCode(c);
-                }else if((c > 127) && (c < 2048)) {
-                    utftext += String.fromCharCode((c >> 6) | 192);
-                    utftext += String.fromCharCode((c & 63) | 128);
-                }else {
-                    utftext += String.fromCharCode((c >> 12) | 224);
-                    utftext += String.fromCharCode(((c >> 6) & 63) | 128);
-                    utftext += String.fromCharCode((c & 63) | 128);
-                }
-            }
-            return utftext;
-        },
-        mia : function (string) {
-            string = string.replace(/\r\n/g,"\n");
-            var utftex= "";
-            var letr = ["á","é","í","ó","ú","Á","É","Í","Ó","Ú","ñ","Ñ"];
-            var cambio = ["\acute{a}","\acute{e}","\acute{i}","\acute{o}","\acute{u}","\acute{A}","\acute{E}","\acute{I}","\acute{O}","\acute{U}","\tilde{n}","\tilde{N}"];
-
-            for(var v = 0; v < string.length; v++)
-            {
-                utftex += string[v].replace(letr[v], cambio[v]);
-            }
-            return utftex;
-        },
-
-        // public method for url decoding
-        decode : function (utftext) {
-            var string = "";
-            var i = 0;
-            var c = c1 = c2 = 0;
-            while ( i < utftext.length ) {
-                c = utftext.charCodeAt(i);
-                if (c < 128) {
-                    string += String.fromCharCode(c);
-                    i++;
-                }else if((c > 191) && (c < 224)) {
-                    c2 = utftext.charCodeAt(i+1);
-                    string += String.fromCharCode(((c & 31) << 6) | (c2 & 63));
-                    i += 2;
-                } else {
-                    c2 = utftext.charCodeAt(i+1);
-                    c3 = utftext.charCodeAt(i+2);
-                    string += String.fromCharCode(((c & 15) << 12) | ((c2 & 63) << 6) | (c3 & 63));
-                    i += 3;
-                }
-            }
-            return string;
-        }
-    }
-    
-    
+     
     function indicadorCuali(data){
         
         cuali = '<!-- Inicia Bloque -->' +
@@ -288,39 +227,39 @@ $(document).ready(function() {
                                         '<tr>' +
                                             '<td>Evidencias</td><td style="line-height:1.2;">';
             
-            for(var i = 0; i< data.evidence.length; i++){
-                var vigencia = data.evidence[i].validity_year_start - data.evidence[i].validity_end_start;
-                 cuali += '<p><b>Evidencia:</b> ' + data.evidence[i].evidence_name + '</p>' +
-                        '<p><b>Unidad de Observación:</b> ' + data.evidence[i].observation_unit_name + '</p>' +
-                        '<p><b>URL:</b> ' + '<a href="' + data.evidence[i].evidence_url + '" target="_blank">' + data.evidence[i].evidence_url + '</a>' + '</p>' +
-                        '<p><b>Entidad que valida:</b> ' + data.evidence[i].institution_name_evidencie  + '</p>' +
-                        '<p><b>Vigencia:</b> ' + vigencia + '</p>' +
-                        '<p><b>Fecha de actualización de la evidencia:</b> ' + data.evidence[i].update_date + '</p>';
-                if(typeof data.evidence[i].validity_date_evidence !== 'undefined'){
-                    for(var j = 0; j< data.evidence[i].validity_date_evidence.length; j++){
-                        cuali += '<p><b>Fecha de '+ data.evidence[i].validity_date_evidence[j].date_type_name +':</b> ' + data.evidence[i].validity_date_evidence[j].validity_date + '</p>';
-                    }
-                }
-                if(typeof data.evidence[i].objective !== 'undefined'){
-                    for(var k = 0; k< data.evidence[i].objective.length; k++){
-                        cuali += (data.evidence[i].objective[k].objective_sequence === null) ? '' : '<p><b>Objetivo '+ data.evidence[i].objective[k].objective_sequence +':</b> ' + data.evidence[i].objective[k].objective_name + '</p>';
-                        cuali += (data.evidence[i].objective[k].strategy_sequence === null) ? '' : '<p><b>Estrategia '+ data.evidence[i].objective[k].strategy_sequence +':</b> ' + data.evidence[i].objective[k].strategy_name + '</p>';
-                        cuali += (data.evidence[i].objective[k].action_line_sequence === null) ? '' : '<p><b>Línea de acción '+ data.evidence[i].objective[k].action_line_sequence +':</b> ' + data.evidence[i].objective[k].action_line_name + '</p>';
-                    }
-                }
-                if(typeof data.evidence[i].complementary_attribute !== 'undefined'){
-                    for(var l = 0; l < data.evidence[i].complementary_attribute.length; l++){
-                        cuali += (data.evidence[i].complementary_attribute[l].objective_sequence === null) ? '' : '<p><b>'+ data.evidence[i].complementary_attribute[l].complementary_attribute_name +':</b> ' + data.evidence[i].complementary_attribute[l].complementary_attribute_description + '</p>';
-                    }
-                }
-                if(typeof data.evidence[i].paper !== 'undefined'){
-                    for(var m = 0; m < data.evidence[i].paper.length; m++){
-                        cuali += (data.evidence[i].paper[m].paper_sequence === null) ? '' : '<p><b>Artículo '+ data.evidence[i].paper[m].paper_sequence +':</b> ' + data.evidence[i].paper[m].paper_name + '</p>';
-                    }
-                }
-                
-                cuali += '<hr>';
-            }
+                                            for(var i = 0; i< data.evidence.length; i++){
+                                                var vigencia = data.evidence[i].validity_year_start - data.evidence[i].validity_end_start;
+                                                 cuali += '<p><b>Evidencia:</b> ' + data.evidence[i].evidence_name + '</p>' +
+                                                        '<p><b>Unidad de Observación:</b> ' + data.evidence[i].observation_unit_name + '</p>' +
+                                                        '<p><b>URL:</b> ' + '<a href="' + data.evidence[i].evidence_url + '" target="_blank">' + data.evidence[i].evidence_url + '</a>' + '</p>' +
+                                                        '<p><b>Entidad que valida:</b> ' + data.evidence[i].institution_name_evidencie  + '</p>' +
+                                                        '<p><b>Vigencia:</b> ' + vigencia + '</p>' +
+                                                        '<p><b>Fecha de actualización de la evidencia:</b> ' + data.evidence[i].update_date + '</p>';
+                                                if(typeof data.evidence[i].validity_date_evidence !== 'undefined'){
+                                                    for(var j = 0; j< data.evidence[i].validity_date_evidence.length; j++){
+                                                        cuali += '<p><b>Fecha de '+ data.evidence[i].validity_date_evidence[j].date_type_name +':</b> ' + data.evidence[i].validity_date_evidence[j].validity_date + '</p>';
+                                                    }
+                                                }
+                                                if(typeof data.evidence[i].objective !== 'undefined'){
+                                                    for(var k = 0; k< data.evidence[i].objective.length; k++){
+                                                        cuali += (data.evidence[i].objective[k].objective_sequence === null) ? '' : '<p><b>Objetivo '+ data.evidence[i].objective[k].objective_sequence +':</b> ' + data.evidence[i].objective[k].objective_name + '</p>';
+                                                        cuali += (data.evidence[i].objective[k].strategy_sequence === null) ? '' : '<p><b>Estrategia '+ data.evidence[i].objective[k].strategy_sequence +':</b> ' + data.evidence[i].objective[k].strategy_name + '</p>';
+                                                        cuali += (data.evidence[i].objective[k].action_line_sequence === null) ? '' : '<p><b>Línea de acción '+ data.evidence[i].objective[k].action_line_sequence +':</b> ' + data.evidence[i].objective[k].action_line_name + '</p>';
+                                                    }
+                                                }
+                                                if(typeof data.evidence[i].complementary_attribute !== 'undefined'){
+                                                    for(var l = 0; l < data.evidence[i].complementary_attribute.length; l++){
+                                                        cuali += (data.evidence[i].complementary_attribute[l].objective_sequence === null) ? '' : '<p><b>'+ data.evidence[i].complementary_attribute[l].complementary_attribute_name +':</b> ' + data.evidence[i].complementary_attribute[l].complementary_attribute_description + '</p>';
+                                                    }
+                                                }
+                                                if(typeof data.evidence[i].paper !== 'undefined'){
+                                                    for(var m = 0; m < data.evidence[i].paper.length; m++){
+                                                        cuali += (data.evidence[i].paper[m].paper_sequence === null) ? '' : '<p><b>Artículo '+ data.evidence[i].paper[m].paper_sequence +':</b> ' + data.evidence[i].paper[m].paper_name + '</p>';
+                                                    }
+                                                }
+
+                                                cuali += '<hr>';
+                                            }
                               
                                        cuali += '</td></tr>' +
                                     '</tbody>' +
@@ -446,7 +385,7 @@ $(document).ready(function() {
                                 //var tados = data.breakdown_group;
                                 
                                 cuanti += '<div class="divTabla">';
-                                cuanti += '<div class="verTabla"></div>';
+                                cuanti += '<div class="verTabla" style="width: 100%;overflow-x: scroll;"></div>';
         
                                 cuanti += '</div>';
                                 
@@ -602,6 +541,44 @@ $(document).ready(function() {
                 
         return cuanti;
     }
+    
+    
+    function tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos){
+        // Tipos de gráfica reportados por la API según el recurso breakdown_group.graphic[n].graphic_key
+        // Bre = Gráfica de Dotplot para comparación entre 2 variables
+        // ColAg = Gráfica de columnas agrupadas para comparación entre 2 variables
+        // Ln = Gráfica de línea simple
+        // Col = Gráfica de barras simple
+        // Mapa = Visualiza un mapa de México con las 32 entidades
+
+        var salida;
+        
+        switch(tipo){
+            case "Bre":
+                salida = dotplot();
+            break;
+            case "ColAg":
+                salida = columnAgrupada();
+            break;
+            case "Ln":
+                salida = lineas();
+            break;
+            case "Col":
+                salida = barras();
+            break;
+            case "Mapa":
+                salida = mapa();
+            break;
+            default:
+                salida = barras();
+            break;
+                
+        }
+               
+        return salida;
+                
+    }
+    
     
     function graficaCuanti(fuente, tipoGrafica, ejeX, ejeY, color, datos){
         var graf = '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
