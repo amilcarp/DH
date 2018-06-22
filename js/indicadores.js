@@ -14,6 +14,30 @@ var res = '';
 var rec = '';
 var clas = '';
 var str = "0";
+var tados;
+
+var JSONvar = '['+
+    '{'+
+        '"Periodo":2010,'+
+        '"poblacion_de_18_anios_o_mas":22.3,'+
+        '"poblacion_con_menos_de_18_anios":29.4'+
+   ' },'+
+    '{'+
+       ' "Periodo":2012,'+
+      '  "poblacion_de_18_anios_o_mas":20.9,'+
+      '  "poblacion_con_menos_de_18_anios":28.2'+
+   ' },'+
+   ' {'+
+     '   "Periodo":2014, '+
+     '   "poblacion_de_18_anios_o_mas":21.3,'+
+     '   "poblacion_con_menos_de_18_anios":27.6'+
+    '},'+
+    '{'+
+      '  "Periodo":2016,'+
+      '  "poblacion_de_18_anios_o_mas":18.5,'+
+      '  "poblacion_con_menos_de_18_anios":23.3'+
+    '}'+
+']';
 
 var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
@@ -111,8 +135,21 @@ $(document).ready(function() {
             $(".btnTabla").hide();
             $(".divGrafica").hide();
             $(".divTabla").show();
-            $(".btnGrafica").on("click",function(){ $(".btnGrafica").hide();$(".btnTabla").show();$(".divGrafica").show();$(".divTabla").hide();});
-            $(".btnTabla").on("click",function(){ $(".btnGrafica").show();$(".btnTabla").hide();$(".divGrafica").hide();$(".divTabla").show();});
+            $(".btnGrafica").on("click",function(){ 
+                $(".btnGrafica").hide();
+                $(".btnTabla").show();
+                $(".divGrafica").show();
+                $(".divTabla").hide();
+                //$(".verGrafica").html(graficaCuanti(JSONvar,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos 
+                $(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', '', '#f00', datosDer));
+                //tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos)
+            });
+            $(".btnTabla").on("click",function(){
+                $(".btnGrafica").show();
+                $(".btnTabla").hide();
+                $(".divGrafica").hide();
+                $(".divTabla").show();
+            });
         
         
         function armaTabla(data, str){
@@ -144,6 +181,8 @@ $(document).ready(function() {
                     $(".btnGrafica").hide();
                     $(".btnTabla").show();
                     $(".verGrafica").html(graficaCuanti(datosDer,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos
+                    $(".verGrafica").append('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+                    console.log('Pone la gráfica');
                 }
                 //$(".verTabla").html(armaTabla(datosDer,str));
 //                $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
@@ -357,7 +396,7 @@ $(document).ready(function() {
         
                                     if(tieneBreakdown === true){
                                         cuanti += '<div class="col-md-10">';
-                                        var tados = data.breakdown_group;
+                                        tados = data.breakdown_group;
                                         if(tados.length > 1){
                                             cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
                                             for (var m=0;m<tados.length;m++){
@@ -442,7 +481,7 @@ $(document).ready(function() {
                             cuanti += (data.indicator_observation === null) ? '': '<tr><td>Observaciones</td><td>'+data.indicator_observation+'</td></tr>';
                             cuanti += '<tr>' +
                                             '<td>Fecha de actualización</td>' +
-                                            '<td>'+data.lastmodified+'</td>' +
+                                            '<td>'+moment(data.lastmodified).format('DD-MM-YYYY')+'</td>' +
                                         '</tr>' +
                                         '<tr>' +
                                             '<td>Entidad responsable del indicador</td>' +
@@ -561,7 +600,7 @@ $(document).ready(function() {
                 salida = columnAgrupada();
             break;
             case "Ln":
-                salida = lineas();
+                salida = lineas(URLJSON,ejeX,ejeY, color);
             break;
             case "Col":
                 salida = barras();

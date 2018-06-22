@@ -22,7 +22,131 @@
         .axis--x path {
           display: block;
         }
-        </style>
+
+/*
+        .bar {
+          fill: #a1b5c0;
+        }
+
+        .bar:hover {
+          fill: #DAE3E8;
+        }
+*/
+
+        .axis--x path {
+          display: none;
+        }
+
+        h3 {
+            margin-left: 200px;
+        }
+
+        p {
+            margin-left: 200px;
+            font-size: 11pt;
+            color: gray;
+        }
+
+        svg {
+            background-color: white;
+        }
+
+        circle {
+            stroke-width: 1;
+        }
+
+        circle.hombres {
+            fill: #999;
+        }
+
+        circle.mujeres {
+            fill: #721dac;
+            opacity: 1;
+        }
+
+        circle:hover {
+            stroke-width: 3;
+            stroke: white;
+        }
+
+        line.grid {
+            stroke: #eee;
+        }
+
+        line.between {
+            stroke: black;
+        }
+
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+
+        .axis text {
+            font-family: 'galanogrotesque', serif;
+            font-size: 11px;
+        }
+
+        .xlabel {
+            font-family: 'galanogrotesque', serif;
+            font-size: 11px;
+            color: gray;
+        }
+
+        .tick line{
+          opacity: 0.1;
+          stroke-width: 0.5;
+        }
+        .tipsy {  padding: 5px; z-index: 100000;top:0;right:0; }
+        .tipsy-inner {  text-align: center; position:absolute; }
+
+        /* PARA ANIMAR GráFICA DE LINEA */
+
+        .line {
+            fill: none;
+            /*stroke: #aaa;
+            stroke: #43484c;
+            stroke: #405275;
+            stroke: rgba(40, 53, 79, .95);
+            stroke: #161719;
+            stroke: #f99e1a;*/
+            stroke: #a1b5c0;
+            stroke-width: 5px;
+            stroke-dasharray:1400;
+            stroke-dashoffset: 1400;
+            animation: dash 3.5s 1 linear normal;
+            -webkit-animation-fill-mode: forwards; /* Safari 4.0 - 8.0 */
+            animation-fill-mode: forwards;
+
+
+        }
+
+        @keyframes dash{
+            0%{
+                stroke-dashoffset: 1400;
+            }
+            100%{
+                stroke-dashoffset:  0;
+            }
+        }
+
+
+        .toolTip {
+          position: absolute;
+          display: none;
+          min-width: 50px;
+          height: auto;
+          background: none repeat scroll 0 0 #ffffff;
+          border: 1px solid #a1b5c0;
+          padding: 5px;
+          text-align: center;
+            font-size: 12px;
+        }
+
+	</style>
+            
         
 		<!-- Respond.js soporte de media queries para Internet Explorer 8 -->
 	    <!-- ie8.js EventTarget para cada nodo en Internet Explorer 8 -->
@@ -119,6 +243,7 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+        <script src="https://momentjs.com/downloads/moment.min.js"></script>
 	    
         <script src="js/main.js"></script>
         <script src="js/indicadores.js"></script>

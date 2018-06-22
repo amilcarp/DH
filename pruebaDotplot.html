@@ -101,7 +101,7 @@
     //var heightScale = d3.scaleBand().rangeRound([ margin.top, height], 0.2);
     
     var widthScale = d3.scaleLinear().range([0, width]);
-    var heightScale = d3.scaleTime().range([height, 0]);
+    var heightScale = d3.scaleLinear().range([height, 0]);
     
 //	var xAxis = d3.svg.axis()
 //					.scale(widthScale)
@@ -128,15 +128,14 @@
     svg.append("g")
       .call(d3.axisLeft(heightScale));
     
-
+    var anios;
 
 	d3.json("AaR02.json", function(error, data) {
-
-		if (error) {
-			console.log("error reading file");
-		}
-
-		data.sort(function(a, b) {
+		if (error) throw error;
+        
+        anios = data.Periodo;
+		
+        data.sort(function(a, b) {
 			return d3.descending(+a.poblacion_con_menos_de_18_anios, +b.poblacion_con_menos_de_18_anios);
 		});
 
@@ -150,9 +149,11 @@
         //heightScale.domain([height, 0]);
         
         
+        heightScale.domain(anios.map(function(d) { return d.Periodo }));
+        //heightScale.domain(d3.extent(data, function(d) { return d.Periodo; }));
+        //widthScale.domain([0, d3.max(data, function(d) { return d.poblacion_con_menos_de_18_anios; })]);
         
-        heightScale.domain(d3.extent(data, function(d) { return d.Periodo; }));
-        widthScale.domain([0, d3.max(data, function(d) { return d.poblacion_con_menos_de_18_anios; })]);
+        widthScale.domain([0, d3.max(data, function(d) { return d.poblacion_con_menos_de_18_anios })]);
         
         
         console.log(heightScale.range());
