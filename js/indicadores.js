@@ -16,28 +16,7 @@ var clas = '';
 var str = "0";
 var tados;
 
-var JSONvar = '['+
-    '{'+
-        '"Periodo":2010,'+
-        '"poblacion_de_18_anios_o_mas":22.3,'+
-        '"poblacion_con_menos_de_18_anios":29.4'+
-   ' },'+
-    '{'+
-       ' "Periodo":2012,'+
-      '  "poblacion_de_18_anios_o_mas":20.9,'+
-      '  "poblacion_con_menos_de_18_anios":28.2'+
-   ' },'+
-   ' {'+
-     '   "Periodo":2014, '+
-     '   "poblacion_de_18_anios_o_mas":21.3,'+
-     '   "poblacion_con_menos_de_18_anios":27.6'+
-    '},'+
-    '{'+
-      '  "Periodo":2016,'+
-      '  "poblacion_de_18_anios_o_mas":18.5,'+
-      '  "poblacion_con_menos_de_18_anios":23.3'+
-    '}'+
-']';
+var JSONvar = [];
 
 var url_string = window.location.href; //window.location.href
 var url = new URL(url_string);
@@ -104,10 +83,6 @@ $(document).ready(function() {
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
             datosDer = data;
-//            console.log(datosDer);
-//            console.log(datosDer[0].indicator_code);
-//
-//              console.log(indicadorCuali(datosDer));
 
             if(datosDer.is_cuantitative == false){
                 $('#indicadores').html(indicadorCuali(datosDer));
@@ -141,7 +116,12 @@ $(document).ready(function() {
                 $(".divGrafica").show();
                 $(".divTabla").hide();
                 //$(".verGrafica").html(graficaCuanti(JSONvar,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos 
-                $(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', '', '#f00', datosDer));
+                var variable = $('#breakdown').val();
+                
+            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic[0].graphic_key, "AaR02.json", 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name[0], '#f00', datosDer));
+                
+                
+                //$(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', 'poblacion_de_18_anios_o_mas', '#f00', datosDer));
                 //tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos)
             });
             $(".btnTabla").on("click",function(){
@@ -428,7 +408,7 @@ $(document).ready(function() {
         
                                 cuanti += '</div>';
                                 
-                                cuanti += '<div class="verGrafica"></div>';
+                                cuanti += '<div class="verGrafica"><div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div></div>';
         
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
@@ -502,81 +482,6 @@ $(document).ready(function() {
 			      '</div>' +
 		      '</div>' +
 		      '<!-- Termina Bloque -->';
-        
-        //cuanti += graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto");
-        
-        //console.log(graficaCuanti("https://api.datos.gob.mx/v1/ckan.18b64e85-2b3a-4688-8a72-fd9b6e7d21b8.f1c66f48-5160-45d6-851e-8f3ecc2b05ce?grupo-especifico=poblacion_de_18_anios_o_mas", "Linea", "['results'][0]['periodo']", "['results'][0]['porc-pob-carencia-alim']", "#898989", "Abierto"));
-//        cuanti += '<script>' +
-//                'var svg = d3.select("#graph"),' +
-//                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
-//                'width = +svg.attr("width") - margin.left - margin.right,' +
-//                'height = +svg.attr("height") - margin.top - margin.bottom;' +
-//
-//                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
-//                'y = d3.scaleLinear().rangeRound([height, 0]);' +
-//
-//                'var g = svg.append("g")' +
-//                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
-//
-//                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
-//
-//                'd3.json("AaR02.json", function(d) {' +
-//                'd.poblacion_de_18_anios_o_mas = +d.poblacion_de_18_anios_o_mas * 100;' +
-//                'return d;' +
-//                '}, function(error, data) {' +
-//                'if (error) throw error;' +
-//
-//                'x.domain(data.map(function(d) { return d.Periodo; }));' +
-//                'y.domain([0, d3.max(data, function(d) { return d.poblacion_de_18_anios_o_mas; })]);' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--x")' +
-//                '.attr("transform", "translate(0," + height  + ")")' +
-//                '.call(d3.axisBottom(x));' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--y")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("poblacion_de_18_anios_o_mas");' +
-//
-//                'g.append("g")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("fill", "#000")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("poblacion_de_18_anios_o_mas");' +
-//
-//                'g.selectAll(".bar")' +
-//                '.data(data)' +
-//                '.enter().append("rect")' +
-//                '.attr("class", "bar")' +
-//                '.attr("x", function(d) { return x(d.Periodo); })' +
-//                '.attr("y", function(d) { return height; })' +
-//                '.attr("width", x.bandwidth())' +
-//                '.attr("height", function(d) { return 0})' +
-//                '.on("mousemove", function(d){' +
-//                'tooltip' +
-//                '.style("left", d3.event.pageX - 25 + "px")' +
-//                '.style("top", d3.event.pageY - 40 + "px")' +
-//                '.style("display", "inline-block")' +
-//                '.text(d.poblacion_de_18_anios_o_mas);' +
-//                '})' +
-//                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
-//                '.transition()' +
-//                '.delay(function(d,i){ return i*100 })' +
-//                '.duration(2000)' +
-//                '.attr("y", function(d){ return y(d.poblacion_de_18_anios_o_mas)})' +
-//                '.attr("height", function(d){ return height - y(d.poblacion_de_18_anios_o_mas) });' +
-//                '});' +
-//                '</script>';
                 
         return cuanti;
     }
@@ -600,7 +505,7 @@ $(document).ready(function() {
                 salida = columnAgrupada();
             break;
             case "Ln":
-                salida = lineas(URLJSON,ejeX,ejeY, color);
+                salida = lineas(fuente,ejeX,ejeY, color);
             break;
             case "Col":
                 salida = barras();
@@ -724,6 +629,53 @@ $(document).ready(function() {
             datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
         }
         
+            dat1 += '<table class="table">';
+            dat1 += '<thead><th>Periodo</th>';
+            for(var hh=0;hh<rec.length;hh++){
+                dat1 += '<th>'+rec[hh]+'</th>';
+            }
+            
+            var periodos = [];
+            for(var jj=0; jj < datoInd[0].length; jj++){
+                periodos.push(datoInd[0][jj].periodo);
+            }
+            
+            dat1 += '</thead><tbody>';
+            for(var gg=0;gg<periodos.length;gg++){
+                dat1 += '<tr>';
+                    dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                for(var ii = 0; ii < datoInd.length; ii++){
+                    dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+                } 
+                dat1 += '</tr>';
+            }
+            dat1 += '</tbody>';
+            dat1 += '</table>';
+        
+        return dat1;
+    }
+    
+    
+    
+    //Esta función crea el JSON para la gráfica de acuerdo a los siguiente criterios
+    //resource: resource_id de los datos del indicador a consultar en API datos.gob.mx
+    //dataset: Dataset del indicador a consultar en API datos.gob.mx
+    //resultado: Nombre del campo con el valor a graficar o tabular para consultarse en la API de datos.gob.mx. Ej. porc_pob_carencia_alim
+    //clasificacion: Atributo a llamar de la API de datos.gob.mx Ej. grupo-especifico
+    //periodos: Periodos que se van a consultar para el indicador, según reporte la API y consumido desde la variable breakdown_group_year
+    //recurso: Nombre del recurso para la clasificación y el periodo a consultar. Ej. poblacion_con_menos_de_18_anios
+    function datosGrafica(resource, dataset, resultado, clasificacion, periodos, recurso){
+        datoInd = [];
+        datoInd2 = [];
+        datoInd3 = [];
+        dat1 = '';
+        rec = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
+        res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
+        clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
+        var inf = [];
+        for(var yy=0;yy<rec.length;yy++){
+            datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+        }
             dat1 += '<table class="table">';
             dat1 += '<thead><th>Periodo</th>';
             for(var hh=0;hh<rec.length;hh++){
