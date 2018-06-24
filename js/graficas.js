@@ -21,13 +21,14 @@ function lineas(URLJSON, ejeX, ejeY, color){
     // Se crea la variable que mostrará el tooltip
     var tooltip = d3.select("body").append("div").attr("class", "toolTip");
     
-    var url = URLJSON;
+    var data = URLJSON;
     
     // Cargamos los datos del JSON
-    d3.json(URLJSON, function(error, data) {
-        if (error) throw error;
-        console.log(data);
+//    d3.json(URLJSON, function(error, data) {
+//        if (error) throw error;
+//        console.log(data);
         
+    console.log(data);
         // Aquí cargamos los datos
         data.forEach(function(d) {
             d[ejeX] = parseTime(d[ejeX]);
@@ -88,7 +89,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
                 tooltip.style("display", "none");
             });
         
-    });
+    //});
 
 } 
 

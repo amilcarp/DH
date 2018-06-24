@@ -6,6 +6,8 @@ var acumula = [];
 var tablaInd =  '';
 var contenido, cuali, cuanti;
 var datoInd = [];
+var datoInd2 = [];
+var miObj = new Object();
 var todo = [];
 var gob = [];
 var muestraGrafica = false;
@@ -13,6 +15,10 @@ var muestraGrafica = false;
 var res = '';
 var rec = '';
 var clas = '';
+var res2 = '';
+var rec2 = '';
+var clas2 = '';
+var dat111;
 var str = "0";
 var tados;
 
@@ -118,7 +124,7 @@ $(document).ready(function() {
                 //$(".verGrafica").html(graficaCuanti(JSONvar,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos 
                 var variable = $('#breakdown').val();
                 
-            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic[0].graphic_key, "AaR02.json", 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name[0], '#f00', datosDer));
+            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic[0].graphic_key, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name), 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name[0], '#f00', datosDer));
                 
                 
                 //$(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', 'poblacion_de_18_anios_o_mas', '#f00', datosDer));
@@ -134,6 +140,8 @@ $(document).ready(function() {
         
         function armaTabla(data, str){
             var cua = "";
+            cua += datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            console.log(datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name));
             cua += '<div class="tabulado'+str+'">';
             cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
             cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
@@ -180,7 +188,7 @@ $(document).ready(function() {
     
     
     function getTipoIndicador(tipoIndicador){
-        return tipoIndicador === "E" ? '<p class="tipoIndicador colorE" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p>' :  tipoIndicador === "P" ? '<p class="tipoIndicador colorP" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p>':  tipoIndicador === "R" ? '<p class="tipoIndicador colorR" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p>': 'N/D';
+        return tipoIndicador === "E" ? '<p class="tipoIndicador colorE" data-toggle="tooltip" data-placement="top" title="Indicador Estructural">E</p>' :  tipoIndicador === "P" ? '<p class="tipoIndicador colorP" data-toggle="tooltip" data-placement="top" title="Indicador de Proceso">P</p>':  tipoIndicador === "R" ? '<p class="tipoIndicador colorR" data-toggle="tooltip" data-placement="top" title="Indicador de Resultado">R</p>' : 'N/D';
     }
    
      
@@ -668,38 +676,58 @@ $(document).ready(function() {
         datoInd = [];
         datoInd2 = [];
         datoInd3 = [];
-        dat1 = '';
-        rec = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
-        res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
-        clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
+        dat111 = [];
+        rec2 = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
+        res2 = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
+        clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         var inf = [];
-        for(var yy=0;yy<rec.length;yy++){
-            datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+        for(var yy=0;yy<rec2.length;yy++){
+            datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
         }
-            dat1 += '<table class="table">';
-            dat1 += '<thead><th>Periodo</th>';
-            for(var hh=0;hh<rec.length;hh++){
-                dat1 += '<th>'+rec[hh]+'</th>';
-            }
+            dat111 += '[';//'[';
+            //dat111 += '"Periodo"</th>';
+            //for(var hh=0;hh<rec2.length;hh++){
+            //    dat111 += '<th>'+rec2[hh]+'</th>';
+            //}
             
             var periodos = [];
-            for(var jj=0; jj < datoInd[0].length; jj++){
-                periodos.push(datoInd[0][jj].periodo);
+            for(var jj=0; jj < datoInd2[0].length; jj++){
+                periodos.push(datoInd2[0][jj].periodo);
             }
             
-            dat1 += '</thead><tbody>';
+            dat111 += '';
             for(var gg=0;gg<periodos.length;gg++){
-                dat1 += '<tr>';
-                    dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
-                for(var ii = 0; ii < datoInd.length; ii++){
-                    dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+                dat111 += '{';
+                dat111 += '"Periodo" : ' + periodos[gg] + ',';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                for(var ii = 0; ii < datoInd2.length; ii++){
+                    for(var hh=0;hh<rec2.length;hh++){
+                        dat111 += '"'+rec2[hh]+'" : ';
+                        dat111 += '' + datoInd2[ii][gg][res2] + '';
+                        if(ii === datoInd2.length-1){
+                            dat111 += '';
+                        }else{
+                            dat111 += ',';
+                        }
+                    }
+//                    if(ii === datoInd2.length-1){
+//                        dat111 += '';
+//                    }else{
+//                        dat111 += ',';
+//                    }
                 } 
-                dat1 += '</tr>';
+                dat111 += '}';
+                
+                console.log(periodos.length);
+                console.log(periodos[gg]); 
+                if(gg === periodos.length-1){
+                    dat111 += '';
+                }else{
+                    dat111 += ',';
+                }
             }
-            dat1 += '</tbody>';
-            dat1 += '</table>';
+            dat111 += ']';//']';
         
-        return dat1;
+        return dat111;
     }
     
     
