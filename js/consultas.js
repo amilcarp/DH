@@ -670,7 +670,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-02">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.</p></div>' +
-                    '                        <div id="recepDerC"><p>Cargando información...</p></div>' + 
+                    '                        <div id="recepDerF"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
@@ -687,7 +687,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-03">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Categoría conceptual cuyos indicadores incorporan los aspectos instrumentales y de disponibilidad de recursos al interior del aparato estatal para la atención de los derechos.</p></div>' +
-                    '                        <div id="recepDerD"><p>Cargando información...</p></div>' + 
+                    '                        <div id="recepDerC"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
@@ -704,7 +704,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-04">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Principio transversal cuyos indicadores se orientan a asegurar la protección igualitaria y no discriminatoria de los derechos; detallan los mecanismos y políticas específicos disponibles para los grupos de población en situación de vulnerabilidad.</p></div>' +
-                    '                        <div id="recepDerF"><p>Cargando información...</p></div>' + 
+                    '                        <div id="recepDerD"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
@@ -784,7 +784,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-021">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.</p></div>' +
-                    '                        <div id="recepDerMatrizC"><p>Cargando información...</p></div>' + 
+                    '                        <div id="recepDerMatrizF"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
@@ -801,7 +801,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-031">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Categoría conceptual cuyos indicadores incorporan los aspectos instrumentales y de disponibilidad de recursos al interior del aparato estatal para la atención de los derechos.</p></div>' +
-                    '                        <div id="recepDerMatrizD"><p>Cargando información...</p></div>' + 
+                    '                        <div id="recepDerMatrizC"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
@@ -818,7 +818,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-041">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Principio transversal cuyos indicadores se orientan a asegurar la protección igualitaria y no discriminatoria de los derechos; detallan los mecanismos y políticas específicos disponibles para los grupos de población en situación de vulnerabilidad.</p></div>' +
-                    '                        <div id="recepDerMatrizF"><p>Cargando información...</p></div>' + 
+                    '                        <div id="recepDerMatrizD"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
