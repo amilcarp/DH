@@ -633,10 +633,51 @@ $(document).ready(function() {
         rec = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
         res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
-        var inf = [];
-        for(var yy=0;yy<rec.length;yy++){
-            datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
-        }
+        
+        
+        if(clas === "entidad"){
+           var inf = [];
+            for(var yy=0;yy<rec.length;yy++){
+                datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+            }
+            
+            console.log(rec);//Muestra las entidades
+        
+            var periodos = [];
+            for(var jj=0; jj < datoInd[0].length; jj++){
+                periodos.push(datoInd[0][jj].periodo);
+            }
+            
+            console.log(periodos);
+            console.log(datoInd);
+            
+            dat1 += '<table class="table">';
+            dat1 += '<thead><th>Entidad</th>';
+            for(var hh=0;hh<periodos.length;hh++){
+                dat1 += '<th>'+periodos[hh]+'</th>';
+            }
+
+            dat1 += '</thead><tbody>';
+            
+            for(var gg=0;gg<rec.length;gg++){
+                dat1 += '<tr>';
+                    dat1 += '<td>' + rec[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                for(var ii = 0; ii < datoInd[gg].length; ii++){
+                    dat1 += '<td>' + datoInd[gg][ii][res] + '</td>';
+                } 
+                dat1 += '</tr>';
+            }
+            dat1 += '</tbody>';
+            dat1 += '</table>';
+            
+        }else{
+            
+            var inf = [];
+            for(var yy=0;yy<rec.length;yy++){
+                datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+            }
+        
+            console.log(rec);
         
             dat1 += '<table class="table">';
             dat1 += '<thead><th>Periodo</th>';
@@ -660,6 +701,7 @@ $(document).ready(function() {
             }
             dat1 += '</tbody>';
             dat1 += '</table>';
+        }
         
         return dat1;
     }
@@ -681,18 +723,20 @@ $(document).ready(function() {
         rec2 = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
         res2 = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
+        
+        
+        if(clas === "entidad"){
+            
         var inf = [];
+            
         for(var yy=0;yy<rec2.length;yy++){
             datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
         }
         
         console.log(datoInd2);
         console.log(rec2);
-            dat111 += '[';//'[';
-            //dat111 += '"Periodo"</th>';
-            //for(var hh=0;hh<rec2.length;hh++){
-            //    dat111 += '<th>'+rec2[hh]+'</th>';
-            //}
+            
+            dat111 += '[';
             
             var periodos = [];
             for(var jj=0; jj < datoInd2[0].length; jj++){
@@ -700,47 +744,12 @@ $(document).ready(function() {
             }
             
             dat111 += '';
-//            for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
-//                dat111 += '{';
-//                dat111 += '"Periodo" : ' + periodos[gg] + ',';// + '<td>' + datoInd[ll][gg][res] + '</td>';
-//                for(var ii = 0; ii < datoInd2.length; ii++){
-//                    
-//                    for(var hh=0;hh<rec2.length;hh++){
-//                        dat111 += '"'+rec2[hh]+'" : ';
-//                        dat111 += '' + datoInd2[ii][gg][res2] + '';
-//                        if(ii === datoInd2.length-1){
-//                            dat111 += '';
-//                        }else{
-//                            dat111 += ',';
-//                        }
-//                        
-//                    }
-////                    if(ii === datoInd2.length-1){
-////                        dat111 += '';
-////                    }else{
-////                        dat111 += ',';
-////                    }
-//                } 
-//                dat111 += '}';
-//                
-//                console.log(periodos.length);
-//                console.log(periodos[gg]); 
-//                if(gg === periodos.length-1){
-//                    dat111 += '';
-//                }else{
-//                    dat111 += ',';
-//                }
-//            }
         
         for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
                 dat111 += '{';
-                dat111 += '"Periodo" : ' + periodos[gg] + ',';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                dat111 += '"Periodo" : ' + periodos[gg] + ',';
             
             for(var hh=0;hh<rec2.length;hh++){
-                
-                //for(var ii = 0; ii < datoInd2.length; ii++){
-                    
-                    
                         dat111 += '"'+rec2[hh]+'" : ';
                         dat111 += '' + datoInd2[hh][gg][res2] + '';
                         if(hh === datoInd2.length-1){
@@ -749,12 +758,6 @@ $(document).ready(function() {
                             dat111 += ',';
                         }
                         
-                   // }
-//                    if(ii === datoInd2.length-1){
-//                        dat111 += '';
-//                    }else{
-//                        dat111 += ',';
-//                    }
                 } 
                 dat111 += '}';
                 
@@ -766,9 +769,53 @@ $(document).ready(function() {
                     dat111 += ',';
                 }
             }
+            dat111 += ']';
+            
+        }else{
+            
+            var inf = [];
+        for(var yy=0;yy<rec2.length;yy++){
+            datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
+        }
         
+        console.log(datoInd2);
+        console.log(rec2);
+            dat111 += '[';
+            
+            var periodos = [];
+            for(var jj=0; jj < datoInd2[0].length; jj++){
+                periodos.push(datoInd2[0][jj].periodo);
+            }
+            
+            dat111 += '';
         
-            dat111 += ']';//']';
+        for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
+                dat111 += '{';
+                dat111 += '"Periodo" : ' + periodos[gg] + ',';
+            
+            for(var hh=0;hh<rec2.length;hh++){
+                        dat111 += '"'+rec2[hh]+'" : ';
+                        dat111 += '' + datoInd2[hh][gg][res2] + '';
+                        if(hh === datoInd2.length-1){
+                            dat111 += '';
+                        }else{
+                            dat111 += ',';
+                        }
+                        
+                } 
+                dat111 += '}';
+                
+                console.log(periodos.length);
+                console.log(periodos[gg]); 
+                if(gg === periodos.length-1){
+                    dat111 += '';
+                }else{
+                    dat111 += ',';
+                }
+            }
+            dat111 += ']';
+            
+        }
         
         return dat111;
     }

@@ -311,11 +311,9 @@ $(document).ready(function () {
                         });
                 });
                 
-                 var url = window.location.href;
+                var url = window.location.href;
                 var rom = url.split("#");
-                
-                $( "."+rom[1] ).trigger( "click" );
-
+                $( "."+rom[1] ).trigger("click");
                 
             },
             async:true
