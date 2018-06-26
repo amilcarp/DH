@@ -3,9 +3,9 @@ var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
 var tipoDer = [];
 var countDer = [];
 var acumula = [];
+var estatus = [];
 var tablaInd, cuadroDer =  '';
 var contenido;
-var uno = "";
 var cuan = '';
 
 $(document).ready(function () {
@@ -47,7 +47,7 @@ $(document).ready(function () {
         //Disponible = Si hay indicadores cualitativos y cuantitativos en el derecho
         //Parcial = Si solo hay indicadores cualitativos
         //Próximamente = Si no hay indicadores
-        
+        var uno = "";
         $.ajax({
 		  type: 'GET',
 		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100&fac.json={array:{type:%22terms%22,field:%22is_cuantitative%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}},nombres: {type:%22terms%22,field:%22right_name_short_lit%22,limit:20,facet:{unique_indicators: %22unique(indicator_name_lit)%22,indicators_null: {type: %22query%22,q: %22-indicator_name:[*%20TO%20*]%22}}}}",
@@ -57,10 +57,12 @@ $(document).ready(function () {
               cuan = data['fac.json']['array']['buckets'];
               nombre = data['fac.json']['nombres']['buckets'];
                 //console.log(countDer);
+              console.log(cuan[0]['val']);
+              console.log(cuan[0]['count']);
               
-              if(cuan[0]['val'] === "false" && cuan[0]['count'] > 1 && cuan[1]['val'] === "true" && cuan[1]['count'] > 1){
+              if(cuan[0]['val'] === false && cuan[0]['count'] > 1 && cuan[1]['val'] === true && cuan[1]['count'] > 1){
                   uno = "Disponible";
-              }else if(cuan[0]['val'] === "false" && cuan[0]['count'] > 1 || cuan[1]['val'] === "true" && cuan[1]['count'] > 1){
+              }else if(cuan[0]['val'] === false && cuan[0]['count'] > 1 || cuan[1]['val'] === true && cuan[1]['count'] > 1){
                     uno = "Parcial";
               }else{
                     uno = "Próximamente";
@@ -69,12 +71,10 @@ $(document).ready(function () {
               console.log(uno);
               console.log(cuan[0]['val']);
               
-              return uno;
-              
 		  },
 		  async:false
 		});
-
+        return uno;
     }
     
    
@@ -105,6 +105,7 @@ $(document).ready(function () {
                                      '</a>'+
                                      '<p><a href="#'+ sinEspacios(countDer[i]['val']) +'" data-toggle="modal" data-target="#'+ countDer[i]['val']+'"><b>'+estatus(countDer[i]['val'])+'</b></a></p>'+
                                   '</div>';
+                          console.log(countDer[i]['val']);
                       }else if(h == 3 || h == 6 || h == 9 || h == 12 || h == 15 || h == 18 || h == countDer.length){
                           cuadroDer += '<div class="col-md-4">'+
                                      '<a href="derechos.html#'+ sinEspacios(countDer[i]['val']) +'">'+
