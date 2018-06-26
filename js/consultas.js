@@ -92,7 +92,6 @@ $(document).ready(function () {
               }
                 $('.Culturales .arrow-up').removeClass('none');
                 $('#derechos').html(cuadroDer);
-                
 
                 
                 $('.Culturales').on('click', function(){
@@ -312,7 +311,10 @@ $(document).ready(function () {
                         });
                 });
                 
-                 
+                 var url = window.location.href;
+                var rom = url.split("#");
+                
+                $( "."+rom[1] ).trigger( "click" );
 
                 
             },
@@ -657,10 +659,7 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '       <div class="panel-group ficha-collapse" id="accordion">' + 
-                    '            <div class="panel panel-default">' + 
+                    '           <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
                     '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-02" aria-expanded="true" aria-controls="panel-02">Contexto financiero y presupuestal</a>' + 
@@ -673,11 +672,8 @@ $(document).ready(function () {
                     '                        <div id="recepDerF"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
-                    '            </div>' + 
-                    '        </div>' + 
-
-                    '       <div class="panel-group ficha-collapse" id="accordion">' + 
-                    '            <div class="panel panel-default">' + 
+                    '            </div>' +
+                    '           <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
                     '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-03" aria-expanded="true" aria-controls="panel-03">Capacidades estatales</a>' + 
@@ -691,9 +687,6 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
@@ -708,9 +701,6 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
@@ -725,9 +715,6 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
@@ -743,9 +730,9 @@ $(document).ready(function () {
                     '                </div>' + 
                     '            </div>' + 
                     '        </div>' + 
-                    '    </div>' + 
 
                     '</div>' + 
+            '</div>' + 
 
                     '<!--  Vista Matríz -->' + 
 
@@ -756,13 +743,13 @@ $(document).ready(function () {
                     '  </div>' + 
 
                     '  <div class="example">' + 
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
+                    '        <div class="panel-group ficha-collapse" id="accordion2">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-011" aria-expanded="true" aria-controls="panel-011">Recepción del derecho</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-011" aria-expanded="true" aria-controls="panel-011">Recepción del derecho</a>' + 
                     '                    </h4>' + 
-                    '                    <button type="button" class="collpase-button" data-parent="#accordion" data-toggle="collapse" href="#panel-011"></button>' + 
+                    '                    <button type="button" class="collpase-button" data-parent="#accordion2" data-toggle="collapse" href="#panel-011"></button>' + 
                     '                </div>' + 
                     '                <div class="panel-collapse collapse in" id="panel-011">' + 
                     '                    <div class="panel-body">' + 
@@ -771,15 +758,12 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '       <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-021" aria-expanded="true" aria-controls="panel-021">Contexto financiero y presupuestal</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-021" aria-expanded="true" aria-controls="panel-021">Contexto financiero y presupuestal</a>' + 
                     '                    </h4>' + 
-                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-021"></button>' + 
+                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-021"></button>' + 
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-021">' + 
                     '                    <div class="panel-body">' + 
@@ -788,15 +772,12 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-031" aria-expanded="true" aria-controls="panel-031">Capacidades estatales</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-031" aria-expanded="true" aria-controls="panel-031">Capacidades estatales</a>' + 
                     '                    </h4>' + 
-                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-031"></button>' + 
+                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-031"></button>' + 
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-031">' + 
                     '                    <div class="panel-body">' + 
@@ -805,15 +786,12 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-041" aria-expanded="true" aria-controls="panel-041">Igualdad y no discriminación</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-041" aria-expanded="true" aria-controls="panel-041">Igualdad y no discriminación</a>' + 
                     '                    </h4>' + 
-                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-041"></button>' + 
+                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-041"></button>' + 
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-041">' + 
                     '                    <div class="panel-body">' + 
@@ -822,15 +800,12 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-051" aria-expanded="true" aria-controls="panel-051">Acceso a información pública y participación</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-051" aria-expanded="true" aria-controls="panel-051">Acceso a información pública y participación</a>' + 
                     '                    </h4>' + 
-                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-051"></button>' + 
+                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-051"></button>' + 
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-051">' + 
                     '                    <div class="panel-body">' + 
@@ -839,15 +814,12 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
-                    '        </div>' + 
-
-                    '        <div class="panel-group ficha-collapse" id="accordion">' + 
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-061" aria-expanded="true" aria-controls="panel-061">Acceso a la justicia</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-061" aria-expanded="true" aria-controls="panel-061">Acceso a la justicia</a>' + 
                     '                    </h4>' + 
-                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-061"></button>' + 
+                    '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-061"></button>' + 
                     '                </div>' + 
                     '                <div class="panel-collapse collapse" id="panel-061">' + 
                     '                    <div class="panel-body">' + 
@@ -856,6 +828,7 @@ $(document).ready(function () {
                     '                    </div>' + 
                     '                </div>' + 
                     '            </div>' + 
+            
                     '        </div>' + 
                     '  </div>' + 
                   '</div>';

@@ -101,7 +101,7 @@ $(document).ready(function() {
             }
               
             $('#claveInd').html(datosDer.indicator_code);
-            $('#categoriaInd').html(datosDer.right_name_short);
+            $('#categoriaInd').html('<a href="derechos.html#'+sinEspacios(datosDer.right_name_short)+'">' + datosDer.right_name_short+'</a>');
             $('#tituloInd').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
             $('#tInd').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
             $('#fuenteInd').html(datosDer.evidence_name + ' - <a href="'+ datosDer.evidence_url + '">' + datosDer.evidence_url + '</a>');
@@ -773,6 +773,19 @@ $(document).ready(function() {
         return dat111;
     }
     
-    
+    function sinEspacios(dato){
+        var contenido=dato;
+        contenido=contenido.replace(/ /g,"");
+        contenido=contenido.replace(/á/g,"a");
+        contenido=contenido.replace(/é/g,"e");
+        contenido=contenido.replace(/í/g,"i");
+        contenido=contenido.replace(/ó/g,"o");
+        contenido=contenido.replace(/ú/g,"u");
+        contenido=contenido.replace(/ñ/g,"n");
+//        for (var i = 0; i < contenido.length; i ++){
+//        contenido += (contenido.charAt(i) == " ") ? "" : contenido.charAt(i);
+//        }//fin del for
+        return contenido;
+    }
     
 });
