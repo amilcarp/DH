@@ -21,7 +21,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
     // Se crea la variable que mostrará el tooltip
     var tooltip = d3.select("body").append("div").attr("class", "toolTip");
     
-    var data = URLJSON;
+    var data = JSON.parse(URLJSON);
     
     // Cargamos los datos del JSON
 //    d3.json(URLJSON, function(error, data) {
@@ -32,6 +32,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
         // Aquí cargamos los datos
         data.forEach(function(d) {
             d[ejeX] = parseTime(d[ejeX]);
+            //d[ejeX] = d[ejeX];
             d[ejeY] = +d[ejeY];
             //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
             console.log(d[ejeX]);
@@ -109,6 +110,8 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
     var y = d3.scaleLinear().rangeRound([height, 0]);
     
+    var data = JSON.parse(URLJSON);
+    
     var chartWidth, chartHeight;
         
         var axisLayer = svg.append("g").classed("axisLayer", true);
@@ -125,8 +128,8 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
             .range(["#d0743c", "#ff8c00"]);
     
     var nested = d3.nest()
-            .rollup(function(d){ delete d[0].Periodo; return d[0] })
-            .key(function(d){ return d.Periodo })
+            .rollup(function(d){ delete d[0][ejeX]; return d[0] })
+            .key(function(d){ return d[ejeX] })
             .entries(data);
 
         
@@ -290,7 +293,92 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     
 }
 
-function barras(){
+function barras(URLJSON, ejeX, ejeY, color){
+    /* Configuración del tamaño de la caja del canvas o SVG */
+    var svg = d3.select("svg"),
+        margin = {top: 20, right: 20, bottom: 30, left: 50},
+        width = +svg.attr("width") - margin.left - margin.right,
+        height = +svg.attr("height") - margin.top - margin.bottom,
+        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    
+    // Se definen las variables de los ejes X y Y
+    var parseTime = d3.timeParse("%Y");
+        // Valores para Barras
+    var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
+    var y = d3.scaleLinear().rangeRound([height, 0]);
+    
+        // Se crea la variable que mostrará el tooltip
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+    
+    
+        // Cargamos los datos del JSON
+//    d3.json("AaR02.json", function(error, data) {
+//        if (error) throw error;
+//        console.log(data);
+        
+    console.log(URLJSON);
+    var data = JSON.parse(URLJSON);
+    
+    console.log(data);
+    
+        data.forEach(function(d) {
+            d[ejeX] = d[ejeX];
+            d[ejeY] = +d[ejeY];
+            //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
+            console.log(d[ejeX]);
+          });
+          x.domain(data.map(function(d) { return d[ejeX]; }));
+          y.domain([0, d3.max(data, function(d) { return d[ejeY]; })]);
+
+          g.append("g")
+              .attr("class", "axis axis--x")
+              .attr("transform", "translate(0," + height  + ")")
+              .call(d3.axisBottom(x));
+
+//          g.append("g")
+//              .attr("class", "axis axis--y")
+//              .call(d3.axisLeft(y))
+//            .append("text")
+//              .attr("transform", "rotate(-90)")
+//              .attr("y", 6)
+//              .attr("dy", "0.71em")
+//              .attr("text-anchor", "end")
+//              .text("Unidades");
+
+            g.append("g")
+              .call(d3.axisLeft(y))
+            .append("text")
+              .attr("fill", "#000")
+              .attr("transform", "rotate(-90)")
+              .attr("y", -50)
+              .attr("dy", "0.71em")
+              .attr("text-anchor", "end")
+              .text("Unidades");
+
+          g.selectAll(".bar")
+            .data(data)
+            .enter().append("rect")
+              .attr("class", "bar")
+              .attr("x", function(d) { return x(d[ejeX]); })
+              .attr("y", function(d) { return height; })
+              .attr("width", x.bandwidth())
+              .attr("height", function(d) { return 0})
+            .on("mousemove", function(d){
+                    tooltip
+                      .style("left", d3.event.pageX - 25 + "px")
+                      .style("top", d3.event.pageY - 40 + "px")
+                      .style("display", "inline-block")
+                    .text(d[ejeY]);
+                })
+                .on("mouseout", function(d){ tooltip.style("display", "none");})
+               .transition()
+               .delay(function(d,i){ return i*100 })
+               .duration(2000)
+                .attr('y', function(d){ return y(d[ejeY])})
+               .attr('height', function(d){ return height - y(d[ejeY]) });
+        
+   // });
     
 }
 

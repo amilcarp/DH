@@ -124,9 +124,9 @@ $(document).ready(function() {
                 //$(".verGrafica").html(graficaCuanti(JSONvar,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos 
                 var variable = $('#breakdown').val();
                 
+                $(".verGrafica .divGrafica svg").html('');
             $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic[0].graphic_key, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name), 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name[0], '#f00', datosDer));
                 
-                1
                 //$(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', 'poblacion_de_18_anios_o_mas', '#f00', datosDer));
                 //tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos)
             });
@@ -140,7 +140,7 @@ $(document).ready(function() {
         
         function armaTabla(data, str){
             var cua = "";
-//            cua += datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
             console.log(datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name));
             cua += '<div class="tabulado'+str+'">';
             cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
@@ -386,7 +386,7 @@ $(document).ready(function() {
                                         cuanti += '<div class="col-md-10">';
                                         tados = data.breakdown_group;
                                         if(tados.length > 1){
-                                            cuanti += '<br/><span>Elige una variable: </span><select name="breakdown" id="breakdown">';
+                                            cuanti += '<br/><span>Elige un corte de información: </span><select name="breakdown" id="breakdown">';
                                             for (var m=0;m<tados.length;m++){
                                                 cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
                                             }
@@ -507,7 +507,8 @@ $(document).ready(function() {
         
         switch(tipo){
             case "Bre":
-                salida = dotplot();
+                //salida = dotplot();
+                salida = columnAgrupada();
             break;
             case "ColAg":
                 salida = columnAgrupada();
@@ -516,7 +517,7 @@ $(document).ready(function() {
                 salida = lineas(fuente,ejeX,ejeY, color);
             break;
             case "Col":
-                salida = barras();
+                salida = barras(fuente,ejeX,ejeY, color);
             break;
             case "Mapa":
                 salida = mapa();
@@ -684,6 +685,9 @@ $(document).ready(function() {
         for(var yy=0;yy<rec2.length;yy++){
             datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
         }
+        
+        console.log(datoInd2);
+        console.log(rec2);
             dat111 += '[';//'[';
             //dat111 += '"Periodo"</th>';
             //for(var hh=0;hh<rec2.length;hh++){
@@ -696,19 +700,56 @@ $(document).ready(function() {
             }
             
             dat111 += '';
-            for(var gg=0;gg<periodos.length;gg++){
+//            for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
+//                dat111 += '{';
+//                dat111 += '"Periodo" : ' + periodos[gg] + ',';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+//                for(var ii = 0; ii < datoInd2.length; ii++){
+//                    
+//                    for(var hh=0;hh<rec2.length;hh++){
+//                        dat111 += '"'+rec2[hh]+'" : ';
+//                        dat111 += '' + datoInd2[ii][gg][res2] + '';
+//                        if(ii === datoInd2.length-1){
+//                            dat111 += '';
+//                        }else{
+//                            dat111 += ',';
+//                        }
+//                        
+//                    }
+////                    if(ii === datoInd2.length-1){
+////                        dat111 += '';
+////                    }else{
+////                        dat111 += ',';
+////                    }
+//                } 
+//                dat111 += '}';
+//                
+//                console.log(periodos.length);
+//                console.log(periodos[gg]); 
+//                if(gg === periodos.length-1){
+//                    dat111 += '';
+//                }else{
+//                    dat111 += ',';
+//                }
+//            }
+        
+        for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
                 dat111 += '{';
                 dat111 += '"Periodo" : ' + periodos[gg] + ',';// + '<td>' + datoInd[ll][gg][res] + '</td>';
-                for(var ii = 0; ii < datoInd2.length; ii++){
-                    for(var hh=0;hh<rec2.length;hh++){
+            
+            for(var hh=0;hh<rec2.length;hh++){
+                
+                //for(var ii = 0; ii < datoInd2.length; ii++){
+                    
+                    
                         dat111 += '"'+rec2[hh]+'" : ';
-                        dat111 += '' + datoInd2[ii][gg][res2] + '';
-                        if(ii === datoInd2.length-1){
+                        dat111 += '' + datoInd2[hh][gg][res2] + '';
+                        if(hh === datoInd2.length-1){
                             dat111 += '';
                         }else{
                             dat111 += ',';
                         }
-                    }
+                        
+                   // }
 //                    if(ii === datoInd2.length-1){
 //                        dat111 += '';
 //                    }else{
@@ -725,6 +766,8 @@ $(document).ready(function() {
                     dat111 += ',';
                 }
             }
+        
+        
             dat111 += ']';//']';
         
         return dat111;
