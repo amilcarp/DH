@@ -237,7 +237,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
                       .style("left", d3.event.pageX - 25 + "px")
                       .style("top", d3.event.pageY - 40 + "px")
                       .style("display", "inline-block")
-                    .text(d.value);
+                    .text(d.key + ': ' +d.value);
                 })
                 .on("mouseout", function(d){ tooltip.style("display", "none");});
 //               .transition()
