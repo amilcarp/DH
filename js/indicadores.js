@@ -53,15 +53,29 @@ function apiGOB(resource, dataset, page, total){
     
     function apiGobGrupo(resource, dataset, atributo, variable){
         var gobGrupo = [];
-        $.ajax({
-		  type: 'GET',
-		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?'+atributo+'='+variable,
-		  data: {},
-		  success: function( data, textStatus, jqxhr ) {
-              gobGrupo = data['results'];
-		  },
-		  async:false
-		});
+        
+        if(atributo === null || variable === null){
+            $.ajax({
+              type: 'GET',
+              url: pathAPIGob + 'ckan.'+dataset+'.'+resource,
+              data: {},
+              success: function( data, textStatus, jqxhr ) {
+                  gobGrupo = data['results'];
+              },
+              async:false
+          });
+        }else{
+            $.ajax({
+              type: 'GET',
+              url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?'+atributo+'='+variable,
+              data: {},
+              success: function( data, textStatus, jqxhr ) {
+                  gobGrupo = data['results'];
+              },
+              async:false
+		  });
+        }
+        
         return gobGrupo;
     }
 
@@ -143,6 +157,7 @@ $(document).ready(function() {
             var cua = "";
            // cua += datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
             //console.log(datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name));
+            console.log(data.breakdown_group[str].breakdown_attribute);
             cua += '<div class="tabulado'+str+'">';
             cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
             cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
@@ -514,10 +529,10 @@ $(document).ready(function() {
         switch(tipo){
             case "Bre":
                 //salida = dotplot();
-                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["#4749A0","#4E57E0"]);
+                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.8)"]);
             break;
             case "ColAg":
-                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["#4749A0","#4E57E0"]);
+                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.8)"]);
             break;
             case "Ln":
                 salida = lineas(fuente,ejeX,ejeY, color);
@@ -620,7 +635,12 @@ $(document).ready(function() {
     
     function parseAPI(string){
         var contenido=string;
-        string=string.replace(/_/g,"-");
+        if(string !== null){
+            string=string.replace(/_/g,"-");
+        }else{
+            string=string;
+        }
+        
         return string;
     }
     
@@ -639,9 +659,43 @@ $(document).ready(function() {
         rec = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
         res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
+        console.log(clas);
+        if(clas === null || res === null){
+            var inf = [];
+            //for(var yy=0;yy<rec.length;yy++){
+                datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+            //}
+            
+            console.log(datoInd);
+            console.log(rec);//Muestra las entidades
         
-        
-        if(clas === "entidad" || clas === "Entidad Federativa" || clas === "Circuito Judicial"){
+            var periodos = [];
+            for(var jj=0; jj < datoInd[0].length; jj++){
+                periodos.push(datoInd[0][jj].legislatura);
+            }
+            
+            console.log(periodos);
+            console.log(datoInd);
+            
+            dat1 += '<table class="table" id="tabuls1">';
+            dat1 += '<thead><th>Legistatura</th>';
+            for(var hh=0;hh<periodos.length;hh++){
+                dat1 += '<th>'+periodos[hh]+'</th>';
+            }
+
+            dat1 += '</thead><tbody>';
+            
+            for(var gg=0;gg<periodos.length;gg++){
+                dat1 += '<tr>';
+                    dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                for(var ii = 0; ii < datoInd[0][gg].length; ii++){
+                    dat1 += '<td>' + datoInd[0][gg][ii]["porcentaje-de-iniciativas-legislativas-en-el-mbito-cultural-para-la-legislatura"] + '</td>';
+                } 
+                dat1 += '</tr>';
+            }
+            dat1 += '</tbody>';
+            dat1 += '</table>';
+        }else if(clas === "entidad" || clas === "Entidad Federativa" || clas === "Circuito Judicial"){
            var inf = [];
             for(var yy=0;yy<rec.length;yy++){
                 datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 

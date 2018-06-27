@@ -306,3 +306,10 @@ p{
     display: inline;
     float: left;
 }
+
+
+
+.botoneraTipos a {
+    width: 32%;
+    margin-right: 10px;
+}

@@ -120,6 +120,24 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                    $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
                 $('.MedioAmbiente').on('click', function(){
                     $('.indis3').html('');
@@ -147,6 +165,24 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                    $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
                 $('.Trabajo').on('click', function(){
                     $('.indis3').html('');
@@ -174,6 +210,24 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                    $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
                 $('.Sindicales').on('click', function(){
                     $('.indis3').html('');
@@ -201,6 +255,24 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                    $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
                  $('.Alimentacion').on('click', function(){
                     $('.indis3').html('');
@@ -228,6 +300,24 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                     $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
                 $('.SeguridadSocial').on('click', function(){
                     $('.indis3').html('');
@@ -255,6 +345,24 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                    $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
                 $('.Educacion').on('click', function(){
                     $('.indis3').html('');
@@ -282,6 +390,24 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                    $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
                 $('.Salud').on('click', function(){
                     $('.indis3').html('');
@@ -309,7 +435,26 @@ $(document).ready(function () {
                           $('.btnMatriz').show();
                           $('.btnListado').hide();
                         });
+                    $('.btnEstructural').on('click', function(){
+                        $('.trE').show();
+                        $('.trP').hide();
+                        $('.trR').hide();
+                    });
+
+
+                    $('.btnProceso').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').show();
+                        $('.trR').hide();
+                    });
+
+                    $('.btnResultado').on('click', function(){
+                        $('.trE').hide();
+                        $('.trP').hide();
+                        $('.trR').show();
+                    });
                 });
+                
                 
                 var url = window.location.href;
                 var rom = url.split("#");
@@ -505,63 +650,63 @@ $(document).ready(function () {
         for(var i=0; i < tipoDer.length; i++){
             if(tipoDer[i].indicator_category_key == 'a'){
                 if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContAE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContAE += '<tr class="trE"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContAP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                    tablaIndContAP += '<tr class="trP"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContAR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContAR += '<tr class="trR"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'c'){
                 if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContCE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContCE += '<tr class="trE"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContCP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                    tablaIndContCP += '<tr class="trP"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContCR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContCR += '<tr class="trR"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'd'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContDE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContDE += '<tr class="trE"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContDP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                    tablaIndContDP += '<tr class="trP"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContDR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContDR += '<tr class="trR"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'f'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContFE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContFE += '<tr class="trE"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContFP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                    tablaIndContFP += '<tr class="trP"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContFR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContFR += '<tr class="trR"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'i'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContIE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContIE += '<tr class="trE"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContIP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                    tablaIndContIP += '<tr class="trP"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContIR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContIR += '<tr class="trR"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'j'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContJE += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContJE += '<tr class="trE"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContJP += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                    tablaIndContJP += '<tr class="trP"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContJR += '<tr><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
+                   tablaIndContJR += '<tr class="trR"><td>'+getTipoIndicador(tipoDer[i].indicator_type_code)+'</td>' +'<td><a href="indicadores.html?codigo='+ tipoDer[i].guid +'">'+ tipoDer[i].indicator_code + ' - ' + tipoDer[i].indicator_name + '</a></td>' + '<td><p>'+ tipoDer[i].indicator_definition +'</p></td></tr>';
                 }
             }
 
@@ -653,6 +798,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse in" id="panel-01">' + 
                     '                    <div class="panel-body">' + 
                     '                       <div><p>Categoría conceptual cuyos indicadores permiten identificar información sobre la forma en que cada derecho se encuentra incorporado en el sistema legal y en las políticas públicas, así como los resultados generales sobre su garantía.</p></div>' +
+                    '                       <div class="botoneraTipos"><a href="#btnEstructural" class="btn btn-primary btnEstructural colorE">Estructurales</a><a href="#btnProceso" class="btn btn-primary btnProceso colorP">Proceso</a><a href="#btnResultado" class="btn btn-primary btnResultado colorR">Resultado</a></div>' +
                     '                        <div id="recepDerA"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -667,6 +813,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-02">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.</p></div>' +
+            '                       <div class="botoneraTipos"><a href="#btnEstructural" class="btn btn-primary btnEstructural colorE">Estructurales</a><a href="#btnProceso" class="btn btn-primary btnProceso colorP">Proceso</a><a href="#btnResultado" class="btn btn-primary btnResultado colorR">Resultado</a></div>' +
                     '                        <div id="recepDerF"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -681,6 +828,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-03">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Categoría conceptual cuyos indicadores incorporan los aspectos instrumentales y de disponibilidad de recursos al interior del aparato estatal para la atención de los derechos.</p></div>' +
+            '                       <div class="botoneraTipos"><a href="#btnEstructural" class="btn btn-primary btnEstructural colorE">Estructurales</a><a href="#btnProceso" class="btn btn-primary btnProceso colorP">Proceso</a><a href="#btnResultado" class="btn btn-primary btnResultado colorR">Resultado</a></div>' +
                     '                        <div id="recepDerC"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -695,6 +843,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-04">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Principio transversal cuyos indicadores se orientan a asegurar la protección igualitaria y no discriminatoria de los derechos; detallan los mecanismos y políticas específicos disponibles para los grupos de población en situación de vulnerabilidad.</p></div>' +
+            '                       <div class="botoneraTipos"><a href="#btnEstructural" class="btn btn-primary btnEstructural colorE">Estructurales</a><a href="#btnProceso" class="btn btn-primary btnProceso colorP">Proceso</a><a href="#btnResultado" class="btn btn-primary btnResultado colorR">Resultado</a></div>' +
                     '                        <div id="recepDerD"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -709,6 +858,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-05">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Principio transversal cuyos indicadores revisan, por un lado, el nivel de información y transparencia sobre los derechos, para una adecuada rendición de cuentas; y por el otro, examinan la disponibilidad de mecanismos para la participación en el diseño, implementación y seguimiento de las políticas públicas correspondientes.</p></div>' +
+            '                       <div class="botoneraTipos"><a href="#btnEstructural" class="btn btn-primary btnEstructural colorE">Estructurales</a><a href="#btnProceso" class="btn btn-primary btnProceso colorP">Proceso</a><a href="#btnResultado" class="btn btn-primary btnResultado colorR">Resultado</a></div>' +
                     '                        <div id="recepDerI"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
@@ -723,6 +873,7 @@ $(document).ready(function () {
                     '                <div class="panel-collapse collapse" id="panel-06">' + 
                     '                    <div class="panel-body">' + 
                     '                        <div><p>Principio transversal cuyos indicadores están dirigidos a garantizar los recursos para la exigibilidad de los derechos y el apropiado acceso a la justicia, incluyendo el examen sobre la posibilidad de acceso a mecanismos de reclamo y protección.</p></div>' +
+            '                       <div class="botoneraTipos"><a href="#btnEstructural" class="btn btn-primary btnEstructural colorE">Estructurales</a><a href="#btnProceso" class="btn btn-primary btnProceso colorP">Proceso</a><a href="#btnResultado" class="btn btn-primary btnResultado colorR">Resultado</a></div>' +
                     '                        <div id="recepDerJ"><p>Cargando información...</p></div>' + 
                     '                    </div>' + 
                     '                </div>' + 
