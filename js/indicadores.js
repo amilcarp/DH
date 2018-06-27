@@ -21,6 +21,7 @@ var clas2 = '';
 var dat111;
 var str = "0";
 var tados;
+var tabulado1, tabulado2;
 
 var JSONvar = [];
 
@@ -181,6 +182,11 @@ $(document).ready(function() {
             
             // Mostramos
               $('#breakdown').val('0').change();
+              
+              
+
+              
+              
               
 		  },
 		  async:true
@@ -651,7 +657,7 @@ $(document).ready(function() {
             console.log(periodos);
             console.log(datoInd);
             
-            dat1 += '<table class="table">';
+            dat1 += '<table class="table" id="tabuls1">';
             dat1 += '<thead><th>Entidad</th>';
             for(var hh=0;hh<periodos.length;hh++){
                 dat1 += '<th>'+periodos[hh]+'</th>';
@@ -679,7 +685,7 @@ $(document).ready(function() {
         
             console.log(rec);
         
-            dat1 += '<table class="table">';
+            dat1 += '<table class="table" id="tabuls1">';
             dat1 += '<thead><th>Periodo</th>';
             for(var hh=0;hh<rec.length;hh++){
                 dat1 += '<th>'+rec[hh]+'</th>';
@@ -703,6 +709,7 @@ $(document).ready(function() {
             dat1 += '</table>';
         }
         
+        tabulado1 = dat1;
         return dat1;
     }
     
