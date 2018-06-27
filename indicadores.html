@@ -217,8 +217,8 @@
                         <div class="col-md-3" id="descarDatos2">...</div>
                         <div class="col-md-3" id="descarDatos3">...</div>
                         <div class="col-md-3">
-                            <button class="btn btn-primary">XLS</button>
-                            <button class="btn btn-primary">CSV</button>
+                            <button class="btn btn-primary" onclick="fnExcelReport()">XLS</button>
+                            <button class="btn btn-primary" onclick="fnExcelCSV()">CSV</button>
                         </div>
 				      </div>
 				      
@@ -242,5 +242,76 @@
         <script src="js/indicadores.js"></script>
         <script src="js/graficas.js"></script>
 <!--        <script src="https://d3js.org/d3.v4.min.js"></script>-->
+        <script>
+        // Función para exportar archivos en XLS
+              function fnExcelReport()
+            {
+                /*var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+                var textRange; var j=0;*/
+               /* tab = document.getElementById('headerTable'); // id of table
+
+                for(j = 0 ; j < tab.rows.length ; j++) 
+                {     
+                    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+                    //tab_text=tab_text+"</tr>";
+                }
+
+                tab_text=tab_text+"</table>";
+                tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+                tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+                tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params*/
+
+                var ua = window.navigator.userAgent;
+                var msie = ua.indexOf("MSIE "); 
+
+                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+                {
+                    tabuls1.document.open("txt/html","replace");
+                    tabuls1.document.write(tabulado1);
+                    tabuls1.document.close();
+                    txtArea1.focus(); 
+                    sa=tabuls1.document.execCommand("SaveAs",true,"DescargaIndividual.xls");
+                }  
+                else                 //other browser not tested on IE 11
+                    sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tabulado1));  
+
+                return (sa);
+            }
+            
+             // Función para exportar archivos en XLS
+              function fnExcelCSV()
+            {
+                /*var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
+                var textRange; var j=0;*/
+               /* tab = document.getElementById('headerTable'); // id of table
+
+                for(j = 0 ; j < tab.rows.length ; j++) 
+                {     
+                    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+                    //tab_text=tab_text+"</tr>";
+                }
+
+                tab_text=tab_text+"</table>";
+                tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
+                tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
+                tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params*/
+
+                var ua = window.navigator.userAgent;
+                var msie = ua.indexOf("MSIE "); 
+
+                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
+                {
+                    tabuls1.document.open("txt/html","replace");
+                    tabuls1.document.write(tabulado1);
+                    tabuls1.document.close();
+                    tabuls1.focus(); 
+                    sa=tabuls1.document.execCommand("SaveAs",true,"DescargaIndividual.csv");
+                }  
+                else                 //other browser not tested on IE 11
+                    sa = window.open('data:application/csv;charset=utf-8,' + encodeURIComponent(tabulado1));  
+
+                return (sa);
+            }
+        </script>
 	</body>
 </html>
