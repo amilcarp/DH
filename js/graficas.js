@@ -110,6 +110,9 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     var x = d3.scaleBand().rangeRound([0, width]).padding(0.1);
     var y = d3.scaleLinear().rangeRound([height, 0]);
     
+    // Se crea la variable que mostrará el tooltip
+    var tooltip = d3.select("body").append("div").attr("class", "toolTip");
+    
     var data = JSON.parse(URLJSON);
     
     var chartWidth=960, chartHeight=500;
@@ -125,7 +128,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
         var yScale = d3.scaleLinear();
 
         var color = d3.scaleOrdinal()
-            .range(["#d0743c", "#ff8c00"]);
+            .range(color);
     
     console.log(data);
 
@@ -216,17 +219,17 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
         
 
         contry.merge(newCountry)
-            .attr("transform", function(d) { return "translate(" + [xScale(d.key)+25, 0] + ")"; });
+            .attr("transform", function(d) { return "translate(" + [xScale(d.key)+5, 0] + ")"; });
 
         
-        var bar = newCountry.selectAll(".bar")
+        var bar = newCountry.selectAll(".barr")
             .data(function(d){ return d.age });
 
-        var newBar = bar.enter().append("rect").attr("class", "bar");
+        var newBar = bar.enter().append("rect").attr("class", "barr");
 
                         
         bar.merge(newBar)
-            .attr("width", xInScale.bandwidth()-60)
+            .attr("width", xInScale.bandwidth()-20)
             .attr("height", 0)
             .attr("fill", function(d) { return color(d.key); })
             .attr("transform", function(d) { return "translate(" + [xInScale(d.key), chartHeight] + ")" }).on("mousemove", function(d){

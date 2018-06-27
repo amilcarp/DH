@@ -416,7 +416,7 @@ $(document).ready(function() {
         
                                 cuanti += '</div>';
                                 
-                                cuanti += '<div class="verGrafica"><div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div></div>';
+                                cuanti += '<div class="verGrafica" style="padding:30px 0 10px 0;"><div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div></div>';
         
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
@@ -508,10 +508,10 @@ $(document).ready(function() {
         switch(tipo){
             case "Bre":
                 //salida = dotplot();
-                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, color);
+                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["#4749A0","#4E57E0"]);
             break;
             case "ColAg":
-                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, color);
+                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["#4749A0","#4E57E0"]);
             break;
             case "Ln":
                 salida = lineas(fuente,ejeX,ejeY, color);
