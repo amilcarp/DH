@@ -508,10 +508,10 @@ $(document).ready(function() {
         switch(tipo){
             case "Bre":
                 //salida = dotplot();
-                salida = columnAgrupada();
+                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, color);
             break;
             case "ColAg":
-                salida = columnAgrupada();
+                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, color);
             break;
             case "Ln":
                 salida = lineas(fuente,ejeX,ejeY, color);
@@ -635,7 +635,7 @@ $(document).ready(function() {
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         
         
-        if(clas === "entidad"){
+        if(clas === "entidad" || clas === "Entidad Federativa" || clas === "Circuito Judicial"){
            var inf = [];
             for(var yy=0;yy<rec.length;yy++){
                 datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
@@ -725,7 +725,7 @@ $(document).ready(function() {
         clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         
         
-        if(clas === "entidad"){
+        if(clas === "entidad" || clas === "Entidad Federativa"){
             
         var inf = [];
             

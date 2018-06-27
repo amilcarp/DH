@@ -112,7 +112,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     
     var data = JSON.parse(URLJSON);
     
-    var chartWidth, chartHeight;
+    var chartWidth=960, chartHeight=500;
         
         var axisLayer = svg.append("g").classed("axisLayer", true);
         var chartLayer = svg.append("g").classed("chartLayer", true);
@@ -127,13 +127,16 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
         var color = d3.scaleOrdinal()
             .range(["#d0743c", "#ff8c00"]);
     
+    console.log(data);
+
+    
     var nested = d3.nest()
             .rollup(function(d){ delete d[0][ejeX]; return d[0] })
             .key(function(d){ return d[ejeX] })
             .entries(data);
-
-        
-        
+    
+        console.log(nested);
+    
         nested.forEach(function(d){
             d.age = Object.keys(d.value).map(function(key){
                 return {key:key, value:d.value[key]}
@@ -146,7 +149,8 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
         drawAxis();
         drawChart(nested);
     
-     function cast(data) {
+    
+    function cast(data) {
         Object.keys(d).forEach(function(key){
             if (!isNaN(+d[key])) d[key] = +d[key]
         })
@@ -156,8 +160,11 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     
     function setSize(nested) {
 
-        width = document.querySelector("#graph").clientWidth;
-        height = document.querySelector("#graph").clientHeight;
+        width = document.querySelector(".divGrafica").clientWidth;
+        height = document.querySelector(".divGrafica").clientHeight;
+        
+//        width = clientWidth;
+//        height = clientHeight;
 
         margin = {top:0, left:100, bottom:40, right:30 };
         
@@ -209,7 +216,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
         
 
         contry.merge(newCountry)
-            .attr("transform", function(d) { return "translate(" + [xScale(d.key), 0] + ")"; });
+            .attr("transform", function(d) { return "translate(" + [xScale(d.key)+25, 0] + ")"; });
 
         
         var bar = newCountry.selectAll(".bar")
@@ -268,7 +275,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
           .style("text-anchor", "end")
           .text(function(d) {return d; });
 
-        legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
+        legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","0");
         
     }
     
@@ -288,9 +295,10 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
             .attr("transform", "translate("+[margin.left, chartHeight]+")")
             .call(xAxis);
         
-    }   
+    }
     
     
+     
 }
 
 function barras(URLJSON, ejeX, ejeY, color){
