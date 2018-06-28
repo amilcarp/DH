@@ -437,7 +437,10 @@ $(document).ready(function() {
         
                                 cuanti += '</div>';
                                 
-                                cuanti += '<div class="verGrafica" style="padding:30px 0 10px 0;"><div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div></div>';
+                                // cuanti += '<div class="verGrafica" style="padding:30px 0 10px 0;"><div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div></div>';
+
+                                cuanti += '<div class="verGrafica" style="padding:30px 0 10px 0;"><div id="map"></div></div>';
+
         
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
