@@ -896,4 +896,123 @@ $(document).ready(function() {
         return contenido;
     }
     
+    function exportTableToCSV($table, filename) {
+            var $rows = $table.find('tr:has(td)'),
+                tmpColDelim = String.fromCharCode(11), // vertical tab character
+                tmpRowDelim = String.fromCharCode(0), // null character
+                // actual delimiter characters for CSV format
+                colDelim = '","',
+                rowDelim = '"\r\n"',
+
+                // Grab text from table into CSV formatted string
+                csv = '"' + $rows.map(function(i, row) {
+                    var $row = $(row),
+                        $cols = $row.find('td');
+
+                    return $cols.map(function(j, col) {
+                        var $col = $(col),
+                            text = $col.text();
+
+                        return text.replace(/"/g, '""'); // escape double quotes
+
+                    }).get().join(tmpColDelim);
+
+                }).get().join(tmpRowDelim)
+                .split(tmpRowDelim).join(rowDelim)
+                .split(tmpColDelim).join(colDelim) + '"';
+
+            // Deliberate 'false', see comment below
+            if (false && window.navigator.msSaveBlob) {
+
+                var blob = new Blob([decodeURIComponent(csv)], {
+                    type: 'text/csv;charset=utf8'
+                });
+
+                window.navigator.msSaveBlob(blob, filename);
+            } else if (window.Blob && window.URL) {
+                var blob = new Blob([csv], {
+                    type: 'text/csv;charset=utf8'
+                });
+                var csvUrl = URL.createObjectURL(blob);
+
+                $(this)
+                    .attr({
+                        'download': filename,
+                        'href': csvUrl
+                    });
+            } else {
+                var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+                $(this)
+                    .attr({
+                        'download': filename,
+                        'href': csvData,
+                        'target': '_blank'
+                    });
+            }
+        }
+
+        function deselect(e) {
+            $('.pop').slideFadeToggle(function() {
+                e.removeClass('selected');
+            });
+        }
+
+        function buscar(busqueda) {
+            window.location.replace("busqueda.html?busqueda=" + busqueda);
+        }
+
+        function exportTableToXLS($table1, filename1) {
+            var $rows1 = $table1.find('tr:has(td)'),
+                tmpColDelim1 = String.fromCharCode(11), // vertical tab character
+                tmpRowDelim1 = String.fromCharCode(0), // null character
+
+                // actual delimiter characters for CSV format
+                colDelim1 = '","',
+                rowDelim1 = '"\r\n"',
+
+                // Grab text from table into CSV formatted string
+                xls = '"' + $rows1.map(function(i, row) {
+                    var $row1 = $(row),
+                        $cols1 = $row1.find('td');
+
+                    return $cols1.map(function(j, col) {
+                        var $col1 = $(col),
+                            text1 = $col1.text();
+                        return text1.replace(/"/g, '""'); // escape double quotes
+                    }).get().join(tmpColDelim1);
+                }).get().join(tmpRowDelim1)
+                .split(tmpRowDelim1).join(rowDelim1)
+                .split(tmpColDelim1).join(colDelim1) + '"';
+
+            // Deliberate 'false', see comment below
+            if (false && window.navigator.msSaveBlob) {
+                var blob1 = new Blob([decodeURIComponent($table1)], {
+                    type: 'text/plain;charset=utf8'
+                });
+                window.navigator.msSaveBlob(blob1, filename1);
+            } else if (window.Blob && window.URL) {
+                // HTML5 Blob
+                var blob1 = new Blob([xls], {
+                    type: 'text/plain;charset=utf8'
+                });
+                var xlsUrl = URL.createObjectURL(blob1);
+
+                $(this)
+                    .attr({
+                        'download': filename1,
+                        'href': xlsUrl
+                    });
+            } else {
+                // Data URI
+                var xlsData = 'data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(xls);
+
+                $(this)
+                    .attr({
+                        'download': filename1,
+                        'href': xlsData,
+                        'target': '_blank'
+                    });
+            }
+        }
+    
 });
