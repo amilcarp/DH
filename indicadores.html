@@ -477,9 +477,11 @@
 					  	<div class="col-md-3" id="descarDatos1">...</div>
                         <div class="col-md-3" id="descarDatos2">...</div>
                         <div class="col-md-3" id="descarDatos3">...</div>
-                        <div class="col-md-3">
-                            <button class="btn btn-primary" onclick="fnExcelReport()">XLS</button>
-                            <button class="btn btn-primary" onclick="fnExcelCSV()">CSV</button>
+                        <div class="col-md-3" id="btnDescarga">
+<!--                            <button class="btn btn-primary" onclick="tableToExcel('tabuls1', 'Indicador')">XLS</button>-->
+                            <a download="Indicador.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, 'tabuls1', 'Indicador');">XLS</a>
+                            
+                            <a download="Indicador.csv" class="btn btn-primary" onclick="return ExcellentExport.csv(this, 'tabuls1');">CSV</a>
                         </div>
 				      </div>
 				      
@@ -499,6 +501,13 @@
 	    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
         <script src="https://momentjs.com/downloads/moment.min.js"></script>
 	    <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="js/excellentexport.js"></script>
+        <script src="http://requirejs.org/docs/release/2.3.2/minified/require.js"></script>
+        <script>
+            require(['js/excellentexport'], function(ee) {
+                window.ExcellentExport = ee;
+            });
+        </script>
         <script src="js/main.js"></script>
         <script src="js/indicadores.js"></script>
         <script src="js/graficas.js"></script>
@@ -513,75 +522,8 @@
         <script src="js/data.js"></script>
         <script src='js/funcionesApi.js'></script>
         <script>
-        // Función para exportar archivos en XLS
-              function fnExcelReport()
-            {
-                /*var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
-                var textRange; var j=0;*/
-               /* tab = document.getElementById('headerTable'); // id of table
-
-                for(j = 0 ; j < tab.rows.length ; j++) 
-                {     
-                    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-                    //tab_text=tab_text+"</tr>";
-                }
-
-                tab_text=tab_text+"</table>";
-                tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
-                tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
-                tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params*/
-
-                var ua = window.navigator.userAgent;
-                var msie = ua.indexOf("MSIE "); 
-
-                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
-                {
-                    tabuls1.document.open("txt/html","replace");
-                    tabuls1.document.write(tabulado1);
-                    tabuls1.document.close();
-                    txtArea1.focus(); 
-                    sa=tabuls1.document.execCommand("SaveAs",true,"DescargaIndividual.xls");
-                }  
-                else                 //other browser not tested on IE 11
-                    sa = window.open('data:application/vnd.ms-excel,' + encodeURIComponent(tabulado1));  
-
-                return (sa);
-            }
-            
-             // Función para exportar archivos en XLS
-              function fnExcelCSV()
-            {
-                /*var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
-                var textRange; var j=0;*/
-               /* tab = document.getElementById('headerTable'); // id of table
-
-                for(j = 0 ; j < tab.rows.length ; j++) 
-                {     
-                    tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
-                    //tab_text=tab_text+"</tr>";
-                }
-
-                tab_text=tab_text+"</table>";
-                tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table
-                tab_text= tab_text.replace(/<img[^>]*>/gi,""); // remove if u want images in your table
-                tab_text= tab_text.replace(/<input[^>]*>|<\/input>/gi, ""); // reomves input params*/
-
-                var ua = window.navigator.userAgent;
-                var msie = ua.indexOf("MSIE "); 
-
-                if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))      // If Internet Explorer
-                {
-                    tabuls1.document.open("txt/html","replace");
-                    tabuls1.document.write(tabulado1);
-                    tabuls1.document.close();
-                    tabuls1.focus(); 
-                    sa=tabuls1.document.execCommand("SaveAs",true,"DescargaIndividual.csv");
-                }  
-                else                 //other browser not tested on IE 11
-                    sa = window.open('data:application/csv;charset=utf-8,' + encodeURIComponent(tabulado1));  
-
-                return (sa);
-            }
+//            //Botones de descarga individual
+//              $('#btnDescarga').html('<a download="'+datosDer.indicator_name+'.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, "tabuls1", "'+datosDer.indicator_name+'");">XLS</a> <a download="'+datosDer.indicator_name+'.csv" class="btn btn-primary" onclick="return ExcellentExport.csv(this, "tabuls1");">CSV</a>');
         </script>
 
         <script type="text/javascript">
