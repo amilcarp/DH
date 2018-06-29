@@ -158,8 +158,8 @@ $(document).ready(function() {
            // cua += datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
             //console.log(datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name));
             console.log(data.breakdown_group[str].breakdown_attribute);
-            cua += '<div class="tabulado'+str+'">';
-            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+            cua += '<div class="tabulado'+str+'" style="padding:25px 0 0 0;">';
+//            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
             cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
             cua += '</div>';
             console.log(cua);
@@ -276,23 +276,25 @@ $(document).ready(function() {
                                             '<td>Evidencias</td><td style="line-height:1.2;">';
             
                                             for(var i = 0; i< data.evidence.length; i++){
-                                                var vigencia = data.evidence[i].validity_year_start - data.evidence[i].validity_end_start;
+                                                var vigencia = data.evidence[i].validity_year_start + '-' + data.evidence[i].validity_end_start;
                                                  cuali += '<p><b>Evidencia:</b> ' + data.evidence[i].evidence_name + '</p>' +
                                                         '<p><b>Unidad de Observación:</b> ' + data.evidence[i].observation_unit_name + '</p>' +
                                                         '<p><b>URL:</b> ' + '<a href="' + data.evidence[i].evidence_url + '" target="_blank">' + data.evidence[i].evidence_url + '</a>' + '</p>' +
-                                                        '<p><b>Entidad que valida:</b> ' + data.evidence[i].institution_name_evidencie  + '</p>' +
-                                                        '<p><b>Vigencia:</b> ' + vigencia + '</p>' +
-                                                        '<p><b>Fecha de actualización de la evidencia:</b> ' + data.evidence[i].update_date + '</p>';
+                                                        '<p><b>Entidad que valida:</b> ' + data.evidence[i].institution_name_evidencie  + '</p>';
+                                                        cuali += (data.evidence[i].validity_year_start === null || data.evidence[i].validity_end_start === null) ? '' : '<p><b>Vigencia:</b> ' + vigencia + '</p>' +
+                                                        '<p><b>Fecha de actualización de la evidencia:</b> ' + moment(data.evidence[i].update_date).format('DD-MM-YYYY') + '</p>';
                                                 if(typeof data.evidence[i].validity_date_evidence !== 'undefined'){
                                                     for(var j = 0; j< data.evidence[i].validity_date_evidence.length; j++){
-                                                        cuali += '<p><b>Fecha de '+ data.evidence[i].validity_date_evidence[j].date_type_name +':</b> ' + data.evidence[i].validity_date_evidence[j].validity_date + '</p>';
+                                                        cuali += '<p><b>Fecha de '+ data.evidence[i].validity_date_evidence[j].date_type_name +':</b> ' + moment(data.evidence[i].validity_date_evidence[j].validity_date).format('DD-MM-YYYY') + '</p>';
                                                     }
                                                 }
                                                 if(typeof data.evidence[i].objective !== 'undefined'){
                                                     for(var k = 0; k< data.evidence[i].objective.length; k++){
+                                                        cuali += '<br />';
                                                         cuali += (data.evidence[i].objective[k].objective_sequence === null) ? '' : '<p><b>Objetivo '+ data.evidence[i].objective[k].objective_sequence +':</b> ' + data.evidence[i].objective[k].objective_name + '</p>';
                                                         cuali += (data.evidence[i].objective[k].strategy_sequence === null) ? '' : '<p><b>Estrategia '+ data.evidence[i].objective[k].strategy_sequence +':</b> ' + data.evidence[i].objective[k].strategy_name + '</p>';
                                                         cuali += (data.evidence[i].objective[k].action_line_sequence === null) ? '' : '<p><b>Línea de acción '+ data.evidence[i].objective[k].action_line_sequence +':</b> ' + data.evidence[i].objective[k].action_line_name + '</p>';
+                                                        
                                                     }
                                                 }
                                                 if(typeof data.evidence[i].complementary_attribute !== 'undefined'){
@@ -327,7 +329,7 @@ $(document).ready(function() {
         var j = 2;
         
         if(formula !== null){
-            for(var i = 0; i < formula.length; i++){
+            for(var i = 0; i < formula.length-1; i++){
             i++;
             if(formula[i] === null){
                 
@@ -407,7 +409,7 @@ $(document).ready(function() {
                                         cuanti += '<div class="col-md-10">';
                                         tados = data.breakdown_group;
                                         if(tados.length > 1){
-                                            cuanti += '<br/><span>Elige un corte de información: </span><select name="breakdown" id="breakdown">';
+                                            cuanti += '<br/><span>Elige un desglose: </span><select name="breakdown" id="breakdown">';
                                             for (var m=0;m<tados.length;m++){
                                                 cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
                                             }
@@ -433,7 +435,7 @@ $(document).ready(function() {
                                 //var tados = data.breakdown_group;
                                 
                                 cuanti += '<div class="divTabla">';
-                                cuanti += '<div class="verTabla" style="width: 100%;overflow-x: scroll;"></div>';
+                                cuanti += '<div class="verTabla" style="width: 100%;overflow-x: auto;"></div>';
         
                                 cuanti += '</div>';
                                 
@@ -895,5 +897,124 @@ $(document).ready(function() {
 //        }//fin del for
         return contenido;
     }
+    
+    function exportTableToCSV($table, filename) {
+            var $rows = $table.find('tr:has(td)'),
+                tmpColDelim = String.fromCharCode(11), // vertical tab character
+                tmpRowDelim = String.fromCharCode(0), // null character
+                // actual delimiter characters for CSV format
+                colDelim = '","',
+                rowDelim = '"\r\n"',
+
+                // Grab text from table into CSV formatted string
+                csv = '"' + $rows.map(function(i, row) {
+                    var $row = $(row),
+                        $cols = $row.find('td');
+
+                    return $cols.map(function(j, col) {
+                        var $col = $(col),
+                            text = $col.text();
+
+                        return text.replace(/"/g, '""'); // escape double quotes
+
+                    }).get().join(tmpColDelim);
+
+                }).get().join(tmpRowDelim)
+                .split(tmpRowDelim).join(rowDelim)
+                .split(tmpColDelim).join(colDelim) + '"';
+
+            // Deliberate 'false', see comment below
+            if (false && window.navigator.msSaveBlob) {
+
+                var blob = new Blob([decodeURIComponent(csv)], {
+                    type: 'text/csv;charset=utf8'
+                });
+
+                window.navigator.msSaveBlob(blob, filename);
+            } else if (window.Blob && window.URL) {
+                var blob = new Blob([csv], {
+                    type: 'text/csv;charset=utf8'
+                });
+                var csvUrl = URL.createObjectURL(blob);
+
+                $(this)
+                    .attr({
+                        'download': filename,
+                        'href': csvUrl
+                    });
+            } else {
+                var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
+                $(this)
+                    .attr({
+                        'download': filename,
+                        'href': csvData,
+                        'target': '_blank'
+                    });
+            }
+        }
+
+        function deselect(e) {
+            $('.pop').slideFadeToggle(function() {
+                e.removeClass('selected');
+            });
+        }
+
+        function buscar(busqueda) {
+            window.location.replace("busqueda.html?busqueda=" + busqueda);
+        }
+
+        function exportTableToXLS($table1, filename1) {
+            var $rows1 = $table1.find('tr:has(td)'),
+                tmpColDelim1 = String.fromCharCode(11), // vertical tab character
+                tmpRowDelim1 = String.fromCharCode(0), // null character
+
+                // actual delimiter characters for CSV format
+                colDelim1 = '","',
+                rowDelim1 = '"\r\n"',
+
+                // Grab text from table into CSV formatted string
+                xls = '"' + $rows1.map(function(i, row) {
+                    var $row1 = $(row),
+                        $cols1 = $row1.find('td');
+
+                    return $cols1.map(function(j, col) {
+                        var $col1 = $(col),
+                            text1 = $col1.text();
+                        return text1.replace(/"/g, '""'); // escape double quotes
+                    }).get().join(tmpColDelim1);
+                }).get().join(tmpRowDelim1)
+                .split(tmpRowDelim1).join(rowDelim1)
+                .split(tmpColDelim1).join(colDelim1) + '"';
+
+            // Deliberate 'false', see comment below
+            if (false && window.navigator.msSaveBlob) {
+                var blob1 = new Blob([decodeURIComponent($table1)], {
+                    type: 'text/plain;charset=utf8'
+                });
+                window.navigator.msSaveBlob(blob1, filename1);
+            } else if (window.Blob && window.URL) {
+                // HTML5 Blob
+                var blob1 = new Blob([xls], {
+                    type: 'text/plain;charset=utf8'
+                });
+                var xlsUrl = URL.createObjectURL(blob1);
+
+                $(this)
+                    .attr({
+                        'download': filename1,
+                        'href': xlsUrl
+                    });
+            } else {
+                // Data URI
+                var xlsData = 'data:application/vnd.ms-excel;charset=utf-8,' + encodeURIComponent(xls);
+
+                $(this)
+                    .attr({
+                        'download': filename1,
+                        'href': xlsData,
+                        'target': '_blank'
+                    });
+            }
+        }
     
 });

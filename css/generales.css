@@ -308,8 +308,11 @@ p{
 }
 
 
+.botoneraTipos{
+    margin-left: 7%;
+}
 
 .botoneraTipos a {
-    width: 32%;
-    margin-right: 10px;
+    width: 27%;
+    margin-right: 6.2%;
 }

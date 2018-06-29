@@ -74,7 +74,31 @@
 				      <hr />
 				      <div class="row">
 					  	<div class="col-md-8">
-					      <p>[Aquí va el texto descriptivo de la sección, sí es que la hay]</p>
+                            
+                            
+					      <div class="container" id="objetivo0">
+                              <div class="row">
+                                <div class="col s12">
+                                  <h3 class="fuerte t_principal">Resultado de busqueda</h3>
+                                </div>
+                                <div class="col s12">
+                                  <div class="input-field col s4" style="margin-left:15px;">
+                                    <span class="icon-search" aria-hidden="true"></span>
+                                    <input id="icon_prefix" type="text" class="validate caja_d autocomplete" placeholder=" Buscar indicadores" style="padding-left: 12px;">
+                                  </div>
+                                </div>
+                              </div>
+
+                              <div class="row" >
+                                <div id="noresultado">
+
+                                </div>
+                                <ul class="collection" id="resultado">
+
+                                </ul>
+                              </div>
+                            </div>
+                            
 					  	</div>
 				      </div>
 			      </div>
@@ -93,6 +117,231 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js"></script>
-		
+		 <script type="text/javascript">
+    jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
+        return function( elem ) {
+            return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+        };
+    });
+
+    var objetivoId = getParameterByName('objetivoId');
+    var lupa = false;
+    var visibles =  true;
+
+
+    $(document).ready(function(){
+      $('#noresultado').hide();
+      $('#cam_bus').keypress(function(e) {
+          if(e.which == 13) {
+            buscar($('#cam_bus').val());
+          }
+      });
+
+      $('#icon_prefix').keypress(function(e) {
+          if(e.which == 13) {
+            buscar($('#icon_prefix').val());
+          }
+      });
+
+      function deselect(e) {
+        $('.pop').slideFadeToggle(function() {
+          e.removeClass('selected');
+        });
+      }
+
+      $("#contact").hover(
+       function() {
+         if($(this).hasClass('selected')) {
+           deselect($(this));
+         } else {
+           $(this).addClass('selected');
+           $('.pop').slideFadeToggle();
+         }
+         return false;
+       }, function() {
+         deselect($('#contact'));
+         return false;
+       }
+     );
+
+
+     $.fn.slideFadeToggle = function(easing, callback) {
+       return this.animate({ opacity: 'toggle', height: 'toggle' }, 'fast', easing, callback);
+     };
+
+        window.onload = function () {
+
+          $('#buscar').click(function () {
+            if(lupa) {
+              $('#cam_bus').hide();
+              lupa = false;
+            } else {
+              $('#cam_bus').show();
+              $('#buscar').hide();
+              document.getElementById("cam_bus").focus();
+              lupa = true;
+            }
+          });
+        }
+
+    llamada();
+    if(objetivoId != ''){
+      desplegar(objetivoId);
+      console.log('entro');
+    }
+
+    });
+
+    function buscar(busqueda){
+      $('.collection-item').hide();
+      if(busqueda != ''){
+        $('#noresultado').hide();
+        var res = busqueda.split(" ");
+        console.log(res);
+        for (var i = 0; i < res.length; i++) {
+          if($('.collection-item:Contains("'+ res[i] +'")').length > 0){
+            $('.collection-item:Contains("'+ res[i] +'")').show();
+          }else{
+            $('#noresultado').show();
+            $('#noresultado').html('<h3>No se encontró ninguna coincidencia</h3>');
+          }
+        }
+      }else{
+        //$('#resultado').html('No se encontraron coincidencias.');
+        $('.objetivos').show();
+        console.log('entrado');
+        $('#noresultado').show();
+        $('#noresultado').html('<h3>No se encontró ninguna coincidencia</h3>');
+      }
+    }
+
+    function llamada(){
+      var url = 'https://datosabiertos.unam.mx/api/alice/search?q=*:*&right_id=*&fl=indicator_name,indicator_code,guid,right_id,right_name_short&rows=100';
+      //var url = 'https://operativos.inegi.org.mx/datos/api/Valores/PorClaveSerie';
+      var parametros =  {"PIdioma":"ES"}
+      //var parametros =  {'PCveInd':indicador,'PAnoIni':'0', 'PAnoFin':'0', 'POrden':'DESC','PCveSer': ser , 'PIdioma':'ES'}
+        $.ajax({
+          type: 'GET',
+          url: url,
+          success: function( data, textStatus, jqxhr ) {
+             console.log(data);
+             //ponObjetivos(data);
+
+              var obj = getParameterByName("busqueda");
+              if(obj != null){
+                buscar(obj);
+              }else{
+                console.log('entrado');
+                $('#noresultado').show();
+                $('#noresultado').html('<h3>No se encontró ninguna coincidencia</h3>');
+              }
+
+          },
+          async:false
+        });
+    }
+
+    function ponObjetivos(datos){
+      var checar = 0;
+      for (var i = 0; i < datos.length; i++) {
+        var contenido='';
+        var lista_resultados =  '';
+        console.log(datos[i]);
+
+        var codigo = datos[i].Codigo_des;
+        codigo = codigo.replace(".","");
+
+        lista_resultados = lista_resultados + '<li class="collection-item">' +
+                          '<a href="objetivos.html?objetivoId='+ codigo +'">' + datos[i].Codigo_des + datos[i].Abrevia_des +' : <span class="descripcion"> '+datos[i].Descrip_des + '</span> </a></li>';
+
+        for (var j = 0; j < datos[i].Meta.length; j++) {
+          var clave_arb_meta  = datos[i].Meta[j].Indicador[0].ClaveInd_arb;
+          if(true){
+            if(clave_arb_meta != 210){
+              lista_resultados = lista_resultados + '<li class="collection-item">' + datos[i].Meta[j].Codigo_des + ' <span class="descripcion"> '+datos[i].Meta[j].Descrip_des + '</span> </li>';
+
+
+            for (var k = 0; k < datos[i].Meta[j].Indicador.length; k++) {
+
+              var clave_arb     = datos[i].Meta[j].Indicador[k].ClaveInd_arb;
+              var codigo_dg     = datos[i].Meta[j].Indicador[k].DesGeo.Codigo_dg;
+              var descrip_des   = datos[i].Meta[j].Indicador[k].Descrip_des;
+              var codigo_des    = datos[i].Meta[j].Indicador[k].Codigo_des;
+            if( clave_arb == 210){
+
+            }
+            else{
+              if(datos[i].Meta[j].Indicador[k].TieneValores){
+
+                lista_resultados = lista_resultados + '<li class="collection-item">' + '<span class="buscar" >'+ '<a class="buscar" href="indicadores.html?objetivo='+datos[i].Codigo_des+'&meta='+datos[i].Meta[j].Clave_arb+'&indicador='+ clave_arb+'&codigo='+codigo_dg+'&obj='+datos[i].Clave_arb+'">'+
+                    codigo_des +' '+ descrip_des +
+                  '</a>'+
+                  '<a class="buscar fond_global tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].DescripS_tatr : "n/A" )+'"> &nbsp;&nbsp; '+
+                    ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].Cve_tatr : "n/A" )+
+                  '</a>' +
+                  '&nbsp;&nbsp;'+
+                '<a class="buscar ns tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ datos[i].Meta[j].Indicador[k].DesGeo.Descrip_dg +'">'+
+                  '&nbsp;&nbsp;&nbsp;'+ datos[i].Meta[j].Indicador[k].DesGeo.Codigo_dg +'&nbsp;</a>'+
+                '</li>';
+              }else{
+
+                lista_resultados = lista_resultados + '<li class="collection-item">' +  '<span class="buscar" >'+
+                    codigo_des +' '+ descrip_des +
+                  '</span>'+
+                  '<a class="buscar fond_global tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].DescripS_tatr : "n/A" )+'"> &nbsp;&nbsp; '+
+                    ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].Cve_tatr : "n/A" )+
+                  '</a>' +
+                  '&nbsp;&nbsp;'+
+                '<a class="buscar ns tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ datos[i].Meta[j].Indicador[k].DesGeo.Descrip_dg +'">'+
+                  '&nbsp;&nbsp;&nbsp;'+ datos[i].Meta[j].Indicador[k].DesGeo.Codigo_dg +'&nbsp;</a>'+
+                '</li>';
+              }
+            }//fin for mas interno
+          }
+          }
+        }
+        }//despues de este cambia el indicador
+        $('#resultado').append(lista_resultados);
+
+      }//fin for mas externo
+
+    }//fin de la función
+
+    function show_less()
+    {
+      if(visibles){
+        $('.ocultar').hide();
+        console.log('oculta');
+        visibles = false;
+        $('.mensaje').html('Ver más');
+      }
+      else{
+       $('.ocultar').show();
+       console.log('muetra');
+       visibles = true;
+       $('.mensaje').html('Ver menos');
+      }
+    }
+
+    function esconder() {
+      $('#cam_bus').hide();
+      $('#buscar').show();x
+      lupa = false;
+    }
+
+    function desplegar(objetivoId)
+    {
+      $('#objetivo'+objetivoId+' > div').click();
+      window.location.href = '#objetivo'+ (objetivoId-1);
+    }
+
+    function getParameterByName(name) {
+      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+      results = regex.exec(location.search);
+      return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+    }
+
+    </script>
 	</body>
 </html>
