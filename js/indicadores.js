@@ -778,7 +778,10 @@ $(document).ready(function() {
     //clasificacion: Atributo a llamar de la API de datos.gob.mx Ej. grupo-especifico
     //periodos: Periodos que se van a consultar para el indicador, según reporte la API y consumido desde la variable breakdown_group_year
     //recurso: Nombre del recurso para la clasificación y el periodo a consultar. Ej. poblacion_con_menos_de_18_anios
-    function datosGrafica(resource, dataset, resultado, clasificacion, periodos, recurso){
+    function datosGrafica(resource, dataset, resultado, clasificacion, periodos, recurso)
+    {
+ 
+
         datoInd = [];
         datoInd2 = [];
         datoInd3 = [];
@@ -788,8 +791,11 @@ $(document).ready(function() {
         clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         
         
-        if(clas === "entidad" || clas === "Entidad Federativa"){
+        if(clas === "entidad" || clas === "Entidad Federativa")
+        {
+        
             
+
         var inf = [];
             
         for(var yy=0;yy<rec2.length;yy++){
@@ -834,6 +840,68 @@ $(document).ready(function() {
             }
             dat111 += ']';
             
+        
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            // nuevos calculos para voltear el arreglo
+            datoInd = [];
+            datoInd2 = [];
+            datoInd3 = [];
+            dat111 = [];
+            rec2 = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
+            res2 = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
+            clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
+            
+            var inf = [];
+                
+            for(var yy=0;yy<rec2.length;yy++){
+                datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
+            }
+            
+            dat111 += '[';
+
+            var periodos = [];
+            for(var jj=0; jj < datoInd2[0].length; jj++)
+            {
+                periodos.push(datoInd2[0][jj].periodo);
+            }
+
+            dat111 += '';
+            
+            //Contamos estados
+            for(var gg=0; gg<rec2.length; gg++)
+            {
+                dat111 += '{';
+                dat111 += '"Entidad" : "' + rec2[gg] + '",';
+                
+                for(var hh = 0; hh < periodos.length; hh++)
+                {
+                    dat111 += '"'+periodos[hh]+'" : ';
+                    dat111 += '' + datoInd2[gg][hh][res2] + '';
+
+                    if(hh === periodos.length-1)
+                    {
+                        dat111 += '';
+                    }
+                    else
+                    {
+                        dat111 += ',';
+                    }      
+                } 
+
+                dat111 += '}';
+                    
+                if(gg === rec2.length-1)
+                {
+                    dat111 += '';
+                }
+                else
+                {
+                    dat111 += ',';
+                }
+            }
+            dat111 += ']';
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
         }else{
             
             var inf = [];
