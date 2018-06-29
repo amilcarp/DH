@@ -158,8 +158,8 @@ $(document).ready(function() {
            // cua += datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
             //console.log(datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name));
             console.log(data.breakdown_group[str].breakdown_attribute);
-            cua += '<div class="tabulado'+str+'">';
-            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+            cua += '<div class="tabulado'+str+'" style="padding:25px 0 0 0;">';
+//            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
             cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
             cua += '</div>';
             console.log(cua);
@@ -276,23 +276,25 @@ $(document).ready(function() {
                                             '<td>Evidencias</td><td style="line-height:1.2;">';
             
                                             for(var i = 0; i< data.evidence.length; i++){
-                                                var vigencia = data.evidence[i].validity_year_start - data.evidence[i].validity_end_start;
+                                                var vigencia = data.evidence[i].validity_year_start + '-' + data.evidence[i].validity_end_start;
                                                  cuali += '<p><b>Evidencia:</b> ' + data.evidence[i].evidence_name + '</p>' +
                                                         '<p><b>Unidad de Observación:</b> ' + data.evidence[i].observation_unit_name + '</p>' +
                                                         '<p><b>URL:</b> ' + '<a href="' + data.evidence[i].evidence_url + '" target="_blank">' + data.evidence[i].evidence_url + '</a>' + '</p>' +
-                                                        '<p><b>Entidad que valida:</b> ' + data.evidence[i].institution_name_evidencie  + '</p>' +
-                                                        '<p><b>Vigencia:</b> ' + vigencia + '</p>' +
-                                                        '<p><b>Fecha de actualización de la evidencia:</b> ' + data.evidence[i].update_date + '</p>';
+                                                        '<p><b>Entidad que valida:</b> ' + data.evidence[i].institution_name_evidencie  + '</p>';
+                                                        cuali += (data.evidence[i].validity_year_start === null || data.evidence[i].validity_end_start === null) ? '' : '<p><b>Vigencia:</b> ' + vigencia + '</p>' +
+                                                        '<p><b>Fecha de actualización de la evidencia:</b> ' + moment(data.evidence[i].update_date).format('DD-MM-YYYY') + '</p>';
                                                 if(typeof data.evidence[i].validity_date_evidence !== 'undefined'){
                                                     for(var j = 0; j< data.evidence[i].validity_date_evidence.length; j++){
-                                                        cuali += '<p><b>Fecha de '+ data.evidence[i].validity_date_evidence[j].date_type_name +':</b> ' + data.evidence[i].validity_date_evidence[j].validity_date + '</p>';
+                                                        cuali += '<p><b>Fecha de '+ data.evidence[i].validity_date_evidence[j].date_type_name +':</b> ' + moment(data.evidence[i].validity_date_evidence[j].validity_date).format('DD-MM-YYYY') + '</p>';
                                                     }
                                                 }
                                                 if(typeof data.evidence[i].objective !== 'undefined'){
                                                     for(var k = 0; k< data.evidence[i].objective.length; k++){
+                                                        cuali += '<br />';
                                                         cuali += (data.evidence[i].objective[k].objective_sequence === null) ? '' : '<p><b>Objetivo '+ data.evidence[i].objective[k].objective_sequence +':</b> ' + data.evidence[i].objective[k].objective_name + '</p>';
                                                         cuali += (data.evidence[i].objective[k].strategy_sequence === null) ? '' : '<p><b>Estrategia '+ data.evidence[i].objective[k].strategy_sequence +':</b> ' + data.evidence[i].objective[k].strategy_name + '</p>';
                                                         cuali += (data.evidence[i].objective[k].action_line_sequence === null) ? '' : '<p><b>Línea de acción '+ data.evidence[i].objective[k].action_line_sequence +':</b> ' + data.evidence[i].objective[k].action_line_name + '</p>';
+                                                        
                                                     }
                                                 }
                                                 if(typeof data.evidence[i].complementary_attribute !== 'undefined'){
@@ -327,7 +329,7 @@ $(document).ready(function() {
         var j = 2;
         
         if(formula !== null){
-            for(var i = 0; i < formula.length; i++){
+            for(var i = 0; i < formula.length-1; i++){
             i++;
             if(formula[i] === null){
                 
@@ -407,7 +409,7 @@ $(document).ready(function() {
                                         cuanti += '<div class="col-md-10">';
                                         tados = data.breakdown_group;
                                         if(tados.length > 1){
-                                            cuanti += '<br/><span>Elige un corte de información: </span><select name="breakdown" id="breakdown">';
+                                            cuanti += '<br/><span>Elige un desglose: </span><select name="breakdown" id="breakdown">';
                                             for (var m=0;m<tados.length;m++){
                                                 cuanti += '<option value="' + m + '">' + data.breakdown_group[m].breakdown_group_name + '</option>';
                                             }
@@ -433,7 +435,7 @@ $(document).ready(function() {
                                 //var tados = data.breakdown_group;
                                 
                                 cuanti += '<div class="divTabla">';
-                                cuanti += '<div class="verTabla" style="width: 100%;overflow-x: scroll;"></div>';
+                                cuanti += '<div class="verTabla" style="width: 100%;overflow-x: auto;"></div>';
         
                                 cuanti += '</div>';
                                 
