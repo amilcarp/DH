@@ -68,11 +68,60 @@
 	      <div class="container">
 		      <br /><br />
 		  	<!-- Inicia Bloque -->
+              
+              
 		      <div class="row">
 			      <div class="col-md-12">
 				      <h1>Generación de reporte</h1>
 				      <hr />
+                      
+                      <div class="row">
+					      <h3>Ficha del reporte</h3>
+					     <table class="table">
+                             <tr>
+                                <td>Total de Derechos en la plataforma:</td>
+                                <td class="derechosNombre">Alimentación, Medio Ambiente, Culturales, Sindicales y Trabajo</td>
+                             </tr>
+                             <tr>
+                                <td>Total de Indicadores reportados para la Plataforma:</td>
+                                <td class="totalInd">415</td>
+                             </tr>
+                             <tr>
+                                <td>Total de indicadores Cuantitativos activos:</td>
+                                <td class="indActivos">18</td>
+                             </tr>
+                             <tr>
+                                <td>Indicadores por Derecho</td>
+                                <td class="derechoCantidad">
+                                    <b>Alimentación:</b> 76<br>
+                                    <b>Medio Ambiente:</b> 100<br>
+                                    <b>Culturales:</b> 105<br>
+                                    <b>Trabajo:</b> 81<br>
+                                    <b>Sindicales:</b> 53<br>
+                                 </td>
+                             </tr>
+                             <tr>
+                                <td>Indicadores por Entidad</td>
+                                <td>
+                                    <b>XXXXX:</b> 0<br>
+                                    <b>XXXXX:</b> 0<br>
+                                    <b>XXXXX:</b> 0<br>
+                                 </td>
+                             </tr>
+                        </table>
+
+                          
+				      </div>
+                      
+                      
 				      <div class="row">
+                          <p>Para generar un listado de los elementos a descargar debes seguir los siguientes pasos:</p>
+                          <ul>
+                            <li>Selecciona los indicadores de los que quieres descargar información</li>
+                            <li>Elije el tipo de información que quieres descargar (Tabulados, Gráficas y/o Mapas)</li>
+                              <li>Selecciona el formato de descarga</li>
+                              <li>Presiona el botón de "Generar Reporte"</li>
+                          </ul>
 					      <div class="col-md-2">
 						      <h6>Elementos a exportar</h6>
 					      </div>
@@ -111,44 +160,18 @@
 					      </div>
 					  	
 				      </div>
-				      <br /><br />
-				      <div class="row">
-					      <h3>Ficha del reporte</h3>
-					     <table class="table">
-                             <tr>
-                                <td>Total de Derechos en la plataforma:</td>
-                                <td>Alimentación, Medio Ambiente, Culturales, Sindicales y Trabajo</td>
-                             </tr>
-                             <tr>
-                                <td>Total de Indicadores reportados para la Plataforma:</td>
-                                <td>415</td>
-                             </tr>
-                             <tr>
-                                <td>Total de indicadores Cuantitativos activos:</td>
-                                <td>18</td>
-                             </tr>
-                             <tr>
-                                <td>Indicadores por Derecho</td>
-                                <td>
-                                    <b>Alimentación:</b> 76<br>
-                                    <b>Medio Ambiente:</b> 100<br>
-                                    <b>Culturales:</b> 105<br>
-                                    <b>Trabajo:</b> 81<br>
-                                    <b>Sindicales:</b> 53<br>
-                                 </td>
-                             </tr>
-                             <tr>
-                                <td>Indicadores por Entidad</td>
-                                <td>
-                                    <b>XXXXX:</b> 0<br>
-                                    <b>XXXXX:</b> 0<br>
-                                    <b>XXXXX:</b> 0<br>
-                                 </td>
-                             </tr>
-                        </table>
+				      <br />
+                      
+                      <div class="row internoDerecho" >
+                        <div class="example">
+                            <div class="panel-group ficha-collapse" id="accordion">
+                                
+                            </div> 
 
-                          
-				      </div>
+                    </div> 
+            </div>
+                      
+                      <br /><br />
 				      
 			      </div>
 		      </div>
@@ -165,6 +188,79 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js"></script>
+        <script src="js/consultas.js"></script>
+        <script>
+            
+            var todosInd = [];
+            
+            // Solucionar Bug número de indicadores
+//            for (var f=1;f<415;f++){
+//                if(f === 100){
+//                   
+//                }
+//                   
+//                $.ajax({
+//                  type: 'GET',
+//                  url: pathAPI + "search?q=*:*&offset=0&rows=100",
+//                  data: {},
+//                  success: function( data, textStatus, jqxhr ) { 
+//                      todosInd += data;
+//                  },
+//                    async: true
+//                });
+//            }
+//            
+            var colap = '';
+            var indDer = ['Culturales','Medio Ambiente','Trabajo','Alimentación','Sindicales'];
+            
+            function listaInd(){
+                for(var i=0;i<indDer.length;i++){
+                    colap += '<div class="panel panel-default">'+
+                            '        <div class="panel-heading d'+(i+1)+'">'+
+                            '            <h4 class="panel-title">'+
+                            '                <a data-parent="#accordion" data-toggle="collapse" href="#panel-0'+i+'" aria-expanded="false" aria-controls="panel-0'+i+'" style="color:#ffffff;">'+indDer[i]+'</a>'+
+                            '            </h4>'+
+                            '            <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-0'+i+'"></button>'+
+                            '        </div>'+
+                            '        <div class="panel-collapse collapse" id="panel-0'+i+'">'+
+                            '            <div class="panel-body">'+
+                            '                <div id="cargaDat'+i+'">'+getValores(indDer[i])+'<p>Cargando información...</p></div>'+
+                            '            </div>'+
+                            '        </div>'+
+                            '    </div>';
+                }
+                return colap;
+            }
+            
+            function getValores(derecho){
+                var valores = '';
+        //var derecho = "Medio Ambiente";
+        //var id_derecho = 5;
+         $.ajax({
+		  type: 'GET',
+		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+             //url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {   
+              
+            
+              
+              tipoDer = data['results']['records'];
+              
+              if(tipoDer.is_cuantitative === true && tipoDer.breakdown_attribute_result != null){
+                    valores += '<input type="checkbox" name="vals"> ' + tipoDer.indicator_code + ' - ' + tipoDer.indicator_name + '<br />';
+                 }
+              
+                
+		  },
+		  async:false
+		});
+                return valores;
+    }
+            
+            $('#accordion').html(listaInd());
+            
+        </script>
 		
 	</body>
 </html>
