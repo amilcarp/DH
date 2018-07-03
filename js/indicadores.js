@@ -184,7 +184,7 @@ $(document).ready(function() {
                     $(".divTabla").hide();
                     $(".btnGrafica").hide();
                     $(".btnTabla").show();
-                    $(".verGrafica").html(graficaCuanti(datosDer,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos
+//                    $(".verGrafica").html(graficaCuanti(datosDer,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos
                     $(".verGrafica").append('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
                     console.log('Pone la gráfica');
                 }
@@ -553,84 +553,84 @@ $(document).ready(function() {
     }
     
     
-    function graficaCuanti(fuente, tipoGrafica, ejeX, ejeY, color, datos){
-        var graf = '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
-            
-            graf += '<script>' +
-                'var svg = d3.select("#graph"),' +
-                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
-                'width = +svg.attr("width") - margin.left - margin.right,' +
-                'height = +svg.attr("height") - margin.top - margin.bottom;' +
-
-                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
-                'y = d3.scaleLinear().rangeRound([height, 0]);' +
-
-                'var g = svg.append("g")' +
-                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
-
-                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
-
-                'd3.json("'+fuente+'", function(d) {' +
-                'd'+ejeY+' = +d'+ejeY+' * 100;' +
-                'console.log(d.results[0]);' +
-                'return d.results[0];' +
-                '}, function(error, data) {' +
-                'if (error) throw error;' +
-
-                'x.domain(data.map(function(d) { return d'+ejeX+'; }));' +
-                'y.domain([0, d3.max(data, function(d) { return d'+ejeY+'; })]);' +
-
-                'g.append("g")' +
-                '.attr("class", "axis axis--x")' +
-                '.attr("transform", "translate(0," + height  + ")")' +
-                '.call(d3.axisBottom(x));' +
-
-                'g.append("g")' +
-                '.attr("class", "axis axis--y")' +
-                '.call(d3.axisLeft(y))' +
-                '.append("text")' +
-                '.attr("transform", "rotate(-90)")' +
-                '.attr("y", 6)' +
-                '.attr("dy", "0.71em")' +
-                '.attr("text-anchor", "end")' +
-                '.text("Porcentaje");' +
-
-                'g.append("g")' +
-                '.call(d3.axisLeft(y))' +
-                '.append("text")' +
-                '.attr("fill", "#000")' +
-                '.attr("transform", "rotate(-90)")' +
-                '.attr("y", 6)' +
-                '.attr("dy", "0.71em")' +
-                '.attr("text-anchor", "end")' +
-                '.text("Porcentaje");' +
-
-                'g.selectAll(".bar")' +
-                '.data(data)' +
-                '.enter().append("rect")' +
-                '.attr("class", "bar")' +
-                '.attr("x", function(d) { return x(d'+ejeX+'); })' +
-                '.attr("y", function(d) { return height; })' +
-                '.attr("width", x.bandwidth())' +
-                '.attr("height", function(d) { return 0})' +
-                '.on("mousemove", function(d){' +
-                'tooltip' +
-                '.style("left", d3.event.pageX - 25 + "px")' +
-                '.style("top", d3.event.pageY - 40 + "px")' +
-                '.style("display", "inline-block")' +
-                '.text(d'+ejeY+');' +
-                '})' +
-                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
-                '.transition()' +
-                '.delay(function(d,i){ return i*100 })' +
-                '.duration(2000)' +
-                '.attr("y", function(d){ return y(d'+ejeY+')})' +
-                '.attr("height", function(d){ return height - y(d'+ejeY+') });' +
-                '});' +
-                '</script>';
-        
-        return graf;
-    }
+//    function graficaCuanti(fuente, tipoGrafica, ejeX, ejeY, color, datos){
+//        var graf = '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
+//            
+//            graf += '<script>' +
+//                'var svg = d3.select("#graph"),' +
+//                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
+//                'width = +svg.attr("width") - margin.left - margin.right,' +
+//                'height = +svg.attr("height") - margin.top - margin.bottom;' +
+//
+//                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
+//                'y = d3.scaleLinear().rangeRound([height, 0]);' +
+//
+//                'var g = svg.append("g")' +
+//                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
+//
+//                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
+//
+//                'd3.json("'+fuente+'", function(d) {' +
+//                'd'+ejeY+' = +d'+ejeY+' * 100;' +
+//                'console.log(d.results[0]);' +
+//                'return d.results[0];' +
+//                '}, function(error, data) {' +
+//                'if (error) throw error;' +
+//
+//                'x.domain(data.map(function(d) { return d'+ejeX+'; }));' +
+//                'y.domain([0, d3.max(data, function(d) { return d'+ejeY+'; })]);' +
+//
+//                'g.append("g")' +
+//                '.attr("class", "axis axis--x")' +
+//                '.attr("transform", "translate(0," + height  + ")")' +
+//                '.call(d3.axisBottom(x));' +
+//
+//                'g.append("g")' +
+//                '.attr("class", "axis axis--y")' +
+//                '.call(d3.axisLeft(y))' +
+//                '.append("text")' +
+//                '.attr("transform", "rotate(-90)")' +
+//                '.attr("y", 6)' +
+//                '.attr("dy", "0.71em")' +
+//                '.attr("text-anchor", "end")' +
+//                '.text("Porcentaje");' +
+//
+//                'g.append("g")' +
+//                '.call(d3.axisLeft(y))' +
+//                '.append("text")' +
+//                '.attr("fill", "#000")' +
+//                '.attr("transform", "rotate(-90)")' +
+//                '.attr("y", 6)' +
+//                '.attr("dy", "0.71em")' +
+//                '.attr("text-anchor", "end")' +
+//                '.text("Porcentaje");' +
+//
+//                'g.selectAll(".bar")' +
+//                '.data(data)' +
+//                '.enter().append("rect")' +
+//                '.attr("class", "bar")' +
+//                '.attr("x", function(d) { return x(d'+ejeX+'); })' +
+//                '.attr("y", function(d) { return height; })' +
+//                '.attr("width", x.bandwidth())' +
+//                '.attr("height", function(d) { return 0})' +
+//                '.on("mousemove", function(d){' +
+//                'tooltip' +
+//                '.style("left", d3.event.pageX - 25 + "px")' +
+//                '.style("top", d3.event.pageY - 40 + "px")' +
+//                '.style("display", "inline-block")' +
+//                '.text(d'+ejeY+');' +
+//                '})' +
+//                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
+//                '.transition()' +
+//                '.delay(function(d,i){ return i*100 })' +
+//                '.duration(2000)' +
+//                '.attr("y", function(d){ return y(d'+ejeY+')})' +
+//                '.attr("height", function(d){ return height - y(d'+ejeY+') });' +
+//                '});' +
+//                '</script>';
+//        
+//        return graf;
+//    }
     
     function parseAPI(string){
         var contenido=string;
@@ -786,6 +786,7 @@ $(document).ready(function() {
         
         
         if(clas === "entidad" || clas === "Entidad Federativa"){
+        //if(clas === "1" || clas === "En"){
             
         var inf = [];
             
@@ -830,6 +831,59 @@ $(document).ready(function() {
                 }
             }
             dat111 += ']';
+            
+//            var inf = [];
+//                
+//            for(var yy=0;yy<rec2.length;yy++){
+//                datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
+//            }
+//            
+//            dat111 += '[';
+//
+//            var periodos = [];
+//            for(var jj=0; jj < datoInd2[0].length; jj++)
+//            {
+//                periodos.push(datoInd2[0][jj].periodo);
+//            }
+//
+//            dat111 += '';
+//            
+//            //Contamos estados
+//            for(var gg=0; gg<rec2.length; gg++)
+//            {
+//                dat111 += '{';
+//                dat111 += '"Entidad" : "' + rec2[gg] + '",';
+//                
+//                for(var hh = 0; hh < periodos.length; hh++)
+//                {
+//                    dat111 += '"'+periodos[hh]+'" : ';
+//                    dat111 += '' + datoInd2[gg][hh][res2] + '';
+//
+//                    if(hh === periodos.length-1)
+//                    {
+//                        dat111 += '';
+//                    }
+//                    else
+//                    {
+//                        dat111 += ',';
+//                    }      
+//                } 
+//
+//                dat111 += '}';
+//                    
+//                if(gg === rec2.length-1)
+//                {
+//                    dat111 += '';
+//                }
+//                else
+//                {
+//                    dat111 += ',';
+//                }
+//            }
+//dat111 += ']';
+            
+            
+            
             
         }else{
             
@@ -894,61 +948,6 @@ $(document).ready(function() {
 //        }//fin del for
         return contenido;
     }
-    
-    function exportTableToCSV($table, filename) {
-            var $rows = $table.find('tr:has(td)'),
-                tmpColDelim = String.fromCharCode(11), // vertical tab character
-                tmpRowDelim = String.fromCharCode(0), // null character
-                // actual delimiter characters for CSV format
-                colDelim = '","',
-                rowDelim = '"\r\n"',
-
-                // Grab text from table into CSV formatted string
-                csv = '"' + $rows.map(function(i, row) {
-                    var $row = $(row),
-                        $cols = $row.find('td');
-
-                    return $cols.map(function(j, col) {
-                        var $col = $(col),
-                            text = $col.text();
-
-                        return text.replace(/"/g, '""'); // escape double quotes
-
-                    }).get().join(tmpColDelim);
-
-                }).get().join(tmpRowDelim)
-                .split(tmpRowDelim).join(rowDelim)
-                .split(tmpColDelim).join(colDelim) + '"';
-
-            // Deliberate 'false', see comment below
-            if (false && window.navigator.msSaveBlob) {
-
-                var blob = new Blob([decodeURIComponent(csv)], {
-                    type: 'text/csv;charset=utf8'
-                });
-
-                window.navigator.msSaveBlob(blob, filename);
-            } else if (window.Blob && window.URL) {
-                var blob = new Blob([csv], {
-                    type: 'text/csv;charset=utf8'
-                });
-                var csvUrl = URL.createObjectURL(blob);
-
-                $(this)
-                    .attr({
-                        'download': filename,
-                        'href': csvUrl
-                    });
-            } else {
-                var csvData = 'data:application/csv;charset=utf-8,' + encodeURIComponent(csv);
-                $(this)
-                    .attr({
-                        'download': filename,
-                        'href': csvData,
-                        'target': '_blank'
-                    });
-            }
-        }
 
         function deselect(e) {
             $('.pop').slideFadeToggle(function() {

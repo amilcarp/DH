@@ -333,6 +333,9 @@ function barras(URLJSON, ejeX, ejeY, color){
     
     console.log(data);
     
+    console.log(ejeX);
+    console.log(ejeY);
+    
         data.forEach(function(d) {
             d[ejeX] = d[ejeX];
             d[ejeY] = +d[ejeY];
