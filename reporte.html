@@ -80,23 +80,27 @@
 					     <table class="table">
                              <tr>
                                 <td>Total de Derechos en la plataforma:</td>
-                                <td class="derechosNombre">Alimentación, Medio Ambiente, Culturales, Sindicales y Trabajo</td>
+                                <td class="derechosNombre">Culturales, Medio Ambiente, Trabajo, Alimentación y Sindicales</td>
                              </tr>
                              <tr>
-                                <td>Total de Indicadores reportados para la Plataforma:</td>
+                                <td>Total de Indicadores en la Plataforma:</td>
                                 <td class="totalInd">415</td>
                              </tr>
                              <tr>
-                                <td>Total de indicadores Cuantitativos activos:</td>
-                                <td class="indActivos">18</td>
+                                <td>Total de Indicadores Cualitativos:</td>
+                                <td class="indCualis">281 (281 activos)</td>
+                             </tr>
+                             <tr>
+                                <td>Total de i¡Indicadores Cuantitativos:</td>
+                                <td class="indCuantis">134 (18 activos)</td>
                              </tr>
                              <tr>
                                 <td>Indicadores por Derecho</td>
                                 <td class="derechoCantidad">
-                                    <b>Alimentación:</b> 76<br>
-                                    <b>Medio Ambiente:</b> 100<br>
                                     <b>Culturales:</b> 105<br>
+                                    <b>Medio Ambiente:</b> 100<br>
                                     <b>Trabajo:</b> 81<br>
+                                    <b>Alimentación:</b> 76<br>
                                     <b>Sindicales:</b> 53<br>
                                  </td>
                              </tr>
@@ -116,13 +120,14 @@
                       
 				      <div class="row">
                           <p>Para generar un listado de los elementos a descargar debes seguir los siguientes pasos:</p>
-                          <ul>
+                          <ol>
                             <li>Selecciona los indicadores de los que quieres descargar información</li>
                             <li>Elije el tipo de información que quieres descargar (Tabulados, Gráficas y/o Mapas)</li>
                               <li>Selecciona el formato de descarga</li>
                               <li>Presiona el botón de "Generar Reporte"</li>
-                          </ul>
-					      <div class="col-md-2">
+                          </ol>
+                          <br/>
+					      <div class="">
 						      <h6>Elementos a exportar</h6>
 					      </div>
 					      <div class="col-md-2">
@@ -155,8 +160,8 @@
 								  <option>CSV</option>
 								</select>
 					      </div>
-					      <div class="col-md-2">
-						      <button type="button" class="btn btn-primary">Generar reporte</button>
+					      <div class="col-md-4">
+						      <button type="button" class="btn btn-primary" onclick="alert('Debe seleccionar al menos 1 indicador para generar la descarga.')">Generar insumos para el reporte</button>
 					      </div>
 					  	
 				      </div>
@@ -164,6 +169,8 @@
                       
                       <div class="row internoDerecho" >
                         <div class="example">
+                            <div style="padding:15px 0;"><span>Mostrar sólo: </span><a class="btn btn-primary verCuantis">Indicadores cuantitativos</a> <a class="btn btn-primary verCualis">Indicadores cualitativos</a></div>
+                            <br />
                             <div class="panel-group ficha-collapse" id="accordion">
                                 
                             </div> 
@@ -179,6 +186,11 @@
 		      
 	      </div>
 		  <br /><br />
+            
+<!--            Se crea la tabla para la descarga del reporte-->
+            
+            
+            
 
 	    </main>
 	
@@ -224,7 +236,7 @@
                             '        </div>'+
                             '        <div class="panel-collapse collapse" id="panel-0'+i+'">'+
                             '            <div class="panel-body">'+
-                            '                <div id="cargaDat'+i+'">'+getValores(indDer[i])+'<p>Cargando información...</p></div>'+
+                            '                <div id="cargaDat'+i+'">'+getValores(indDer[i])+'</div>'+
                             '            </div>'+
                             '        </div>'+
                             '    </div>';
@@ -234,6 +246,8 @@
             
             function getValores(derecho){
                 var valores = '';
+                console.log(pathAPI);
+                console.log(derecho);
         //var derecho = "Medio Ambiente";
         //var id_derecho = 5;
          $.ajax({
@@ -242,23 +256,38 @@
              //url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {   
-              
-            
-              
+
               tipoDer = data['results']['records'];
               
-              if(tipoDer.is_cuantitative === true && tipoDer.breakdown_attribute_result != null){
-                    valores += '<input type="checkbox" name="vals"> ' + tipoDer.indicator_code + ' - ' + tipoDer.indicator_name + '<br />';
-                 }
-              
+              console.log(tipoDer);
+              for(var g = 0;g<tipoDer.length;g++){
+                if(tipoDer[g].is_cuantitative === true && tipoDer[g].breakdown_attribute_result != null){
+                    valores += '<div class="CT"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" style="color:#fff;padding:3px 5px;font-size:11px;border-radius:4px;" title="Indicador Cuantitativo">CT</span><br /></div>';
+                 }else if(tipoDer[g].is_cuantitative === false){
+                      valores += '<div class="CL"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" title="Indicador Cualitativo" style="color:#fff;opacity:0.7;padding:3px 5px;font-size:11px;border-radius:4px;">CL</span><br /></div>';
+                          }
+              }
                 
 		  },
 		  async:false
 		});
+                console.log(valores);
                 return valores;
     }
             
             $('#accordion').html(listaInd());
+            
+            $(".verCualis").on("click",function(){
+                $(".CL").show();
+                $(".CT").hide();
+            });
+            
+            $(".verCuantis").on("click",function(){
+                $(".CL").hide();
+                $(".CT").show();
+            });
+            
+            
             
         </script>
 		
