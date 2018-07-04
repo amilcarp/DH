@@ -72,7 +72,7 @@
               
 		      <div class="row">
 			      <div class="col-md-12">
-				      <h1>Generación de reporte</h1>
+				      <h1>Generación de insumos para reporte</h1>
 				      <hr />
                       
                       <div class="row">
@@ -124,8 +124,9 @@
                             <li>Selecciona los indicadores de los que quieres descargar información</li>
                             <li>Elije el tipo de información que quieres descargar (Tabulados, Gráficas y/o Mapas)</li>
                               <li>Selecciona el formato de descarga</li>
-                              <li>Presiona el botón de "Generar Reporte"</li>
+                              <li>Presiona el botón de "Generar insumos para el reporte"</li>
                           </ol>
+                          <p><b>NOTA:</b> Los indicadores se dividen en cualitativos y cuantitativos. De los primeros es posible descargar fichas y evidencias; de los segundos, gráficas, tablas y mapas.</p>
                           <br/>
 					      <div class="">
 						      <h6>Elementos a exportar</h6>
@@ -161,7 +162,7 @@
 								</select>
 					      </div>
 					      <div class="col-md-4">
-						      <button type="button" class="btn btn-primary" onclick="alert('Debe seleccionar al menos 1 indicador para generar la descarga.')">Generar insumos para el reporte</button>
+						      <button type="button" id="generarInsumos" class="btn btn-primary" >Generar insumos para el reporte</button>
 					      </div>
 					  	
 				      </div>
@@ -189,13 +190,61 @@
             
 <!--            Se crea la tabla para la descarga del reporte-->
             
+            <div id="tabuladoInsumo">
+                <table class="table">
+                    <thead>
+                        <td>Derecho</td>
+                        <td>Clave</td>
+                        <td>Nombre del indicador</td>
+                        <td>Categoría</td>
+                        <td>Tipo de indicador</td>
+                        <td>Tipo de información</td>
+                        <td>Tabulado</td>
+                        <td>Gráfica</td>
+                        <td>Mapa</td>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
             
+            
+            
+            
+<!--            Pantalla para de descarga de documento-->
+            <div id="descargaDoc">
+              <div class="caja">
+                  <h5 id="mensajeDescarga">Se está generando su carpeta de descarga</h5>
+                  <div style="margin:0 auto;text-align:center;" class="loadload">
+                    <div class="preloader-wrapper big active">
+                      <div class="spinner-layer spinner-blue-only">
+                        <div class="circle-clipper left">
+                          <div class="circle"></div>
+                        </div><div class="gap-patch">
+                          <div class="circle"></div>
+                        </div><div class="circle-clipper right">
+                          <div class="circle"></div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <div id="resp">
+
+                </div>
+                <br/>
+                <br/>
+                <div class="cerrar">
+                    <button id="cerrarBoton" class="valdidate caja_d waves-effect waves-light btn blue white-text">Cerrar</button>
+                </div>
+              </div>
+            </div>
             
 
 	    </main>
 	
 	    <!-- JS -->
 	    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
 	    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
@@ -204,6 +253,9 @@
         <script>
             
             var todosInd = [];
+            
+            $('#descargaDoc').hide();
+            
             
             // Solucionar Bug número de indicadores
 //            for (var f=1;f<415;f++){
@@ -262,9 +314,9 @@
               console.log(tipoDer);
               for(var g = 0;g<tipoDer.length;g++){
                 if(tipoDer[g].is_cuantitative === true && tipoDer[g].breakdown_attribute_result != null){
-                    valores += '<div class="CT"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" style="color:#fff;padding:3px 5px;font-size:11px;border-radius:4px;" title="Indicador Cuantitativo">CT</span><br /></div>';
+                    valores += '<div class="CT"><label style="font-weight:400;"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" style="color:#fff;padding:3px 5px;font-size:11px;border-radius:4px;" title="Indicador Cuantitativo">CT</span></label><br /></div>';
                  }else if(tipoDer[g].is_cuantitative === false){
-                      valores += '<div class="CL"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" title="Indicador Cualitativo" style="color:#fff;opacity:0.7;padding:3px 5px;font-size:11px;border-radius:4px;">CL</span><br /></div>';
+                      valores += '<div class="CL"><label style="font-weight:400;"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" title="Indicador Cualitativo" style="color:#fff;opacity:0.7;padding:3px 5px;font-size:11px;border-radius:4px;">CL</span></label><br /></div>';
                           }
               }
                 
@@ -286,6 +338,62 @@
                 $(".CL").hide();
                 $(".CT").show();
             });
+            
+            
+            // Acciones para la descarga
+            $('#generarInsumos').on('click',function(e){
+              $('#descargaDoc').show();
+              e.preventDefault();
+              var indica = [];
+              var valor='';
+              var n = $('#accordion input[type=checkbox]:checked');
+              console.log(n);
+
+
+              if(n != '' || n != null){
+                $.each(n, function(){
+                     console.log($(this).attr('name'));
+                     valor  +=  ',' + $(this).attr('name');
+                });
+              }else{
+                alert('Debes seleccionar al menos 1 indicador.');
+              }
+
+                console.log(valor);
+                
+                // Variable de lo seleccionado en string separado por comas
+                var iji = valor.substr(1);
+                console.log(iji);
+
+                var resol = iji.split(",");
+                
+                for(var ll=0;ll<resol.length;ll++){
+                    var url = pathAPI + "data/PUDH:INDI:" + resol[ll];
+                    var indContd = '';
+                    $.ajax({
+                       type: "GET",
+                       url: url,
+                       success: function(data)
+                       {
+                            indContd = '<tr><td>'+data.right_name_short+'</td><td>'+data.indicator_code+'</td><td>'+data.indicator_name+'</td><td>'+data.indicator_category_name+'</td><td>'+data.indicator_type_short+'</td>';
+                           var tipoInfo = (data.is_cuantitative === true) ? "Cuantitativo" : "Cualitativo";
+                           indContd += '<td>'+tipoInfo+'</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>';
+                           
+                           console.log(indContd);
+                           
+                            $('#tabuladoInsumo table tbody').append(indContd);
+                       },
+                       async: true
+                   });
+                }
+                
+
+           $('#cerrarBoton').on('click',function(e){
+              $('#descargaDoc').hide();
+              location.reload();
+           });
+
+      });
             
             
             
