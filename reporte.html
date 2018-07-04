@@ -123,6 +123,7 @@
 					      </div>
 					      <div class="col-md-4">
 						      <button type="button" id="generarInsumos" class="btn btn-primary btn-lg" >Generar listado de insumos</button>
+                              <button type="button" id="nuevoInsumos" style="display:none;" class="btn btn-primary btn-lg" onclick="javascript:window.location.reload();">Nuevo listado de insumos</button>
 					      </div>
 					  	
 				      </div>
@@ -181,6 +182,7 @@
             
             $('#selIndis').show();
             $('#tabuladoInsumo').hide();
+            $('#nuevoInsumos').hide();
             
             
             // Solucionar Bug número de indicadores
@@ -268,7 +270,9 @@
             
             // Acciones para la descarga
             $('#generarInsumos').on('click',function(e){
-                $(this).prop( "disabled", true );
+                $(this).hide();
+                $('#nuevoInsumos').show();
+                
                 $('#selIndis').hide();
               $('#tabuladoInsumo').show();
               e.preventDefault();
