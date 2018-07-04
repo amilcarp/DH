@@ -263,7 +263,7 @@ $(document).ready(function() {
                                 
                                 '<h2>' + datosDer.indicator_name + '</h2>' +
                                 
-                                '<table class="table table-striped">' +
+                                '<table class="table table-striped " id="tabuls1">' +
                                     '<tbody>' +
                                         '<tr>' +
                                             '<td>Derecho</td>' +
