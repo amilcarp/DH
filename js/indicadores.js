@@ -106,10 +106,46 @@ $(document).ready(function() {
             datosDer = data;
 
             if(datosDer.is_cuantitative == false){
+                //El Indicador es cualitativo
                 $('#indicadores').html(indicadorCuali(datosDer));
+                $('.descargaIndividual').html('<div class="col-md-12">'+
+				      '<h2>Descargar Ficha</h2>'+
+				      '<hr />'+
+				      '<div class="row">'+
+					  	'<div class="col-md-4"><b>Nombre del indicicador</b></div>'+
+                        '<div class="col-md-4"><b>Descripción del indicador</b></div>'+
+                        '<div class="col-md-4"><b>Formatos</b></div>'+
+				      '</div>'+
+                      '<div class="row">'+
+					  	'<div class="col-md-4" id="descarDatos1">...</div>'+
+                        '<div class="col-md-4" id="descarDatos2">...</div>'+
+                        '<div class="col-md-4" id="btnDescarga">'+
+                            '<a download="Indicador.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, \'tabuls1\', \'Indicador\');">XLS</a> '+
+                        '</div>'+
+				      '</div>'+
+			      '</div>');
             }else{
                 if(datosDer.breakdown_group != null){
                     $('#indicadores').html(indicadorCuanti(datosDer,true));
+                    $('.descargaIndividual').html('<div class="col-md-12">'+
+				      '<h2>Descargar datos</h2>'+
+				      '<hr />'+
+				      '<div class="row">'+
+					  	'<div class="col-md-3"><b>Nombre del indicicador</b></div>'+
+                        '<div class="col-md-3"><b>Descripción del indicador</b></div>'+
+                        '<div class="col-md-3"><b>Institución responsable de la información</b></div>'+
+                        '<div class="col-md-3"><b>Formatos</b></div>'+
+				      '</div>'+
+                      '<div class="row">'+
+					  	'<div class="col-md-3" id="descarDatos1">...</div>'+
+                        '<div class="col-md-3" id="descarDatos2">...</div>'+
+                        '<div class="col-md-3" id="descarDatos3">...</div>'+
+                        '<div class="col-md-3" id="btnDescarga">'+
+                            '<a download="Indicador.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, \'tabuls1\', \'Indicador\');">XLS</a> '+
+                            '<a download="Indicador.csv" class="btn btn-primary" onclick="return ExcellentExport.csv(this, \'tabuls1\');">CSV</a>'+
+                        '</div>'+
+				      '</div>'+
+			      '</div>');
                 }else{
                     $('#indicadores').html(indicadorCuanti(datosDer,false));
                 }

@@ -104,14 +104,6 @@
                                     <b>Sindicales:</b> 53<br>
                                  </td>
                              </tr>
-                             <tr>
-                                <td>Indicadores por Entidad</td>
-                                <td>
-                                    <b>XXXXX:</b> 0<br>
-                                    <b>XXXXX:</b> 0<br>
-                                    <b>XXXXX:</b> 0<br>
-                                 </td>
-                             </tr>
                         </table>
 
                           
@@ -121,63 +113,46 @@
 				      <div class="row">
                           <p>Para generar un listado de los elementos a descargar debes seguir los siguientes pasos:</p>
                           <ol>
-                            <li>Selecciona los indicadores de los que quieres descargar información</li>
-                            <li>Elije el tipo de información que quieres descargar (Tabulados, Gráficas y/o Mapas)</li>
-                              <li>Selecciona el formato de descarga</li>
-                              <li>Presiona el botón de "Generar insumos para el reporte"</li>
+                            <li>Selecciona los indicadores de los que quieres descargar información. Los indicadores se dividen en cualitativos y cuantitativos. De los primeros es posible descargar fichas y evidencias; de los segundos, gráficas, tablas y mapas.</li>
+                              <li>Selecciona el formato de descarga.</li>
+                              <li>Presiona el botón de "Generar listado de insumos"</li>
+                              <li>En la pantalla se mostrará un listado con las selección hecha.</li>
                           </ol>
-                          <p><b>NOTA:</b> Los indicadores se dividen en cualitativos y cuantitativos. De los primeros es posible descargar fichas y evidencias; de los segundos, gráficas, tablas y mapas.</p>
                           <br/>
-					      <div class="">
-						      <h6>Elementos a exportar</h6>
-					      </div>
-					      <div class="col-md-2">
-						      <div class="checkbox">
-							    <label>
-							      <input type="checkbox">
-							      Tabulados
-							    </label>
-							  </div>
-					      </div>
-					      <div class="col-md-2">
-							  <div class="checkbox">
-							    <label>
-							      <input type="checkbox">
-							      Gráficas
-							    </label>
-							  </div>
-					      </div>
-					      <div class="col-md-2">
-							  <div class="checkbox">
-							    <label>
-							      <input type="checkbox">
-							      Mapas
-							    </label>
-							  </div>
-					      </div>
-					      <div class="col-md-2">
-							  <select class="form-control" placeholder="Tipo de formato">
-								  <option>XLS</option>
-								  <option>CSV</option>
-								</select>
+					      <div class="col-md-4">
 					      </div>
 					      <div class="col-md-4">
-						      <button type="button" id="generarInsumos" class="btn btn-primary" >Generar insumos para el reporte</button>
+						      <button type="button" id="generarInsumos" class="btn btn-primary btn-lg" >Generar listado de insumos</button>
 					      </div>
 					  	
 				      </div>
 				      <br />
                       
                       <div class="row internoDerecho" >
-                        <div class="example">
-                            <div style="padding:15px 0;"><span>Mostrar sólo: </span><a class="btn btn-primary verCuantis">Indicadores cuantitativos</a> <a class="btn btn-primary verCualis">Indicadores cualitativos</a></div>
+                        <div class="example" id="selIndis">
+                            <div style="padding:15px 0;"><span>Mostrar sólo: </span><a class="btn btn-default btn-sm verCuantis">Indicadores cuantitativos</a> <a class="btn btn-default btn-sm verCualis">Indicadores cualitativos</a></div>
                             <br />
-                            <div class="panel-group ficha-collapse" id="accordion">
-                                
-                            </div> 
-
-                    </div> 
-            </div>
+                            <div class="panel-group ficha-collapse" id="accordion"></div> 
+                        </div> 
+                          
+                          <!--            Se crea la tabla para la descarga del reporte-->
+                        <div id="tabuladoInsumo">
+                            <table class="table">
+                                <thead>
+                                    <th>Derecho</th>
+                                    <th>Clave</th>
+                                    <th>Nombre del indicador</th>
+                                    <th>Categoría</th>
+                                    <th>Tipo de indicador</th>
+                                    <th>Tipo de información</th>
+                                    <th>Liga al indicador</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                          
+                    </div>
                       
                       <br /><br />
 				      
@@ -187,58 +162,6 @@
 		      
 	      </div>
 		  <br /><br />
-            
-<!--            Se crea la tabla para la descarga del reporte-->
-            
-            <div id="tabuladoInsumo">
-                <table class="table">
-                    <thead>
-                        <td>Derecho</td>
-                        <td>Clave</td>
-                        <td>Nombre del indicador</td>
-                        <td>Categoría</td>
-                        <td>Tipo de indicador</td>
-                        <td>Tipo de información</td>
-                        <td>Tabulado</td>
-                        <td>Gráfica</td>
-                        <td>Mapa</td>
-                    </thead>
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-            
-            
-            
-            
-<!--            Pantalla para de descarga de documento-->
-            <div id="descargaDoc">
-              <div class="caja">
-                  <h5 id="mensajeDescarga">Se está generando su carpeta de descarga</h5>
-                  <div style="margin:0 auto;text-align:center;" class="loadload">
-                    <div class="preloader-wrapper big active">
-                      <div class="spinner-layer spinner-blue-only">
-                        <div class="circle-clipper left">
-                          <div class="circle"></div>
-                        </div><div class="gap-patch">
-                          <div class="circle"></div>
-                        </div><div class="circle-clipper right">
-                          <div class="circle"></div>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-                <div id="resp">
-
-                </div>
-                <br/>
-                <br/>
-                <div class="cerrar">
-                    <button id="cerrarBoton" class="valdidate caja_d waves-effect waves-light btn blue white-text">Cerrar</button>
-                </div>
-              </div>
-            </div>
-            
 
 	    </main>
 	
@@ -255,6 +178,9 @@
             var todosInd = [];
             
             $('#descargaDoc').hide();
+            
+            $('#selIndis').show();
+            $('#tabuladoInsumo').hide();
             
             
             // Solucionar Bug número de indicadores
@@ -342,7 +268,9 @@
             
             // Acciones para la descarga
             $('#generarInsumos').on('click',function(e){
-              $('#descargaDoc').show();
+                $(this).prop( "disabled", true );
+                $('#selIndis').hide();
+              $('#tabuladoInsumo').show();
               e.preventDefault();
               var indica = [];
               var valor='';
@@ -377,7 +305,7 @@
                        {
                             indContd = '<tr><td>'+data.right_name_short+'</td><td>'+data.indicator_code+'</td><td>'+data.indicator_name+'</td><td>'+data.indicator_category_name+'</td><td>'+data.indicator_type_short+'</td>';
                            var tipoInfo = (data.is_cuantitative === true) ? "Cuantitativo" : "Cualitativo";
-                           indContd += '<td>'+tipoInfo+'</td><td>N/A</td><td>N/A</td><td>N/A</td></tr>';
+                           indContd += '<td>'+tipoInfo+'</td><td><a href="indicadores.html?codigo=PUDH:INDI:'+data.indicator_code+'" target="_blank">Indicador '+data.indicator_code+'</a></td></tr>';
                            
                            console.log(indContd);
                            
@@ -387,11 +315,6 @@
                    });
                 }
                 
-
-           $('#cerrarBoton').on('click',function(e){
-              $('#descargaDoc').hide();
-              location.reload();
-           });
 
       });
             
