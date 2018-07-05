@@ -118,11 +118,11 @@
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js"></script>
 		 <script type="text/javascript">
-    jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
-        return function( elem ) {
-            return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
-        };
-    });
+//    jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
+//        return function( elem ) {
+//            return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+//        };
+//    });
 
     var objetivoId = getParameterByName('objetivoId');
     var lupa = false;
@@ -217,9 +217,6 @@
 
     function llamada(){
       var url = 'https://datosabiertos.unam.mx/api/alice/search?q=*:*&right_id=*&fl=indicator_name,indicator_code,guid,right_id,right_name_short&rows=100';
-      //var url = 'https://operativos.inegi.org.mx/datos/api/Valores/PorClaveSerie';
-      var parametros =  {"PIdioma":"ES"}
-      //var parametros =  {'PCveInd':indicador,'PAnoIni':'0', 'PAnoFin':'0', 'POrden':'DESC','PCveSer': ser , 'PIdioma':'ES'}
         $.ajax({
           type: 'GET',
           url: url,
@@ -230,6 +227,7 @@
               var obj = getParameterByName("busqueda");
               if(obj != null){
                 buscar(obj);
+                  //console.log(obj);
               }else{
                 console.log('entrado');
                 $('#noresultado').show();
@@ -248,11 +246,10 @@
         var lista_resultados =  '';
         console.log(datos[i]);
 
-        var codigo = datos[i].Codigo_des;
-        codigo = codigo.replace(".","");
+        var codigo = datos[i].indicator_code;
 
         lista_resultados = lista_resultados + '<li class="collection-item">' +
-                          '<a href="objetivos.html?objetivoId='+ codigo +'">' + datos[i].Codigo_des + datos[i].Abrevia_des +' : <span class="descripcion"> '+datos[i].Descrip_des + '</span> </a></li>';
+                          '<a href="indicadores.html?codigo=PUDH:INDI:'+ codigo +'">' + datos[i].indicator_code + datos[i].indicator_name +'</a></li>';
 
         for (var j = 0; j < datos[i].Meta.length; j++) {
           var clave_arb_meta  = datos[i].Meta[j].Indicador[0].ClaveInd_arb;
