@@ -159,7 +159,7 @@ $(document).ready(function() {
             $('#descarDatos1').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
             $('#descarDatos2').html(datosDer.indicator_definition);
             $('#descarDatos3').html(datosDer.responsible_institution);
-              
+              $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
 
             //Muestra u oculta botones para las gráficas y los tabulados
             $(".btnGrafica").show();
@@ -168,6 +168,7 @@ $(document).ready(function() {
             $(".divGrafica").hide();
             $(".divTabla").show();
             $(".btnGrafica").on("click",function(){ 
+                $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
                 $(".btnGrafica").hide();
                 $(".btnTabla").show();
                 $(".divGrafica").show();
@@ -176,10 +177,123 @@ $(document).ready(function() {
                 var variable = $('#breakdown').val();
                 
                 $(".verGrafica .divGrafica svg").html('');
-            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic[0].graphic_key, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name), 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name[0], '#f00', datosDer));
+                $(".verGrafica").append('<span style="font-size:15px;">Tipo de gráfica: </span><a class="btn btn-default btnBre">Brecha</a> <a class="btn btn-default btnColAg">Columna Agrupada</a>');
+            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name), 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer));
                 
                 //$(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', 'poblacion_de_18_anios_o_mas', '#f00', datosDer));
                 //tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos)
+                $(".ColAg").css('display','none');
+                
+            $(".btnBre").on("click",function(){
+                $(".Bre").css("display","block");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","none");
+            });
+              
+            $(".btnColAg").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","block");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","none");
+            });
+                
+            $(".btnColLin").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","block");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","none");
+            });
+                
+            $(".btnColAp").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","block");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","none");
+            });
+                
+            $(".btnColCPAg").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","block");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","none");
+            });
+                
+            $(".btnColAgAp").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","block");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","none");
+            });
+                
+            $(".btnCol").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","block");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","none");
+            });
+                
+            $(".btnLn").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","block");
+                $(".Mapa").css("display","none");
+            });
+                
+            $(".btnMapa").on("click",function(){
+                $(".Bre").css("display","none");
+                $(".ColAg").css("display","none");
+                $(".ColLin").css("display","none");
+                $(".ColAp").css("display","none");
+                $(".ColCPAg").css("display","none");
+                $(".ColAgAp").css("display","none");
+                $(".Col").css("display","none");
+                $(".Ln").css("display","none");
+                $(".Mapa").css("display","block");
+            });
+                
+                
+                
             });
             $(".btnTabla").on("click",function(){
                 $(".btnGrafica").show();
@@ -187,7 +301,9 @@ $(document).ready(function() {
                 $(".divGrafica").hide();
                 $(".divTabla").show();
             });
-        
+              
+              
+              
         
         function armaTabla(data, str){
             var cua = "";
@@ -233,7 +349,6 @@ $(document).ready(function() {
             
             // Mostramos
               $('#breakdown').val('0').change();
-              
               
               
 		  },
@@ -472,7 +587,7 @@ $(document).ready(function() {
         
                                 cuanti += '</div>';
                                 
-                                cuanti += '<div class="verGrafica" style="padding:30px 0 10px 0;"><div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div></div>';
+                                cuanti += '<div class="verGrafica" style="padding:30px 0 10px 0;"><div class="divGrafica"></div></div>';
         
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
@@ -550,7 +665,12 @@ $(document).ready(function() {
         return cuanti;
     }
     
-    
+    // datosDer.breakdown_group[variable].graphic, 
+    //datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id,data.breakdown_group[str].breakdown_attribute_result,data.breakdown_group[str].breakdown_attribute,data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name),
+        //'Periodo', 
+        //datosDer.breakdown_group[variable].breakdown_resource_name,
+        //'#f00',
+        //datosDer
     function tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos){
         // Tipos de gráfica reportados por la API según el recurso breakdown_group.graphic[n].graphic_key
         // Bre = Gráfica de Dotplot para comparación entre 2 variables
@@ -559,29 +679,42 @@ $(document).ready(function() {
         // Col = Gráfica de barras simple
         // Mapa = Visualiza un mapa de México con las 32 entidades
 
-        var salida;
+        console.log(tipo);
         
-        switch(tipo){
-            case "Bre":
-                //salida = dotplot();
-                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.8)"]);
-            break;
-            case "ColAg":
-                salida = columnaAgrupada(fuente,ejeX,ejeY,ejeY, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.8)"]);
-            break;
-            case "Ln":
-                salida = lineas(fuente,ejeX,ejeY, color);
-            break;
-            case "Col":
-                salida = barras(fuente,ejeX,ejeY, color);
-            break;
-            case "Mapa":
-                salida = mapa();
-            break;
-            default:
-                salida = barras();
-            break;
-                
+        var salida;
+        var var1, var2;
+        
+        if(ejeY.length > 1){
+            var1 = ejeY[0];
+            var2 = ejeY[1];
+        }else{
+            var1 = ejeY[0];
+        }
+        
+        
+        
+        for(var t = 0;t<tipo.length;t++){
+            switch(tipo[t].graphic_key){
+                case "Bre":
+                    salida = dotplot(fuente,ejeX,var1,var2, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.7)"]);
+                break;
+                case "ColAg":
+                    salida = columnaAgrupada(fuente,ejeX,var1,var2, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.7)"]);
+                break;
+                case "Ln":
+                    salida = lineas(fuente,ejeX,var1, color);
+                break;
+                case "Col":
+                    salida = barras(fuente,ejeX,var1, color);
+                break;
+                case "Mapa":
+                    salida = mapa(fuente,ejeX,var1, color);
+                break;
+                default:
+                    salida = barras(fuente,ejeX,var1, color);
+                break;
+
+            }
         }
                
         return salida;
