@@ -731,6 +731,7 @@ $(document).ready(function() {
                 break;
                 case "Mapa":
                     salida = mapa(fuente,ejeX,var1, color);
+                    //salida = '<div id="map"></div>';
                 break;
                 default:
                     salida = barras(fuente,ejeX,var1, color);
