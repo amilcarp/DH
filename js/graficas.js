@@ -12,8 +12,9 @@ function lineas(URLJSON, ejeX, ejeY, color){
     
     var svg = d3.select("svg")
           .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+          .attr("height", height + margin.top + margin.bottom);
+    
+    var g = svg.append("g")
         .attr("class","Ln")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -51,9 +52,11 @@ function lineas(URLJSON, ejeX, ejeY, color){
         
         // Aquí se define el dominio de los ejes X y Y
         x.domain(d3.extent(data, function(d) { return d[ejeX]; }));
+        x.nice();
         //x.domain(data.map(function(d) {return d['Periodo'];}));
         //x.domain(data.map(function(d){ return d.Periodo; }));
         y.domain(d3.extent(data, function(d) { return d[ejeY]; }));
+        y.nice();
 
         // Dibuja el eje X
         g.append("g")
@@ -138,6 +141,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     var data = JSON.parse(URLJSON);
     
     var chartWidth=960, chartHeight=500;
+    var clientWidth=960, clientHeight=500;
         
         var axisLayer = svg.append("g").classed("axisLayer", true);
         var chartLayer = svg.append("g").classed("chartLayer", true);
@@ -185,13 +189,13 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     
     function setSize(nested) {
 
-        width = document.querySelector(".divGrafica").clientWidth;
-        height = document.querySelector(".divGrafica").clientHeight;
+        //width = document.querySelector(".divGrafica").clientWidth;
+        //height = document.querySelector(".divGrafica").clientHeight;
         
-//        width = clientWidth;
-//        height = clientHeight;
+        width = clientWidth;
+        height = clientHeight;
 
-        margin = {top:0, left:100, bottom:40, right:30 };
+        margin = {top:0, left:50, bottom:40, right:30 };
         
         
         chartWidth = width - (margin.left+margin.right);
@@ -334,14 +338,14 @@ function barras(URLJSON, ejeX, ejeY, color){
 //        height = +svg.attr("height") - margin.top - margin.bottom,
 //        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    var margin = {top: 20, right: 20, bottom: 10, left: 50};
+    var margin = {top: 20, right: 20, bottom: 30, left: 50};
     var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
     var svg = d3.select("svg")
           .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+          .attr("height", height + margin.top + margin.bottom);
+        var g = svg.append("g")
         .attr("class","Col")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -363,6 +367,7 @@ function barras(URLJSON, ejeX, ejeY, color){
         
     console.log(URLJSON);
     var data = JSON.parse(URLJSON);
+    //var data = URLJSON;
     
     console.log(data);
     
@@ -377,6 +382,7 @@ function barras(URLJSON, ejeX, ejeY, color){
           });
           x.domain(data.map(function(d) { return d[ejeX]; }));
           y.domain([0, d3.max(data, function(d) { return d[ejeY]; })]);
+           // y.nice();
 
           g.append("g")
               .attr("class", "axis axis--x")
@@ -633,6 +639,12 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
             return d3.format(".2s")(d); 
           }
         });
+    
+    // Add the x Axis
+//    xAxis = svg.append("g")
+//      .attr("transform", "translate(0," + height + ")")
+//      .call(d3.axisBottom().scale(x));
+    
       yAxisGroup = svg.append("g")
       	.attr("class", "y-axis-group");
       
@@ -647,6 +659,7 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
       
       xAxisGroup.append("g")
       	.attr("class", "x-axis")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
       axisLines = svg.append("g")
       	.attr("class", "grid-lines");

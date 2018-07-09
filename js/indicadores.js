@@ -168,23 +168,26 @@ $(document).ready(function() {
             $(".divGrafica").hide();
             $(".divTabla").show();
             $(".btnGrafica").on("click",function(){ 
-                $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+                var variable = $('#breakdown').val();
+                $(".verGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic)+'<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+                $(".tipo0").addClass('active');
                 $(".btnGrafica").hide();
                 $(".btnTabla").show();
                 $(".divGrafica").show();
                 $(".divTabla").hide();
                 //$(".verGrafica").html(graficaCuanti(JSONvar,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos 
-                var variable = $('#breakdown').val();
-                
+               
                 $(".verGrafica .divGrafica svg").html('');
-                $(".verGrafica").append('<span style="font-size:15px;">Tipo de gráfica: </span><a class="btn btn-default btnBre">Brecha</a> <a class="btn btn-default btnColAg">Columna Agrupada</a>');
-            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name), 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer));
+//                $(".tipoGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic));
+            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name), 'Entidad', datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer));
                 
                 //$(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', 'poblacion_de_18_anios_o_mas', '#f00', datosDer));
                 //tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos)
                 $(".ColAg").css('display','none');
                 
             $(".btnBre").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","block");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","none");
@@ -197,6 +200,8 @@ $(document).ready(function() {
             });
               
             $(".btnColAg").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","block");
                 $(".ColLin").css("display","none");
@@ -209,6 +214,8 @@ $(document).ready(function() {
             });
                 
             $(".btnColLin").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","block");
@@ -221,6 +228,8 @@ $(document).ready(function() {
             });
                 
             $(".btnColAp").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","none");
@@ -233,6 +242,8 @@ $(document).ready(function() {
             });
                 
             $(".btnColCPAg").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","none");
@@ -245,6 +256,8 @@ $(document).ready(function() {
             });
                 
             $(".btnColAgAp").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","none");
@@ -257,6 +270,8 @@ $(document).ready(function() {
             });
                 
             $(".btnCol").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","none");
@@ -269,6 +284,8 @@ $(document).ready(function() {
             });
                 
             $(".btnLn").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","none");
@@ -281,6 +298,8 @@ $(document).ready(function() {
             });
                 
             $(".btnMapa").on("click",function(){
+                $('.switchBtns a').removeClass('active');
+                $(this).addClass('active');
                 $(".Bre").css("display","none");
                 $(".ColAg").css("display","none");
                 $(".ColLin").css("display","none");
@@ -296,6 +315,7 @@ $(document).ready(function() {
                 
             });
             $(".btnTabla").on("click",function(){
+                $(".tipoGrafica").html('');
                 $(".btnGrafica").show();
                 $(".btnTabla").hide();
                 $(".divGrafica").hide();
@@ -323,6 +343,7 @@ $(document).ready(function() {
                 str = $(this).val();
                 console.log(str);
                 console.log(datosDer);
+                $(".tipoGrafica").html('');
                 if($('.btnGrafica').show()){
                     muestraGrafica = true;
                     $(".divGrafica").hide();
@@ -332,6 +353,7 @@ $(document).ready(function() {
                     $(".verTabla").html(armaTabla(datosDer,str));
                 }else{
                     muestraGrafica = false;
+                    $(".tipoGrafica").html('');
                     $(".divGrafica").show();
                     $(".divTabla").hide();
                     $(".btnGrafica").hide();
@@ -722,85 +744,24 @@ $(document).ready(function() {
     }
     
     
-//    function graficaCuanti(fuente, tipoGrafica, ejeX, ejeY, color, datos){
-//        var graf = '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
-//            
-//            graf += '<script>' +
-//                'var svg = d3.select("#graph"),' +
-//                'margin = {top: 20, right: 20, bottom:130, left: 40},' +
-//                'width = +svg.attr("width") - margin.left - margin.right,' +
-//                'height = +svg.attr("height") - margin.top - margin.bottom;' +
-//
-//                'var x = d3.scaleBand().rangeRound([0, width]).padding(0.1),' +
-//                'y = d3.scaleLinear().rangeRound([height, 0]);' +
-//
-//                'var g = svg.append("g")' +
-//                '.attr("transform", "translate(" + margin.left + "," + margin.top + ")");' +
-//
-//                'var tooltip = d3.select("body").append("div").attr("class", "toolTip");' +
-//
-//                'd3.json("'+fuente+'", function(d) {' +
-//                'd'+ejeY+' = +d'+ejeY+' * 100;' +
-//                'console.log(d.results[0]);' +
-//                'return d.results[0];' +
-//                '}, function(error, data) {' +
-//                'if (error) throw error;' +
-//
-//                'x.domain(data.map(function(d) { return d'+ejeX+'; }));' +
-//                'y.domain([0, d3.max(data, function(d) { return d'+ejeY+'; })]);' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--x")' +
-//                '.attr("transform", "translate(0," + height  + ")")' +
-//                '.call(d3.axisBottom(x));' +
-//
-//                'g.append("g")' +
-//                '.attr("class", "axis axis--y")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
-//
-//                'g.append("g")' +
-//                '.call(d3.axisLeft(y))' +
-//                '.append("text")' +
-//                '.attr("fill", "#000")' +
-//                '.attr("transform", "rotate(-90)")' +
-//                '.attr("y", 6)' +
-//                '.attr("dy", "0.71em")' +
-//                '.attr("text-anchor", "end")' +
-//                '.text("Porcentaje");' +
-//
-//                'g.selectAll(".bar")' +
-//                '.data(data)' +
-//                '.enter().append("rect")' +
-//                '.attr("class", "bar")' +
-//                '.attr("x", function(d) { return x(d'+ejeX+'); })' +
-//                '.attr("y", function(d) { return height; })' +
-//                '.attr("width", x.bandwidth())' +
-//                '.attr("height", function(d) { return 0})' +
-//                '.on("mousemove", function(d){' +
-//                'tooltip' +
-//                '.style("left", d3.event.pageX - 25 + "px")' +
-//                '.style("top", d3.event.pageY - 40 + "px")' +
-//                '.style("display", "inline-block")' +
-//                '.text(d'+ejeY+');' +
-//                '})' +
-//                '.on("mouseout", function(d){ tooltip.style("display", "none");})' +
-//                '.transition()' +
-//                '.delay(function(d,i){ return i*100 })' +
-//                '.duration(2000)' +
-//                '.attr("y", function(d){ return y(d'+ejeY+')})' +
-//                '.attr("height", function(d){ return height - y(d'+ejeY+') });' +
-//                '});' +
-//                '</script>';
-//        
-//        return graf;
-//    }
+    // Función para saber qué tipos de gráficas tiene la cetagoría según sus variables
+    function switchGraficas(tipoGraficas){
+        var sgra = '<div class="tipoGrafica"><span style="font-size:15px;">Tipo de gráfica: </span><div class="switchBtns" style="display:inline;">';
+        
+        console.log(tipoGraficas);
+        
+        for(var t = 0; t<tipoGraficas.length;t++){
+            sgra += '<a class="btn btn-default btn-sm btn'+tipoGraficas[t].graphic_key+' tipo'+t+'">'+tipoGraficas[t].graphic_name+'</a> ';
+        }
+        
+        sgra += '</div></div>';
+        
+        console.log(sgra);
+        
+        return sgra;
+    }
     
+
     function parseAPI(string){
         var contenido=string;
         if(string !== null){
@@ -954,52 +915,111 @@ $(document).ready(function() {
         clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         
         
-        if(clas === "entidad" || clas === "Entidad Federativa"){
+        if(clas === "entidad" || clas === "Entidad Federativa" || clas === "Entidad"){
         //if(clas === "1" || clas === "En"){
+       
             
-        var inf = [];
-            
-        for(var yy=0;yy<rec2.length;yy++){
-            datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
-        }
-        
-        console.log(datoInd2);
-        console.log(rec2);
-            
-            dat111 += '[';
-            
-            var periodos = [];
-            for(var jj=0; jj < datoInd2[0].length; jj++){
-                periodos.push(datoInd2[0][jj].periodo);
+            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            // nuevos calculos para voltear el arreglo
+            var inf = [];
+                
+            for(var yy=0;yy<rec2.length;yy++){
+                datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
             }
             
+            dat111 += '[';
+
+            var periodos = [];
+            for(var jj=0; jj < datoInd2[0].length; jj++)
+            {
+                periodos.push(datoInd2[0][jj].periodo);
+            }
+
             dat111 += '';
-        
-        for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
-                dat111 += '{';
-                dat111 += '"Periodo" : ' + periodos[gg] + ',';
             
-            for(var hh=0;hh<rec2.length;hh++){
-                        dat111 += '"'+rec2[hh]+'" : ';
-                        dat111 += '' + datoInd2[hh][gg][res2] + '';
-                        if(hh === datoInd2.length-1){
-                            dat111 += '';
-                        }else{
-                            dat111 += ',';
-                        }
-                        
-                } 
-                dat111 += '}';
+            //Contamos estados
+            for(var gg=0; gg<rec2.length; gg++)
+            {
+                dat111 += '{';
+                dat111 += '"Entidad" : "' + rec2[gg] + '",';
                 
-                console.log(periodos.length);
-                console.log(periodos[gg]); 
-                if(gg === periodos.length-1){
+                for(var hh = 0; hh < periodos.length; hh++)
+                {
+                    dat111 += '"'+periodos[hh]+'" : ';
+                    dat111 += '' + datoInd2[gg][hh][res2] + '';
+
+                    if(hh === periodos.length-1)
+                    {
+                        dat111 += '';
+                    }
+                    else
+                    {
+                        dat111 += ',';
+                    }      
+                } 
+
+                dat111 += '}';
+                    
+                if(gg === rec2.length-1)
+                {
                     dat111 += '';
-                }else{
+                }
+                else
+                {
                     dat111 += ',';
                 }
             }
             dat111 += ']';
+            
+            console.log(dat111);
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            
+//Si sirve     
+//        var inf = [];
+//            
+//        for(var yy=0;yy<rec2.length;yy++){
+//            datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
+//        }
+//        
+//        console.log(datoInd2);
+//        console.log(rec2);
+//            
+//            dat111 += '[';
+//            
+//            var periodos = [];
+//            for(var jj=0; jj < datoInd2[0].length; jj++){
+//                periodos.push(datoInd2[0][jj].periodo);
+//            }
+//            
+//            dat111 += '';
+//        
+//        for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
+//                dat111 += '{';
+//                dat111 += '"Periodo" : ' + periodos[gg] + ',';
+//            
+//            for(var hh=0;hh<rec2.length;hh++){
+//                        dat111 += '"'+rec2[hh]+'" : ';
+//                        dat111 += '' + datoInd2[hh][gg][res2] + '';
+//                        if(hh === datoInd2.length-1){
+//                            dat111 += '';
+//                        }else{
+//                            dat111 += ',';
+//                        }
+//                        
+//                } 
+//                dat111 += '}';
+//                
+//                console.log(periodos.length);
+//                console.log(periodos[gg]); 
+//                if(gg === periodos.length-1){
+//                    dat111 += '';
+//                }else{
+//                    dat111 += ',';
+//                }
+//            }
+//            dat111 += ']';
+//            
+//            console.log(dat111);
             
 //            var inf = [];
 //                
