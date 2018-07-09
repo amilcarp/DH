@@ -12,8 +12,9 @@ function lineas(URLJSON, ejeX, ejeY, color){
     
     var svg = d3.select("svg")
           .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+          .attr("height", height + margin.top + margin.bottom);
+    
+    var g = svg.append("g")
         .attr("class","Ln")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -51,9 +52,11 @@ function lineas(URLJSON, ejeX, ejeY, color){
         
         // Aquí se define el dominio de los ejes X y Y
         x.domain(d3.extent(data, function(d) { return d[ejeX]; }));
+        x.nice();
         //x.domain(data.map(function(d) {return d['Periodo'];}));
         //x.domain(data.map(function(d){ return d.Periodo; }));
         y.domain(d3.extent(data, function(d) { return d[ejeY]; }));
+        y.nice();
 
         // Dibuja el eje X
         g.append("g")
@@ -70,7 +73,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
             .attr("y", -50)
             .attr("dy", "0.71em")
             .attr("text-anchor", "end")
-            .text("Unidades");
+            .text("");
 
         // Dibuja la línea
         g.append("path")
@@ -95,7 +98,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
                     .style("left", d3.event.pageX - 25 + "px")
                     .style("top", d3.event.pageY - 30 + "px")
                     .style("display", "inline-block")
-                    .text(d[ejeY]);
+                    .text(d[ejeX]+': '+d[ejeY]);
             })
             .on("mouseout", function(d){
                 tooltip.style("display", "none");
@@ -138,6 +141,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     var data = JSON.parse(URLJSON);
     
     var chartWidth=960, chartHeight=500;
+    var clientWidth=960, clientHeight=500;
         
         var axisLayer = svg.append("g").classed("axisLayer", true);
         var chartLayer = svg.append("g").classed("chartLayer", true);
@@ -185,13 +189,13 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
     
     function setSize(nested) {
 
-        width = document.querySelector(".divGrafica").clientWidth;
-        height = document.querySelector(".divGrafica").clientHeight;
+        //width = document.querySelector(".divGrafica").clientWidth;
+        //height = document.querySelector(".divGrafica").clientHeight;
         
-//        width = clientWidth;
-//        height = clientHeight;
+        width = clientWidth;
+        height = clientHeight;
 
-        margin = {top:0, left:100, bottom:40, right:30 };
+        margin = {top:0, left:50, bottom:40, right:30 };
         
         
         chartWidth = width - (margin.left+margin.right);
@@ -334,14 +338,14 @@ function barras(URLJSON, ejeX, ejeY, color){
 //        height = +svg.attr("height") - margin.top - margin.bottom,
 //        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    var margin = {top: 20, right: 20, bottom: 10, left: 50};
+    var margin = {top: 20, right: 20, bottom: 30, left: 50};
     var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
     var svg = d3.select("svg")
           .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
-        .append("g")
+          .attr("height", height + margin.top + margin.bottom);
+        var g = svg.append("g")
         .attr("class","Col")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -363,6 +367,7 @@ function barras(URLJSON, ejeX, ejeY, color){
         
     console.log(URLJSON);
     var data = JSON.parse(URLJSON);
+    //var data = URLJSON;
     
     console.log(data);
     
@@ -371,12 +376,14 @@ function barras(URLJSON, ejeX, ejeY, color){
     
         data.forEach(function(d) {
             d[ejeX] = d[ejeX];
-            d[ejeY] = +d[ejeY];
-            //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
+            //d[ejeY] = +d[ejeY];
+            d[ejeY] = +d['2010'];
+             //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
             console.log(d[ejeX]);
           });
           x.domain(data.map(function(d) { return d[ejeX]; }));
           y.domain([0, d3.max(data, function(d) { return d[ejeY]; })]);
+           // y.nice();
 
           g.append("g")
               .attr("class", "axis axis--x")
@@ -401,7 +408,7 @@ function barras(URLJSON, ejeX, ejeY, color){
               .attr("y", -50)
               .attr("dy", "0.71em")
               .attr("text-anchor", "end")
-              .text("Unidades");
+              .text("");
 
           g.selectAll(".bar")
             .data(data)
@@ -416,7 +423,7 @@ function barras(URLJSON, ejeX, ejeY, color){
                       .style("left", d3.event.pageX - 25 + "px")
                       .style("top", d3.event.pageY - 40 + "px")
                       .style("display", "inline-block")
-                    .text(d[ejeY]);
+                    .text(d[ejeX]+ ': ' +d[ejeY]);
                 })
                 .on("mouseout", function(d){ tooltip.style("display", "none");})
                .transition()
@@ -633,6 +640,12 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
             return d3.format(".2s")(d); 
           }
         });
+    
+    // Add the x Axis
+//    xAxis = svg.append("g")
+//      .attr("transform", "translate(0," + height + ")")
+//      .call(d3.axisBottom().scale(x));
+    
       yAxisGroup = svg.append("g")
       	.attr("class", "y-axis-group");
       
@@ -647,6 +660,7 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
       
       xAxisGroup.append("g")
       	.attr("class", "x-axis")
+        .attr("transform", "translate(0," + height + ")")
         .call(xAxis);
       axisLines = svg.append("g")
       	.attr("class", "grid-lines");
@@ -966,4 +980,113 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
 
 function mapa(){
     
+}
+
+function abrEntidad(entidad){
+    var tao = '';
+    switch (entidad) {
+        case "Estados Unidos Mexicanos":
+            return "MX";
+            break;
+        case "Aguascalientes":
+            return "Ags.";
+            break;
+        case "Baja California":
+            return "BC";
+            break;
+        case "Baja California Sur":
+            return "BCS";
+            break;
+        case "Campeche":
+            return "Camp.";
+            break;
+        case "Coahuila de Zaragoza":
+            return "Coah.";
+            break;
+        case "Colima":
+            return "Col.";
+            break;
+        case "Chiapas":
+            return "Chis.";
+            break;
+        case "Chihuahua":
+            return "Chih.";
+            break;
+        case "Ciudad de México":
+            return "CDMX";
+            break;
+        case "Durango":
+            return "Dgo.";
+            break;
+        case "Guanajuato":
+            return "Gto.";
+            break;
+        case "Guerrero":
+            return "Gro.";
+            break;
+        case "Hidalgo":
+            return "Hgo.";
+            break;
+        case "Jalisco":
+            return "Jal.";
+            break;
+        case "México":
+            return "Mex.";
+            break;
+        case "Michoacán de Ocampo":
+            return "Mich.";
+            break;
+        case "Morelos":
+            return "Mor.";
+            break;
+        case "Nayarit":
+            return "Nay.";
+            break;
+        case "Nuevo León":
+            return "NL";
+            break;
+        case "Oaxaca":
+            return "Oax.";
+            break;
+        case "Puebla":
+            return "Pue.";
+            break;
+        case "Querétaro":
+            return "Qro.";
+            break;
+        case "Quintana Roo":
+            return "Q. Roo";
+            break;
+        case "San Luis Potosí":
+            return "SLP";
+            break;
+        case "Sinaloa":
+            return "Sin.";
+            break;
+        case "Sonora":
+            return "Son.";
+            break;
+        case "Tabasco":
+            return "Tab.";
+            break;
+        case "Tamaulipas":
+            return "Tamps.";
+            break;
+        case "Tlaxcala":
+            return "Tlax.";
+            break;
+        case "Veracruz de Ignacio de la Llave":
+            return "Ver.";
+            break;
+        case "Yucatán":
+            return "Yuc.";
+            break;
+        case "Zacatecas":
+            return "Zac.";
+            break;
+        case "Extranjera":
+            return "Ext.";
+            break;
+    }
+    return tao;
 }
