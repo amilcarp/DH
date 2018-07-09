@@ -1,6 +1,6 @@
 var atributos_global =
 {
-"DescripInd_des": "HOMICIDIO DOLOSO",
+"DescripInd_des": "Indicador",
 "Serie": [
   {
     "CobTemporal_ser": "1997-2017",
