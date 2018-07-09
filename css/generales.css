@@ -316,3 +316,12 @@ p{
     width: 27%;
     margin-right: 6.2%;
 }
+
+
+#accordions .collpase-button.collapsed::after, #accordions .collpase-button::before{
+    background-color: #fff !important;
+}
+
+#accordions .collpase-button{
+    border: 1px solid #fff !important;
+}

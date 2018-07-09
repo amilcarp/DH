@@ -133,7 +133,7 @@
                         <div class="example" id="selIndis">
                             <div style="padding:15px 0;"><span>Mostrar sólo: </span><a class="btn btn-default btn-sm verCuantis">Indicadores cuantitativos</a> <a class="btn btn-default btn-sm verCualis">Indicadores cualitativos</a></div>
                             <br />
-                            <div class="panel-group ficha-collapse" id="accordion"></div> 
+                            <div class="panel-group ficha-collapse" id="accordions"></div> 
                         </div> 
                           
                           <!--            Se crea la tabla para la descarga del reporte-->
@@ -210,7 +210,7 @@
                     colap += '<div class="panel panel-default">'+
                             '        <div class="panel-heading d'+(i+1)+'">'+
                             '            <h4 class="panel-title">'+
-                            '                <a data-parent="#accordion" data-toggle="collapse" href="#panel-0'+i+'" aria-expanded="false" aria-controls="panel-0'+i+'" style="color:#ffffff;">'+indDer[i]+'</a>'+
+                            '                <a data-parent="#accordion" data-toggle="collapse" h ref="#panel-0'+i+'" aria-expanded="false" aria-controls="panel-0'+i+'" style="color:#ffffff;">'+indDer[i]+'</a>'+
                             '            </h4>'+
                             '            <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-0'+i+'"></button>'+
                             '        </div>'+
@@ -255,7 +255,7 @@
                 return valores;
     }
             
-            $('#accordion').html(listaInd());
+            $('#accordions').html(listaInd());
             
             $(".verCualis").on("click",function(){
                 $(".CL").show();
@@ -278,7 +278,7 @@
               e.preventDefault();
               var indica = [];
               var valor='';
-              var n = $('#accordion input[type=checkbox]:checked');
+              var n = $('#accordions input[type=checkbox]:checked');
               console.log(n);
 
 
