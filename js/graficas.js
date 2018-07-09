@@ -73,7 +73,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
             .attr("y", -50)
             .attr("dy", "0.71em")
             .attr("text-anchor", "end")
-            .text("Unidades");
+            .text("");
 
         // Dibuja la línea
         g.append("path")
@@ -98,7 +98,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
                     .style("left", d3.event.pageX - 25 + "px")
                     .style("top", d3.event.pageY - 30 + "px")
                     .style("display", "inline-block")
-                    .text(d[ejeY]);
+                    .text(d[ejeX]+': '+d[ejeY]);
             })
             .on("mouseout", function(d){
                 tooltip.style("display", "none");
@@ -376,8 +376,9 @@ function barras(URLJSON, ejeX, ejeY, color){
     
         data.forEach(function(d) {
             d[ejeX] = d[ejeX];
-            d[ejeY] = +d[ejeY];
-            //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
+            //d[ejeY] = +d[ejeY];
+            d[ejeY] = +d['2010'];
+             //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
             console.log(d[ejeX]);
           });
           x.domain(data.map(function(d) { return d[ejeX]; }));
@@ -407,7 +408,7 @@ function barras(URLJSON, ejeX, ejeY, color){
               .attr("y", -50)
               .attr("dy", "0.71em")
               .attr("text-anchor", "end")
-              .text("Unidades");
+              .text("");
 
           g.selectAll(".bar")
             .data(data)
@@ -422,7 +423,7 @@ function barras(URLJSON, ejeX, ejeY, color){
                       .style("left", d3.event.pageX - 25 + "px")
                       .style("top", d3.event.pageY - 40 + "px")
                       .style("display", "inline-block")
-                    .text(d[ejeY]);
+                    .text(d[ejeX]+ ': ' +d[ejeY]);
                 })
                 .on("mouseout", function(d){ tooltip.style("display", "none");})
                .transition()
@@ -979,4 +980,113 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
 
 function mapa(){
     
+}
+
+function abrEntidad(entidad){
+    var tao = '';
+    switch (entidad) {
+        case "Estados Unidos Mexicanos":
+            return "MX";
+            break;
+        case "Aguascalientes":
+            return "Ags.";
+            break;
+        case "Baja California":
+            return "BC";
+            break;
+        case "Baja California Sur":
+            return "BCS";
+            break;
+        case "Campeche":
+            return "Camp.";
+            break;
+        case "Coahuila de Zaragoza":
+            return "Coah.";
+            break;
+        case "Colima":
+            return "Col.";
+            break;
+        case "Chiapas":
+            return "Chis.";
+            break;
+        case "Chihuahua":
+            return "Chih.";
+            break;
+        case "Ciudad de México":
+            return "CDMX";
+            break;
+        case "Durango":
+            return "Dgo.";
+            break;
+        case "Guanajuato":
+            return "Gto.";
+            break;
+        case "Guerrero":
+            return "Gro.";
+            break;
+        case "Hidalgo":
+            return "Hgo.";
+            break;
+        case "Jalisco":
+            return "Jal.";
+            break;
+        case "México":
+            return "Mex.";
+            break;
+        case "Michoacán de Ocampo":
+            return "Mich.";
+            break;
+        case "Morelos":
+            return "Mor.";
+            break;
+        case "Nayarit":
+            return "Nay.";
+            break;
+        case "Nuevo León":
+            return "NL";
+            break;
+        case "Oaxaca":
+            return "Oax.";
+            break;
+        case "Puebla":
+            return "Pue.";
+            break;
+        case "Querétaro":
+            return "Qro.";
+            break;
+        case "Quintana Roo":
+            return "Q. Roo";
+            break;
+        case "San Luis Potosí":
+            return "SLP";
+            break;
+        case "Sinaloa":
+            return "Sin.";
+            break;
+        case "Sonora":
+            return "Son.";
+            break;
+        case "Tabasco":
+            return "Tab.";
+            break;
+        case "Tamaulipas":
+            return "Tamps.";
+            break;
+        case "Tlaxcala":
+            return "Tlax.";
+            break;
+        case "Veracruz de Ignacio de la Llave":
+            return "Ver.";
+            break;
+        case "Yucatán":
+            return "Yuc.";
+            break;
+        case "Zacatecas":
+            return "Zac.";
+            break;
+        case "Extranjera":
+            return "Ext.";
+            break;
+    }
+    return tao;
 }
