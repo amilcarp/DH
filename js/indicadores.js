@@ -598,6 +598,7 @@ $(document).ready(function() {
                                                 '</div>';
                                     }else{
                                         cuanti += '<h3>Sin información disponible.</h3>';
+                                        $(".descargaIndividual").hide();
                                     }
 
                                     cuanti += '</div>';
