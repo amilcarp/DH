@@ -3,7 +3,7 @@ var atributos_global =
 "DescripInd_des": "Indicador",
 "Serie": [
   {
-    "CobTemporal_ser": "1997-2017",
+    "CobTemporal_ser": "2010-2016",
   }
 ],
 };
