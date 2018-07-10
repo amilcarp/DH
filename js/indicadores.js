@@ -310,6 +310,7 @@ $(document).ready(function() {
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","block");
                 $(".divGrafica").append('<div id="map"></div>');
+                init_map();
                 $("#graph").css("display","none");
             });
                 
