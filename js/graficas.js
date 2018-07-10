@@ -697,7 +697,7 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
     	.attr("class", "lollipop-start")
     	.attr("r", 8)
       .attr("cx", function(d) { 
-      	return x(d[var1]); 
+      	return x(d[var1]);
     	})
     	.on("mouseover", showLabel)
     	.on("mousemove", moveLabel)
