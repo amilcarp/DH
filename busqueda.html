@@ -117,17 +117,20 @@
 			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
 			  crossorigin="anonymous"></script>
 	    <script src="js/main.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
 		 <script type="text/javascript">
-//    jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
-//        return function( elem ) {
-//            return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
-//        };
-//    });
+//            jQuery.expr[":"].Contains = jQuery.expr.createPseudo(function(arg) {
+//                return function( elem ) {
+//                    return jQuery(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+//                };
+//            });
 
     var objetivoId = getParameterByName('objetivoId');
     var lupa = false;
     var visibles =  true;
-
+             
+             
+    
 
     $(document).ready(function(){
       $('#noresultado').hide();
@@ -221,8 +224,8 @@
           type: 'GET',
           url: url,
           success: function( data, textStatus, jqxhr ) {
-             console.log(data);
-             //ponObjetivos(data);
+             console.log(data.results.records);
+             ponObjetivos(data.results.records);
 
               var obj = getParameterByName("busqueda");
               if(obj != null){
@@ -249,63 +252,16 @@
         var codigo = datos[i].indicator_code;
 
         lista_resultados = lista_resultados + '<li class="collection-item">' +
-                          '<a href="indicadores.html?codigo=PUDH:INDI:'+ codigo +'">' + datos[i].indicator_code + datos[i].indicator_name +'</a></li>';
+                          '<a href="indicadores.html?codigo=PUDH:INDI:'+ codigo +'">' + datos[i].indicator_code +' - '+ datos[i].indicator_name +'</a></li>';
 
-        for (var j = 0; j < datos[i].Meta.length; j++) {
-          var clave_arb_meta  = datos[i].Meta[j].Indicador[0].ClaveInd_arb;
-          if(true){
-            if(clave_arb_meta != 210){
-              lista_resultados = lista_resultados + '<li class="collection-item">' + datos[i].Meta[j].Codigo_des + ' <span class="descripcion"> '+datos[i].Meta[j].Descrip_des + '</span> </li>';
-
-
-            for (var k = 0; k < datos[i].Meta[j].Indicador.length; k++) {
-
-              var clave_arb     = datos[i].Meta[j].Indicador[k].ClaveInd_arb;
-              var codigo_dg     = datos[i].Meta[j].Indicador[k].DesGeo.Codigo_dg;
-              var descrip_des   = datos[i].Meta[j].Indicador[k].Descrip_des;
-              var codigo_des    = datos[i].Meta[j].Indicador[k].Codigo_des;
-            if( clave_arb == 210){
-
-            }
-            else{
-              if(datos[i].Meta[j].Indicador[k].TieneValores){
-
-                lista_resultados = lista_resultados + '<li class="collection-item">' + '<span class="buscar" >'+ '<a class="buscar" href="indicadores.html?objetivo='+datos[i].Codigo_des+'&meta='+datos[i].Meta[j].Clave_arb+'&indicador='+ clave_arb+'&codigo='+codigo_dg+'&obj='+datos[i].Clave_arb+'">'+
-                    codigo_des +' '+ descrip_des +
-                  '</a>'+
-                  '<a class="buscar fond_global tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].DescripS_tatr : "n/A" )+'"> &nbsp;&nbsp; '+
-                    ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].Cve_tatr : "n/A" )+
-                  '</a>' +
-                  '&nbsp;&nbsp;'+
-                '<a class="buscar ns tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ datos[i].Meta[j].Indicador[k].DesGeo.Descrip_dg +'">'+
-                  '&nbsp;&nbsp;&nbsp;'+ datos[i].Meta[j].Indicador[k].DesGeo.Codigo_dg +'&nbsp;</a>'+
-                '</li>';
-              }else{
-
-                lista_resultados = lista_resultados + '<li class="collection-item">' +  '<span class="buscar" >'+
-                    codigo_des +' '+ descrip_des +
-                  '</span>'+
-                  '<a class="buscar fond_global tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].DescripS_tatr : "n/A" )+'"> &nbsp;&nbsp; '+
-                    ((typeof datos[i].Meta[j].Indicador[k].TipoInd[0] != "undefined") ? datos[i].Meta[j].Indicador[k].TipoInd[0].Cve_tatr : "n/A" )+
-                  '</a>' +
-                  '&nbsp;&nbsp;'+
-                '<a class="buscar ns tooltipped" data-position="bottom" data-delay="50" data-tooltip="'+ datos[i].Meta[j].Indicador[k].DesGeo.Descrip_dg +'">'+
-                  '&nbsp;&nbsp;&nbsp;'+ datos[i].Meta[j].Indicador[k].DesGeo.Codigo_dg +'&nbsp;</a>'+
-                '</li>';
-              }
-            }//fin for mas interno
-          }
-          }
-        }
-        }//despues de este cambia el indicador
+       
         $('#resultado').append(lista_resultados);
 
       }//fin for mas externo
 
     }//fin de la función
 
-    function show_less()
-    {
+    function show_less(){
       if(visibles){
         $('.ocultar').hide();
         console.log('oculta');
