@@ -72,6 +72,10 @@
 			      <div class="col-md-12">
 				      <h1>Búsqueda</h1>
 				      <hr />
+                      <p>
+                        1. Ingresa su nombre, clave o palabra relacionada. <br/>
+                          2. Pulsa Enter para realizar la búsqueda<br/>
+                          3. Revisa el listado</p>
 				      <div class="row">
 					  	<div class="col-md-8">
                             
@@ -79,7 +83,7 @@
 					      <div class="container" id="objetivo0">
                               <div class="row">
                                 <div class="col s12">
-                                  <h3 class="fuerte t_principal">Resultado de busqueda</h3>
+                                  <h3 class="fuerte t_principal">Resultado de búsqueda</h3>
                                 </div>
                                 <div class="col s12">
                                   <div class="input-field col s4" style="margin-left:15px;">
@@ -93,6 +97,7 @@
                                 <div id="noresultado">
 
                                 </div>
+                                  <br/><br/>
                                 <ul class="collection" id="resultado">
 
                                 </ul>
@@ -214,7 +219,7 @@
         $('.objetivos').show();
         console.log('entrado');
         $('#noresultado').show();
-        $('#noresultado').html('<h3>No se encontró ninguna coincidencia</h3>');
+        //$('#noresultado').html('<h3>No se encontró ninguna coincidencia</h3>');
       }
     }
 
@@ -294,7 +299,7 @@
       results = regex.exec(location.search);
       return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
-
+$('#noresultado').hide();
     </script>
 	</body>
 </html>
