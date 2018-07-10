@@ -325,3 +325,8 @@ p{
 #accordions .collpase-button{
     border: 1px solid #fff !important;
 }
+
+
+.collection-item{
+    margin:10px 0px;
+}

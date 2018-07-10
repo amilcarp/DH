@@ -179,7 +179,7 @@ $(document).ready(function() {
                
                 $(".verGrafica .divGrafica svg").html('');
 //                $(".tipoGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic));
-            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name), 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer));
+            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name,data.breakdown_group[str].breakdown_group_name), 'Periodo', datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer));
                 
                 //$(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', 'poblacion_de_18_anios_o_mas', '#f00', datosDer));
                 //tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos)
@@ -906,7 +906,7 @@ $(document).ready(function() {
     //clasificacion: Atributo a llamar de la API de datos.gob.mx Ej. grupo-especifico
     //periodos: Periodos que se van a consultar para el indicador, según reporte la API y consumido desde la variable breakdown_group_year
     //recurso: Nombre del recurso para la clasificación y el periodo a consultar. Ej. poblacion_con_menos_de_18_anios
-    function datosGrafica(resource, dataset, resultado, clasificacion, periodos, recurso){
+    function datosGrafica(resource, dataset, resultado, clasificacion, periodos, recurso, nombreCat){
         datoInd = [];
         datoInd2 = [];
         datoInd3 = [];
@@ -914,13 +914,57 @@ $(document).ready(function() {
         rec2 = recurso;//Trae el valor de la clasificación a consultar. Ej. poblacion_con_menos_de_18_anios
         res2 = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
+        console.log(recurso);
         
-        
-        if(clas === "entidad" || clas === "Entidad Federativa" || clas === "Entidad"){
+        if(clas2 === "entidad" || clas2 === "Entidad Federativa"){
         //if(clas === "1" || clas === "En"){
        
+            if(nombreCat === "Total"){
+               
+                var inf = [];
+        for(var yy=0;yy<rec2.length;yy++){
+            datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
+        }
+        
+        console.log(datoInd2);
+        console.log(rec2);
+            dat111 += '[';
             
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+            var periodos = [];
+            for(var jj=0; jj < datoInd2[0].length; jj++){
+                periodos.push(datoInd2[0][jj].periodo);
+            }
+            
+            dat111 += '';
+        
+        for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
+                dat111 += '{';
+                dat111 += '"Periodo" : ' + periodos[gg] + ',';
+            
+            for(var hh=0;hh<rec2.length;hh++){
+                        dat111 += '"'+rec2[hh]+'" : ';
+                        dat111 += '' + datoInd2[hh][gg][res2] + '';
+                        if(hh === datoInd2.length-1){
+                            dat111 += '';
+                        }else{
+                            dat111 += ',';
+                        }
+                        
+                } 
+                dat111 += '}';
+                
+                console.log(periodos.length);
+                console.log(periodos[gg]); 
+                if(gg === periodos.length-1){
+                    dat111 += '';
+                }else{
+                    dat111 += ',';
+                }
+            }
+            dat111 += ']';
+                
+               }else{
+                // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
             // nuevos calculos para voltear el arreglo
             var inf = [];
                 
@@ -974,6 +1018,9 @@ $(document).ready(function() {
             
             console.log(dat111);
 // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+               }
+            
+            
             
 //Si sirve     
 //        var inf = [];
