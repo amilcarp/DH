@@ -284,6 +284,9 @@ $(document).ready(function() {
                 $(".Col").css("display","block");
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","none");
+                $("#graph").css("display","block");
+                $("#map").css("display","none");
+                $("#map").remove();
             });
                 
             $(".btnLn").on("click",function(){
@@ -313,8 +316,9 @@ $(document).ready(function() {
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","block");
                 $(".divGrafica").append('<div id="map"></div>');
-                init_map();
                 $("#graph").css("display","none");
+                init_map();
+                
             });
                 
                 
@@ -994,6 +998,7 @@ $(document).ready(function() {
             {
                 dat111 += '{';
                 dat111 += '"Entidad" : "' + rec2[gg] + '",';
+                
                 
                 for(var hh = 0; hh < periodos.length; hh++)
                 {

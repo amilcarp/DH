@@ -1,6 +1,6 @@
 var atributos_global =
 {
-"DescripInd_des": "Indicador",
+"indicator_code": "Indicador",
 "Serie": [
   {
     "CobTemporal_ser": "2010-2016",
