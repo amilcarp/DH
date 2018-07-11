@@ -6,7 +6,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
 //        height = +svg.attr("height") - margin.top - margin.bottom,
 //        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    var margin = {top: 20, right: 20, bottom: 10, left: 50};
+    var margin = {top: 20, right: 20, bottom: 60, left: 50};
     var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
@@ -98,7 +98,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
                     .style("left", d3.event.pageX - 25 + "px")
                     .style("top", d3.event.pageY - 30 + "px")
                     .style("display", "inline-block")
-                    .text(d[ejeX]+': '+d[ejeY]);
+                    .text(d[ejeY]);
             })
             .on("mouseout", function(d){
                 tooltip.style("display", "none");

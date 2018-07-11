@@ -159,7 +159,7 @@ $(document).ready(function() {
             $('#descarDatos1').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
             $('#descarDatos2').html(datosDer.indicator_definition);
             $('#descarDatos3').html(datosDer.responsible_institution);
-              $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+              $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
 
             //Muestra u oculta botones para las gráficas y los tabulados
             $(".btnGrafica").show();
@@ -169,7 +169,7 @@ $(document).ready(function() {
             $(".divTabla").show();
             $(".btnGrafica").on("click",function(){ 
                 var variable = $('#breakdown').val();
-                $(".verGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic)+'<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+                $(".verGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic)+'<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
                 $(".tipo0").addClass('active');
                 $(".btnGrafica").hide();
                 $(".btnTabla").show();
@@ -369,7 +369,7 @@ $(document).ready(function() {
                     $(".btnGrafica").hide();
                     $(".btnTabla").show();
 //                    $(".verGrafica").html(graficaCuanti(datosDer,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos
-                    $(".verGrafica").append('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
+                    $(".verGrafica").append('<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
                     console.log('Pone la gráfica');
                 }
                 //$(".verTabla").html(armaTabla(datosDer,str));
