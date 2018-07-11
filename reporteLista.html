@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>Generación de reporte - Evaluación de Derechos Humanos</title>
+		
+		<!-- CSS -->
+	    <link href="/favicon.ico" rel="shortcut icon">
+	    <link href="https://framework-gb.cdn.gob.mx/assets/styles/main.css" rel="stylesheet">
+	    
+	    <link href="css/generales.css" rel="stylesheet">
+		
+		<!-- Respond.js soporte de media queries para Internet Explorer 8 -->
+	    <!-- ie8.js EventTarget para cada nodo en Internet Explorer 8 -->
+	    <!--[if lt IE 9]>
+	      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	      <script src="https://cdnjs.cloudflare.com/ajax/libs/ie8/0.2.2/ie8.js"></script>
+	    <![endif]-->
+	</head>
+	<body>
+		
+		<!-- Contenido -->
+	    <main class="page">
+		    
+		    
+		    <nav class="navbar navbar-inverse sub-navbar navbar-fixed-top">
+			  <div class="container">
+			    <div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#subenlaces">
+			        <span class="sr-only">Interruptor de Navegación</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand" href="index.html"><img src="img/DH.png" alt="" class="logomenu" /></a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="subenlaces">
+			      <ul class="nav navbar-nav navbar-right">
+			        <li><a href="acerca.html" >Acerca de</a></li>
+			        <li><a href="derechos.html">Derechos</a></li>
+<!--			        <li><a href="calendario.html">Calendario</a></li>-->
+			        <li><a href="descarga.html">Descarga masiva</a></li>
+			        <li><a href="contacto.html">Contacto</a></li>
+			        <li><a href="busqueda.html"><span class="icon-search" aria-hidden="true"></span></a></li>
+			      </ul>
+			    </div>
+			  </div>
+			</nav>
+		    
+		  
+<!--
+			<div class="row header">
+		      <div class="col-md-12 titulo-header">
+			      <h1>Acerca de</h1>
+		      </div>
+	      	</div>
+-->
+			<br/><br/>
+			<div class="container">
+				<ol class="breadcrumb">
+					<li><a href="index.html"><i class="icon icon-home"></i></a></li>
+					<li class="active"><a href="reporte.html">Reporte</a></li>
+				</ol>
+			</div>
+		    
+	      <div class="container">
+		      <br /><br />
+		  	<!-- Inicia Bloque -->
+              
+              
+		      <div class="row">
+			      <div class="col-md-12">
+				      <h1>Generación de insumos para reporte</h1>
+				      <hr />
+                      
+                      <div class="row">
+					      <h3>Ficha del reporte</h3>
+					     <table class="table">
+                             <tr>
+                                <td>Total de Derechos en la plataforma:</td>
+                                <td class="derechosNombre">Culturales, Medio Ambiente, Trabajo, Alimentación y Sindicales</td>
+                             </tr>
+                             <tr>
+                                <td>Total de Indicadores en la Plataforma:</td>
+                                <td class="totalInd">415</td>
+                             </tr>
+                             <tr>
+                                <td>Total de Indicadores Cualitativos:</td>
+                                <td class="indCualis">281 (281 activos)</td>
+                             </tr>
+                             <tr>
+                                <td>Total de i¡Indicadores Cuantitativos:</td>
+                                <td class="indCuantis">134 (18 activos)</td>
+                             </tr>
+                             <tr>
+                                <td>Indicadores por Derecho</td>
+                                <td class="derechoCantidad">
+                                    <b>Culturales:</b> 105<br>
+                                    <b>Medio Ambiente:</b> 100<br>
+                                    <b>Trabajo:</b> 81<br>
+                                    <b>Alimentación:</b> 76<br>
+                                    <b>Sindicales:</b> 53<br>
+                                 </td>
+                             </tr>
+                        </table>
+
+                          
+				      </div>
+                      
+                      
+				      <div class="row">
+                          <p>Para generar un listado de los elementos a descargar debes seguir los siguientes pasos:</p>
+                          <ol>
+                            <li>Selecciona los indicadores de los que quieres descargar información. Los indicadores se dividen en cualitativos y cuantitativos. De los primeros es posible descargar fichas y evidencias; de los segundos, gráficas, tablas y mapas.</li>
+                              <li>Selecciona el formato de descarga.</li>
+                              <li>Presiona el botón de "Generar listado de insumos"</li>
+                              <li>En la pantalla se mostrará un listado con las selección hecha.</li>
+                          </ol>
+                          <br/>
+					      <div class="col-md-4">
+					      </div>
+					      <div class="col-md-4">
+						      <button type="button" id="generarInsumos" class="btn btn-primary btn-lg" >Generar listado de insumos</button>
+                              <button type="button" id="nuevoInsumos" style="display:none;" class="btn btn-primary btn-lg" onclick="javascript:window.location.reload();">Nuevo listado de insumos</button>
+					      </div>
+					  	
+				      </div>
+				      <br />
+                      
+                      <div class="row internoDerecho" >
+                        <div class="example" id="selIndis">
+                            <div style="padding:15px 0;"><span>Mostrar sólo: </span><a class="btn btn-default btn-sm verCuantis">Indicadores cuantitativos</a> <a class="btn btn-default btn-sm verCualis">Indicadores cualitativos</a></div>
+                            <br />
+                            <div class="panel-group ficha-collapse" id="accordions"></div> 
+                        </div> 
+                          
+                          <!--            Se crea la tabla para la descarga del reporte-->
+                        <div id="tabuladoInsumo">
+                            <table class="table">
+                                <thead>
+                                    <th>Derecho</th>
+                                    <th>Clave</th>
+                                    <th>Nombre del indicador</th>
+                                    <th>Categoría</th>
+                                    <th>Tipo de indicador</th>
+                                    <th>Tipo de información</th>
+                                    <th>Liga al indicador</th>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+                        </div>
+                          
+                    </div>
+                      
+                      <br /><br />
+				      
+			      </div>
+		      </div>
+		      <!-- Termina Bloque -->      
+		      
+	      </div>
+		  <br /><br />
+
+	    </main>
+	
+	    <!-- JS -->
+	    <script src="https://framework-gb.cdn.gob.mx/gobmx.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+	    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+			  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+			  crossorigin="anonymous"></script>
+	    <script src="js/main.js"></script>
+        <script src="js/consultas.js"></script>
+        <script>
+            
+            var todosInd = [];
+            
+            $('#descargaDoc').hide();
+            
+            $('#selIndis').show();
+            $('#tabuladoInsumo').hide();
+            $('#nuevoInsumos').hide();
+            
+            
+            // Solucionar Bug número de indicadores
+//            for (var f=1;f<415;f++){
+//                if(f === 100){
+//                   
+//                }
+//                   
+//                $.ajax({
+//                  type: 'GET',
+//                  url: pathAPI + "search?q=*:*&offset=0&rows=100",
+//                  data: {},
+//                  success: function( data, textStatus, jqxhr ) { 
+//                      todosInd += data;
+//                  },
+//                    async: true
+//                });
+//            }
+//            
+            var colap = '';
+            var indDer = ['Culturales','Medio Ambiente','Trabajo','Alimentación','Sindicales'];
+            
+            function listaInd(){
+                for(var i=0;i<indDer.length;i++){
+                    colap += '<div class="panel panel-default">'+
+                            '        <div class="panel-heading d'+(i+1)+'">'+
+                            '            <h4 class="panel-title">'+
+                            '                <a data-parent="#accordion" data-toggle="collapse" h ref="#panel-0'+i+'" aria-expanded="false" aria-controls="panel-0'+i+'" style="color:#ffffff;">'+indDer[i]+'</a>'+
+                            '            </h4>'+
+                            '            <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-0'+i+'"></button>'+
+                            '        </div>'+
+                            '        <div class="panel-collapse collapse" id="panel-0'+i+'">'+
+                            '            <div class="panel-body">'+
+                            '                <div id="cargaDat'+i+'">'+getValores(indDer[i])+'</div>'+
+                            '            </div>'+
+                            '        </div>'+
+                            '    </div>';
+                }
+                return colap;
+            }
+            
+            function getValores(derecho){
+                var valores = '';
+                console.log(pathAPI);
+                console.log(derecho);
+        //var derecho = "Medio Ambiente";
+        //var id_derecho = 5;
+         $.ajax({
+		  type: 'GET',
+		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+             //url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
+		  data: {},
+		  success: function( data, textStatus, jqxhr ) {   
+
+              tipoDer = data['results']['records'];
+              
+              console.log(tipoDer);
+              for(var g = 0;g<tipoDer.length;g++){
+                if(tipoDer[g].is_cuantitative === true && tipoDer[g].breakdown_attribute_result != null){
+                    valores += '<div class="CT"><label style="font-weight:400;"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" style="color:#fff;padding:3px 5px;font-size:11px;border-radius:4px;" title="Indicador Cuantitativo">CT</span></label><br /></div>';
+                 }else if(tipoDer[g].is_cuantitative === false){
+                      valores += '<div class="CL"><label style="font-weight:400;"><input type="checkbox" name="'+tipoDer[g].indicator_code+'"> ' + tipoDer[g].indicator_code + ' - ' + tipoDer[g].indicator_name + ' <span class="d1" title="Indicador Cualitativo" style="color:#fff;opacity:0.7;padding:3px 5px;font-size:11px;border-radius:4px;">CL</span></label><br /></div>';
+                          }
+              }
+                
+		  },
+		  async:false
+		});
+                console.log(valores);
+                return valores;
+    }
+            
+            $('#accordions').html(listaInd());
+            
+            $(".verCualis").on("click",function(){
+                $(".CL").show();
+                $(".CT").hide();
+            });
+            
+            $(".verCuantis").on("click",function(){
+                $(".CL").hide();
+                $(".CT").show();
+            });
+            
+            
+            // Acciones para la descarga
+            $('#generarInsumos').on('click',function(e){
+                $(this).hide();
+                $('#nuevoInsumos').show();
+                
+                $('#selIndis').hide();
+              $('#tabuladoInsumo').show();
+              e.preventDefault();
+              var indica = [];
+              var valor='';
+              var n = $('#accordions input[type=checkbox]:checked');
+              console.log(n);
+
+
+              if(n != '' || n != null){
+                $.each(n, function(){
+                     console.log($(this).attr('name'));
+                     valor  +=  ',' + $(this).attr('name');
+                });
+              }else{
+                alert('Debes seleccionar al menos 1 indicador.');
+              }
+
+                console.log(valor);
+                
+                // Variable de lo seleccionado en string separado por comas
+                var iji = valor.substr(1);
+                console.log(iji);
+
+                var resol = iji.split(",");
+                
+                for(var ll=0;ll<resol.length;ll++){
+                    var url = pathAPI + "data/PUDH:INDI:" + resol[ll];
+                    var indContd = '';
+                    $.ajax({
+                       type: "GET",
+                       url: url,
+                       success: function(data)
+                       {
+                            indContd = '<tr><td>'+data.right_name_short+'</td><td>'+data.indicator_code+'</td><td>'+data.indicator_name+'</td><td>'+data.indicator_category_name+'</td><td>'+data.indicator_type_short+'</td>';
+                           var tipoInfo = (data.is_cuantitative === true) ? "Cuantitativo" : "Cualitativo";
+                           indContd += '<td>'+tipoInfo+'</td><td><a href="indicadores.html?codigo=PUDH:INDI:'+data.indicator_code+'" target="_blank">Indicador '+data.indicator_code+'</a></td></tr>';
+                           
+                           console.log(indContd);
+                           
+                            $('#tabuladoInsumo table tbody').append(indContd);
+                       },
+                       async: true
+                   });
+                }
+                
+
+      });
+            
+            
+            
+        </script>
+		
+	</body>
+</html>
