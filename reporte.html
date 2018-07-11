@@ -112,14 +112,14 @@
                       
                       
 				      <div class="row">
-                          <p style="text-align:center;">Para generar el documento en formato Microsoft Word (.docx), sólo da click en el siguiente botón</p>
+                          <p style="text-align:center;">Para generar el documento en formato Microsoft Word (.docx), sigue los siguientes pasos:</p><br />
+                          <ol>
+                            <li>Selecciona los derechos para los cuáles quieras descargar el reporte</li>
+                              <li>Da clic en el botón que dice "Generar documento de Reporte" para generar el reporte</li>
+                              <li>Descarga el reporte</li>
+                          </ol>
                           <br/>
-					      <div class="col-md-4">
-					      </div>
-					      <div class="col-md-4">
-						      <button type="button" id="generarInsumos" class="btn btn-primary btn-lg" >Generar documento de Reporte</button>
-                              <button type="button" id="nuevoInsumo" class="btn btn-primary btn-lg"  onclick="descarga();">Descargar</button>
-					      </div>
+					      
 					  	
 				      </div>
 				      <br />
@@ -128,6 +128,13 @@
                         <div class="example" id="selIndis">
                             <div class="panel-group ficha-collapse" id="accordions"></div> 
                         </div> 
+                          
+                          <br />
+                          
+                          <div class="col-md-12" style="text-align:center;">
+						      <button type="button" id="generarInsumos" class="btn btn-primary btn-lg" >Generar documento de Reporte</button>
+                              <button type="button" id="nuevoInsumo" class="btn btn-primary btn-lg"  onclick="descarga();">Descargar</button>
+					      </div>
                           
                           <!--            Se crea la tabla para la descarga del reporte-->
                           <!--            Derecho 1-->
@@ -406,12 +413,12 @@
 //                $('#recepDerI').html('');
 //                $('#recepDerJ').html('');
 
-                $('#tabuladoInsumo'+derecho+' #recepDerA').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContAE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContAP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContAR + '</td>' );
-                $('#tabuladoInsumo'+derecho+' #recepDerC').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContCE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContCP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContCR + '</td>' );
-                $('#tabuladoInsumo'+derecho+' #recepDerD').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContDE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContDP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContDR + '</td>' );
-                $('#tabuladoInsumo'+derecho+' #recepDerF').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContFE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContFP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContFR + '</td>' );
-                $('#tabuladoInsumo'+derecho+' #recepDerI').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContIE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContIP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContIR + '</td>' );
-                $('#tabuladoInsumo'+derecho+' #recepDerJ').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContJE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContJP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContJR + '</td>' );
+                $('#tabuladoInsumo'+derecho+' #recepDerA').html('<td style="text-align: left; font-family: Arial;">' + tablaIndContAE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContAP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContAR + '</td>' );
+                $('#tabuladoInsumo'+derecho+' #recepDerC').html('<td style="text-align: left; font-family: Arial;">' + tablaIndContCE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContCP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContCR + '</td>' );
+                $('#tabuladoInsumo'+derecho+' #recepDerD').html('<td style="text-align: left; font-family: Arial;">' + tablaIndContDE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContDP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContDR + '</td>' );
+                $('#tabuladoInsumo'+derecho+' #recepDerF').html('<td style="text-align: left; font-family: Arial;">' + tablaIndContFE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContFP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContFR + '</td>' );
+                $('#tabuladoInsumo'+derecho+' #recepDerI').html('<td style="text-align: left; font-family: Arial;">' + tablaIndContIE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContIP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContIR + '</td>' );
+                $('#tabuladoInsumo'+derecho+' #recepDerJ').html('<td style="text-align: left; font-family: Arial;">' + tablaIndContJE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContJP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContJR + '</td>' );
                
 		  },
 		  async:true
@@ -593,6 +600,7 @@
 //                    ($('#tabuladoInsumo6 .nombreDer').html()) ? document.getElementById("tabuladoInsumo6").innerHTML : '' + 
 //                    ($('#tabuladoInsumo7 .nombreDer').html()) ? document.getElementById("tabuladoInsumo7").innerHTML : '' + 
 //                    ($('#tabuladoInsumo8 .nombreDer').html()) ? document.getElementById("tabuladoInsumo8").innerHTML : '' ;
+                
                 var content = '<!DOCTYPE html><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' + 
                     document.getElementById("tabuladoInsumo1").innerHTML +
                     document.getElementById("tabuladoInsumo2").innerHTML +
@@ -669,6 +677,13 @@
             }
             return nom;
         }
+            
+            
+        var checkEmptyContext = function ( $target ) {    
+            $target = ( $target instanceof jQuery ) ? $target : $( $target );
+
+            return ( $target.length > 0 ) && ! $.trim( $target.html() );
+        };
             
         </script>
 		
