@@ -338,7 +338,7 @@ function barras(URLJSON, ejeX, ejeY, color){
 //        height = +svg.attr("height") - margin.top - margin.bottom,
 //        g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    var margin = {top: 20, right: 20, bottom: 30, left: 50};
+    var margin = {top: 20, right: 20, bottom: 50, left: 50};
     var width = 960 - margin.left - margin.right,
         height = 500 - margin.top - margin.bottom;
     
@@ -375,20 +375,31 @@ function barras(URLJSON, ejeX, ejeY, color){
     console.log(ejeY);
     
         data.forEach(function(d) {
-            d[ejeX] = d[ejeX];
+            d[ejeX] = abrEntidad(d[ejeX]);
             //d[ejeY] = +d[ejeY];
             d[ejeY] = +d['2010'];
              //d['poblacion_con_menos_de_18_anios'] = +d['poblacion_con_menos_de_18_anios'];
             console.log(d[ejeX]);
           });
-          x.domain(data.map(function(d) { return d[ejeX]; }));
+          //x.domain(data.map(function(d) { return d[ejeX]; }));
+    x.domain(data.sort(1 === 1 
+        ? function(a, b) { return b[ejeY] - a[ejeY]; }
+        : function(a, b) { return d3.ascending(a[ejeX], b[ejeX]); })
+        .map(function(d) { return d[ejeX]; }))
+        .copy();
           y.domain([0, d3.max(data, function(d) { return d[ejeY]; })]);
            // y.nice();
 
           g.append("g")
               .attr("class", "axis axis--x")
               .attr("transform", "translate(0," + height  + ")")
-              .call(d3.axisBottom(x));
+              .call(d3.axisBottom(x))
+    .selectAll("text")
+    .attr("y", 0)
+    .attr("x", -8)
+    .attr("dy", ".35em")
+    .attr("transform", "rotate(270)")
+    .style("text-anchor", "end");
 
 //          g.append("g")
 //              .attr("class", "axis axis--y")
@@ -431,6 +442,8 @@ function barras(URLJSON, ejeX, ejeY, color){
                .duration(2000)
                 .attr('y', function(d){ return y(d[ejeY])})
                .attr('height', function(d){ return height - y(d[ejeY]) });
+
+    
         
    // });
     
