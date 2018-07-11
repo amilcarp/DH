@@ -2,6 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>Generación de reporte - Evaluación de Derechos Humanos</title>
@@ -91,7 +92,7 @@
                                 <td class="indCualis">281 (281 activos)</td>
                              </tr>
                              <tr>
-                                <td>Total de i¡Indicadores Cuantitativos:</td>
+                                <td>Total de Indicadores Cuantitativos:</td>
                                 <td class="indCuantis">134 (18 activos)</td>
                              </tr>
                              <tr>
@@ -111,7 +112,7 @@
                       
                       
 				      <div class="row">
-                          <p style="text-align:center;">Para generar el documento en formato Microsoft Word (.doc), sólo da click en el siguiente botón</p>
+                          <p style="text-align:center;">Para generar el documento en formato Microsoft Word (.docx), sólo da click en el siguiente botón</p>
                           <br/>
 					      <div class="col-md-4">
 					      </div>
@@ -130,20 +131,20 @@
                           
                           <!--            Se crea la tabla para la descarga del reporte-->
                         <div id="tabuladoInsumo">
-                            <div class="nombreDer"></div>
+                            <div class="nombreDer" style="text-align: center; font-family: Arial;"></div>
                             <table class="table" border="1">
                                 <thead>
-                                    <th>Estructurales</th>
-                                    <th>De Proceso</th>
-                                    <th>De Resultado</th>
+                                    <th style="text-align: center; font-family: Arial;">Estructurales</th>
+                                    <th style="text-align: center; font-family: Arial;">De Proceso</th>
+                                    <th style="text-align: center; font-family: Arial;">De Resultado</th>
                                 </thead>
                                 <tbody>
-                                    <tr><td colspan="3" align="center"><h3><b>Recepción del derecho</b></h3></td></tr><tr id="recepDerA"></tr>
-                                    <tr><td colspan="3" align="center"><h3><b>Capacidades estatales</b></h3></td></tr><tr id="recepDerC"></tr>
-                                    <tr><td colspan="3" align="center"><h3><b>Igualdad y no discriminación</b></h3></td></tr><tr id="recepDerD"></tr>
-                                    <tr><td colspan="3" align="center"><h3><b>Contexto financiero y presupuestal</b></h3></td></tr><tr id="recepDerF"></tr>
-                                    <tr><td colspan="3" align="center"><h3><b>Acceso a información pública y participación</b></h3></td></tr><tr id="recepDerI"></tr>
-                                    <tr><td colspan="3" align="center"><h3><b>Acceso a la justicia</b></h3></td></tr><tr id="recepDerJ"></tr>
+                                    <tr><td colspan="3" align="center"><h3 style="text-align: center; font-family: Arial;"><b>Recepción del derecho</b></h3></td></tr><tr id="recepDerA"></tr>
+                                    <tr><td colspan="3" align="center"><h3 style="text-align: center; font-family: Arial;"><b>Capacidades estatales</b></h3></td></tr><tr id="recepDerC"></tr>
+                                    <tr><td colspan="3" align="center"><h3 style="text-align: center; font-family: Arial;"><b>Igualdad y no discriminación</b></h3></td></tr><tr id="recepDerD"></tr>
+                                    <tr><td colspan="3" align="center"><h3 style="text-align: center; font-family: Arial;"><b>Contexto financiero y presupuestal</b></h3></td></tr><tr id="recepDerF"></tr>
+                                    <tr><td colspan="3" align="center"><h3 style="text-align: center; font-family: Arial;"><b>Acceso a información pública y participación</b></h3></td></tr><tr id="recepDerI"></tr>
+                                    <tr><td colspan="3" align="center"><h3 style="text-align: center; font-family: Arial;"><b>Acceso a la justicia</b></h3></td></tr><tr id="recepDerJ"></tr>
                                 </tbody>
                             </table>
                         </div>
@@ -186,7 +187,7 @@
             
             $('#selIndis').show();
             $('#tabuladoInsumo').hide();
-            $('#nuevoInsumos').hide();
+            $('#nuevoInsumo').hide();
                         
             var colap = '';
             var indDer = ['Alimentación','Medio Ambiente','Culturales','Trabajo','Sindicales'];
@@ -205,7 +206,7 @@
                             //'            </div>'+
                             //'        </div>'+
                             '    </div>';
-                    getValores(claveDer(indDer[i]));
+                    //getValores(claveDer(indDer[i]));
                 }
                 return colap;
             }
@@ -217,7 +218,7 @@
          $.ajax({
 		  type: 'GET',
 //		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
-            url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
+            url: pathAPI + "search?q=right_id:"+derecho+"&rows=100&fl=indicator_code,indicator_name,indicator_definition,indicator_category_key,indicator_type_code",
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {   
               
@@ -243,21 +244,19 @@
               tipoDer = data['results']['records'];
               recepDero();
               
-              
-              $('.nombreDer').html("<h1>"+nomDer(derecho)+"</h1>");
-                $('#recepDerA').html('');
-                $('#recepDerC').html('');
-                $('#recepDerD').html('');
-                $('#recepDerF').html('');
-                $('#recepDerI').html('');
-                $('#recepDerJ').html('');
+//                $('#recepDerA').html('');
+//                $('#recepDerC').html('');
+//                $('#recepDerD').html('');
+//                $('#recepDerF').html('');
+//                $('#recepDerI').html('');
+//                $('#recepDerJ').html('');
 
-                $('#recepDerA').append('<td>' + tablaIndContAE + '</td><td>' + tablaIndContAP + '</td><td>' + tablaIndContAR + '</td>' );
-                $('#recepDerC').append('<td>' + tablaIndContCE + '</td><td>' + tablaIndContCP + '</td><td>' + tablaIndContCR + '</td>' );
-                $('#recepDerD').append('<td>' + tablaIndContDE + '</td><td>' + tablaIndContDP + '</td><td>' + tablaIndContDR + '</td>' );
-                $('#recepDerF').append('<td>' + tablaIndContFE + '</td><td>' + tablaIndContFP + '</td><td>' + tablaIndContFR + '</td>' );
-                $('#recepDerI').append('<td>' + tablaIndContIE + '</td><td>' + tablaIndContIP + '</td><td>' + tablaIndContIR + '</td>' );
-                $('#recepDerJ').append('<td>' + tablaIndContJE + '</td><td>' + tablaIndContJP + '</td><td>' + tablaIndContJR + '</td>' );
+                $('#recepDerA').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContAE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContAP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContAR + '</td>' );
+                $('#recepDerC').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContCE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContCP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContCR + '</td>' );
+                $('#recepDerD').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContDE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContDP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContDR + '</td>' );
+                $('#recepDerF').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContFE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContFP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContFR + '</td>' );
+                $('#recepDerI').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContIE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContIP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContIR + '</td>' );
+                $('#recepDerJ').html('<td style="text-align: center; font-family: Arial;">' + tablaIndContJE + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContJP + '</td><td style="text-align: center; font-family: Arial;">' + tablaIndContJR + '</td>' );
                
 		  },
 		  async:true
@@ -308,63 +307,63 @@
         for(var i=0; i < tipoDer.length; i++){
             if(tipoDer[i].indicator_category_key == 'a'){
                 if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContAE += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContAE += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContAP += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                    tablaIndContAP += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContAR += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContAR += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'c'){
                 if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContCE += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContCE += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContCP += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                    tablaIndContCP += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContCR += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContCR += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'd'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContDE += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContDE += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContDP += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                    tablaIndContDP += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContDR += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContDR += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'f'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContFE += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContFE += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContFP += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                    tablaIndContFP += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContFR += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContFR += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'i'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContIE += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContIE += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContIP += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                    tablaIndContIP += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContIR += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContIR += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
             }else if(tipoDer[i].indicator_category_key == 'j'){
                  if(tipoDer[i].indicator_type_code === "E"){
-                   tablaIndContJE += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContJE += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "P"){
-                    tablaIndContJP += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                    tablaIndContJP += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
                 else if(tipoDer[i].indicator_type_code === "R"){
-                   tablaIndContJR += '· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
+                   tablaIndContJR += '<br/>· <b>' + tipoDer[i].indicator_code+ ' - '+tipoDer[i].indicator_name+'</b> <br/>'+tipoDer[i].indicator_definition+' <br/><br/><hr>';
                 }
             }
 
@@ -379,7 +378,8 @@
             // Acciones para la descarga
             $('#generarInsumos').on('click',function(e){
                 $(this).hide();
-                $('#nuevoInsumos').show();
+                 $('.internoDerecho').hide();
+                
                 
             $('#selIndis').hide();
               $('#tabuladoInsumo').show();
@@ -408,21 +408,20 @@
                 var resol = iji.split(",");
                 
                 for(var ll=0;ll<resol.length;ll++){
-                    var url = pathAPI + "search?q=right_id:"+resol[ll]+"&rows=100&fl=indicator_code,indicator_name,indicator_definition&is_cuantitative=false";
+                    var url = pathAPI + "search?q=right_id:"+resol[ll]+"&rows=100&fl=indicator_code,indicator_name,indicator_definition,right_name";
                     var indContd = '';
                     $.ajax({
                        type: "GET",
                        url: url,
                        success: function(data)
                        {
-                           
-                            indContd = '<tr><td>'+data.indicator_code+ ' - '+data.indicator_name+' <br/>'+data.indicator_definition+'</td></tr>';
-
-                           console.log(indContd);
-                           
-                            //$('#tabuladoInsumo table tbody').append(indContd);
+                           console.log(resol[ll]);
+                            getValores(resol[ll]); 
+                           console.log(nomDer(resol[ll]));
+                           $('.nombreDer').html("<h1>"+data['results']['records'][0]["right_name"]+"</h1>");
+                           $('#nuevoInsumo').show();
                        },
-                       async: true
+                       async: false
                    });
                 }
                 
@@ -430,9 +429,9 @@
       });
             
             function descarga(){
-                var content = document.getElementById("tabuladoInsumo").innerHTML;
+                var content = '<!DOCTYPE html><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">' + document.getElementById("tabuladoInsumo").innerHTML;
                 console.log(content);
-                var converted = htmlDocx.asBlob(content, {orientation: 'landscape', margins: {top: 720}});
+                var converted = htmlDocx.asBlob(content, {orientation: 'landscape', margins: {top: 720,bottom: 720}});
                 saveAs(converted, 'ReporteSRE.docx');
             }
             
