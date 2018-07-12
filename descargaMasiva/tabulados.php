@@ -2,13 +2,13 @@
 ini_set('memory_limit', '512M');
 
 
-function indicadores(){
+function indicadores($rows = 100, $offset = 0){
   // create curl resource
     $ch = curl_init();
 
     // Setup cURL
     //$ch = curl_init('https://datosabiertos.unam.mx/api/alice/data/PUDH:INDI:CjR01');
-    $ch = curl_init('https://datosabiertos.unam.mx/api/alice/search?q=right_id:*%20AND%20is_cuantitative:false&rows=100');
+    $ch = curl_init('https://datosabiertos.unam.mx/api/alice/search?q=right_id:*%20AND%20is_cuantitative:false&rows='.$rows.'&offset='.$offset);
     curl_setopt_array($ch, array(
         CURLOPT_RETURNTRANSFER => TRUE,
         CURLOPT_HTTPHEADER => array(
@@ -30,49 +30,50 @@ function indicadores(){
 
     curl_close($ch);
     //var_dump($responseData);
-    return $responseData['results']['records'];
+    return $responseData;
 }
 
 
-$bar = indicadores();
-$sumaInd = 0;
+$bar100 = indicadores();
+$bar200 = indicadores(100,100);
+$bar300 = indicadores(100,200);
+$bar400 = indicadores(100,300);
+$bar500 = indicadores(100,400);
+$bar600 = indicadores(100,500);
+$bar700 = indicadores(100,600);
+$bar800 = indicadores(100,700);
+
+////ar_dump($bar200['results']['records']);
+
+$recordsCount = $bar100['results']['recordsCount'];
+//var_dump($recordsCount);
 $indicator_code = array();
+// For acumulador de claves de indicadores
+for($i=0;$i<$recordsCount;$i++){
+    if($i>=0 && $i<=100){
+        $indicator_code[] = $bar100['results']['records'][$i]['indicator_code'];
+    }else if($i>=101 && $i<=200){
+        $indicator_code[] = $bar200['results']['records'][$i-100]['indicator_code'];
+    }else if($i>=201 && $i<=300){
+        $indicator_code[] = $bar300['results']['records'][$i-200]['indicator_code'];
+    }elseif($i>=301 && $i<=400){
+        $indicator_code[] = $bar400['results']['records'][$i-300]['indicator_code'];
+    }elseif($i>=401 && $i<=500){
+        $indicator_code[] = $bar500['results']['records'][$i-400]['indicator_code'];
+    }elseif($i>=501 && $i<=600){
+        $indicator_code[] = $bar600['results']['records'][$i-500]['indicator_code'];
+    }elseif($i>=601 && $i<=700){
+        $indicator_code[] = $bar700['results']['records'][$i-600]['indicator_code'];
+    }elseif($i>=701 && $i<=800){
+        $indicator_code[] = $bar800['results']['records'][$i-700]['indicator_code'];
+    }
+    
+}
 
-foreach($bar as $meta){
-    
-  $indis = $meta;
-    var_dump($meta);
-    //$indicas = count($india);
-      //  for ($i=0; $i < $indicas; $i++) {
-    
-    
-    //var_dump($indis);
-    /*foreach($indis as $indi){
-      $india = $indi['Indicador'];
-
-        $indicas = count($india);
-        for ($i=0; $i < $indicas; $i++) {
-          if($india[$i]['indicator_code'] == 118 || $india[$i]['indicator_code'] == 356 || $india[$i]['indicator_code'] == 357 || $india[$i]['indicator_code'] == 358 || $india[$i]['indicator_code'] == 359 || $india[$i]['indicator_code'] == 360 || $india[$i]['indicator_code'] == 361 || $india[$i]['indicator_code'] == 343){
-
-            //$ClaveInd_arb[] = $india[$i]['ClaveInd_arb'];
-            //echo ' '.$india[$i]['ClaveInd_arb'].'<br/>';
-          }else{
-            //$indicator_code[] = $meta[$i]['indicator_code'];
-          }
-        }*/
-      //}
-
-      //}
-
-    //}// Foreach Indicador
-    
-    
-    
-    //$indicator_code[] = $meta[$i]['indicator_code'];
-}// Foreach Metas
 
 var_dump($indicator_code);
 
+$sumaInd = 0;
 
 function datos($indicador){
   $ch = curl_init();
@@ -104,109 +105,6 @@ function datos($indicador){
     return $responseData;
 }
 
-
-function clasificaciones($indicador){
-  $ch = curl_init();
-
-  $data = array (
-    "PCveInd" => $indicador,
-    "POpcion" => "Cl",
-    "PIdioma" => "ES"
-    );
-
-    // Setup cURL
-    $ch = curl_init('https://ods.org.mx/v2/API/AtrIndicador/PorDesglose');
-    curl_setopt_array($ch, array(
-        CURLOPT_POST => TRUE,
-        CURLOPT_RETURNTRANSFER => TRUE,
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json'
-        ),
-        CURLOPT_POSTFIELDS => json_encode($data)
-    ));
-
-    // Send the request
-    $response = curl_exec($ch);
-
-    // Check for errors
-    if($response === FALSE){
-        die(curl_error($ch));
-    }
-
-    // Decode the response
-    $responseData = json_decode($response, TRUE);
-
-    //var_dump($responseData);
-    return $responseData;
-}
-
-function datosMetadato($indicador){
-  $ch = curl_init();
-
-  $data = array (
-      "PCveInd" => $indicador,
-      "PIdioma" => "ES"
-    );
-
-    // Setup cURL
-    $ch = curl_init('https://ods.org.mx/v2/API/Metadato/PorClave');
-    curl_setopt_array($ch, array(
-        CURLOPT_POST => TRUE,
-        CURLOPT_RETURNTRANSFER => TRUE,
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json'
-        ),
-        CURLOPT_POSTFIELDS => json_encode($data)
-    ));
-
-    // Send the request
-    $response = curl_exec($ch);
-
-    // Check for errors
-    if($response === FALSE){
-        die(curl_error($ch));
-    }
-
-    // Decode the response
-    $responseData = json_decode($response, TRUE);
-
-    //var_dump($responseData);
-    return $responseData;
-}
-
-function nombreIndicador($indicador){
-  // create curl resource
-        $ch = curl_init();
-
-        $data = array (
-            "PCveInd" => $indicador,
-            "PIdioma" => "ES"
-          );
-
-          // Setup cURL
-          $ch = curl_init('https://ods.org.mx/v2/API/AtrIndicador/PorClave');
-          curl_setopt_array($ch, array(
-              CURLOPT_POST => TRUE,
-              CURLOPT_RETURNTRANSFER => TRUE,
-              CURLOPT_HTTPHEADER => array(
-                  'Content-Type: application/json'
-              ),
-              CURLOPT_POSTFIELDS => json_encode($data)
-          ));
-
-          // Send the request
-          $response = curl_exec($ch);
-
-          // Check for errors
-          if($response === FALSE){
-              die(curl_error($ch));
-          }
-
-          // Decode the response
-          $responseData = json_decode($response, TRUE);
-
-          return $responseData['Codigo_des'] . " " . $responseData['DescripInd_des'];
-}
 
 function get_tabulado($indicador){
 
