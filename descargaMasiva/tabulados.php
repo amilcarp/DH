@@ -220,12 +220,12 @@ function get_tabuladoCSV($indicador){
 
 // ----------- Crea todos los XLS de Metadatos ---------//
 
-// for ($i=0; $i < count($indicator_code); $i++) {
-//   metadato(datos($indicator_code[$i]));
-// }
+ for ($i=0; $i < count($indicator_code); $i++) {
+   metadato(datos($indicator_code[$i]));
+ }
 
 
-metadato(datos('AaE01a'));
+//metadato(datos('AaE01a'));
 
 // ----------- Crea todos los CSV de Metadatos ---------//
 
