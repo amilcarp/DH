@@ -294,7 +294,7 @@ function get_tabuladoCSV($indicador){
 
 // ----------- Crea todos los XLS de Indicador ---------//
 
-  for ($i=0; $i < count($ClaveInd_arb); $i++) {
+  for ($i=0; $i < count($indicator_code); $i++) {
    // get_tabulado($ClaveInd_arb[$i]);
     //var_dump($ClaveInd_arb[$i]);
     //echo "muestra ".$i;
