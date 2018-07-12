@@ -50,21 +50,21 @@ $recordsCount = $bar100['results']['recordsCount'];
 $indicator_code = array();
 // For acumulador de claves de indicadores
 for($i=0;$i<$recordsCount;$i++){
-    if($i>=0 && $i<=100){
+    if($i>=0 && $i<100){
         $indicator_code[] = $bar100['results']['records'][$i]['indicator_code'];
-    }else if($i>=101 && $i<=200){
+    }else if($i>=100 && $i<200){
         $indicator_code[] = $bar200['results']['records'][$i-100]['indicator_code'];
-    }else if($i>=201 && $i<=300){
+    }else if($i>=200 && $i<300){
         $indicator_code[] = $bar300['results']['records'][$i-200]['indicator_code'];
-    }elseif($i>=301 && $i<=400){
+    }else if($i>=300 && $i<400){
         $indicator_code[] = $bar400['results']['records'][$i-300]['indicator_code'];
-    }elseif($i>=401 && $i<=500){
+    }else if($i>=400 && $i<500){
         $indicator_code[] = $bar500['results']['records'][$i-400]['indicator_code'];
-    }elseif($i>=501 && $i<=600){
+    }else if($i>=500 && $i<600){
         $indicator_code[] = $bar600['results']['records'][$i-500]['indicator_code'];
-    }elseif($i>=601 && $i<=700){
+    }else if($i>=600 && $i<700){
         $indicator_code[] = $bar700['results']['records'][$i-600]['indicator_code'];
-    }elseif($i>=701 && $i<=800){
+    }else if($i>=700 && $i<800){
         $indicator_code[] = $bar800['results']['records'][$i-700]['indicator_code'];
     }
     
@@ -192,11 +192,11 @@ function get_tabuladoCSV($indicador){
 
 // ----------- Crea todos los XLS de Indicador ---------//
 
-  for ($i=0; $i < count($indicator_code); $i++) {
+  //for ($i=0; $i < count($indicator_code); $i++) {
    // get_tabulado($ClaveInd_arb[$i]);
     //var_dump($ClaveInd_arb[$i]);
     //echo "muestra ".$i;
-  }
+  //}
 
 // ----------- Crea todos los CSV de Indicador ---------//
 
@@ -220,9 +220,12 @@ function get_tabuladoCSV($indicador){
 
 // ----------- Crea todos los XLS de Metadatos ---------//
 
-// for ($i=0; $i < count($ClaveInd_arb); $i++) {
-//   metadato(datosMetadato($ClaveInd_arb[$i]));
+// for ($i=0; $i < count($indicator_code); $i++) {
+//   metadato(datos($indicator_code[$i]));
 // }
+
+
+metadato(datos('AaE01a'));
 
 // ----------- Crea todos los CSV de Metadatos ---------//
 
@@ -298,7 +301,7 @@ function metadato($data){
   define('EOL',(PHP_SAPI == 'cli') ? PHP_EOL : '<br />');
 
   /** Include PHPExcel */
-  require_once dirname(__FILE__) . '/Classes/PHPExcel.php';
+  require_once dirname(__FILE__) . '/../lib/Classes/PHPExcel.php';
 
   // Create new PHPExcel object
   //echo date('H:i:s') , " Create new PHPExcel object" , EOL;
@@ -306,130 +309,132 @@ function metadato($data){
 
   // Set document properties
   //echo date('H:i:s') , " Set document properties" , EOL;
-  $objPHPExcel->getProperties()->setCreator("Agenda2030")
+  $objPHPExcel->getProperties()->setCreator("SNEDH")
   							 ->setLastModifiedBy("Daniel H. Vargas")
-  							 ->setTitle("Objetivo")
-  							 ->setSubject($data['Algoritmo_ft'].$data['Descrip_ind'])
-  							 ->setDescription("Archivo creado para la Descarga Masiva de Agenda 2030")
-  							 ->setKeywords("agenda2030 descarga masiva xls")
-  							 ->setCategory("Objetivos de Desarrollo Sostenible");
+  							 ->setTitle("Indicadores de Derechos Humanos")
+  							 ->setSubject($data['indicator_code'].$data['indicator_name'])
+  							 ->setDescription("Archivo creado para la Descarga Masiva de Sistema Nacional de Evaluación de Derechos Humanos")
+  							 ->setKeywords("SNEDH descarga masiva xls")
+  							 ->setCategory("Sistema Nacional de Evaluación de Derechos Humanos");
 
 
   //$metadato = $data['Series'];
   //var_dump($serie);
   $objPHPExcel->setActiveSheetIndex(0);
 
-  $numInd = $data['Algoritmo_ft'];
-  $nInd = explode('_',$numInd);
-  $nds = '';
-  for ($ede=0; $ede < count($nInd) - 1; $ede++) {
-    $nds .= $nInd[$ede] . '.';
-  }
+//  $numInd = $data['indicator_code'];
+//  $nInd = explode('_',$numInd);
+//  $nds = '';
+//  for ($ede=0; $ede < count($nInd) - 1; $ede++) {
+//    $nds .= $nInd[$ede] . '.';
+//  }
 
   $objPHPExcel->setActiveSheetIndex(0)
-              ->setCellValue('A1', $nds.' '.$data['Descrip_ind']);
+              ->setCellValue('A1', ' '.$data['indicator_code'].' - '.$data['indicator_name']);
 
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', 'Objetivo');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', 'Meta');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A4', 'Nombre del Indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', 'Definición');
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A2', 'Derecho');
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A3', 'Categoría/Principio Transversal');
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A4', 'Clave');
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A5', 'Nombre');
   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A6', 'Tipo de Indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A7', 'Algoritmo');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A8', 'Descripción narrativa del cálculo del indiciador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A9', 'Unidad de medida');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A10', 'Cobertura geográfica');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A11', 'Referencia temporal');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A12', 'Oportunidad');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A13', 'Periodicidad del indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A14', 'Fuente generadora de la información estadística utilizada para el cálculo del indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A15', 'Fecha de actualización del indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A16', 'Fecha de próxima actualización del indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A17', 'Unidad de Estado (UE) responsable de calcular el indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A18', 'Importancia y utilidad del indicador');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A19', 'Referencia nacional y/o internacional');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A20', 'Observaciones');
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A21', 'Contacto');
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A7', 'Descripción');
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A8', 'Evidencias');
+    
+//    $eves = count($data['evidence']);
+//    
+//    for($e=9;$e<$eves;$e++){
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, 'Nombre de la evidencia');
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, '');
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, '');
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, '');
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, '');
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, '');
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, '');
+//        $objPHPExcel->setActiveSheetIndex(0)->setCellValue('A'.$e, '');
+//    }
 
 
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', $data['Descrip_obj']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', $data['Descrip_met']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', $data['Descrip_ind']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', $data['Definicion_ft']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B6', $data['DesTipoInd_ft']);
-  //$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B7', $data['Algoritmo_ft']);
-    // Create new picture object and insert picture
-  $objDrawing = new PHPExcel_Worksheet_Drawing();
-  $objDrawing->setName('Algoritmo'.$data['Algoritmo_ft']);
-  $objDrawing->setDescription('Image');
-  $objDrawing->setPath($data['RutaAlgoritmo_ft'].$data['Algoritmo_ft'].$data['ExpAlgoritmo_ft']);
-  $objDrawing->setHeight(200);
-  $objDrawing->setCoordinates('B7');
-  $objDrawing->setWorksheet($objPHPExcel->getActiveSheet());
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B2', $data['right_name']);
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B3', $data['indicator_category_name']);
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B4', $data['indicator_code']);
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B5', $data['indicator_name']);
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B6', $data['indicator_type_short']);
+$objPHPExcel->setActiveSheetIndex(0)->setCellValue('B7', $data['indicator_definition']);
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B8', '');
+    
+    
+//    for($r=0;$r<count($data['evidence']);$r++){
+//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
+//        $obsEv[] = $data['evidence'][$r]['observation_unit_name'];
+//        $urlEv[] = $data['evidence'][$r]['evidence_url'];
+//        $valEv[] = $data['evidence'][$r]['institution_name_evidencie'];
+//        $vigEv[] = $data['evidence'][$r]['validity_year_start']-$data['evidence'][$r]['validity_end_start'];
+//        $updateEv[] = $data['evidence'][$r]['update_date'];
+//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
+//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
+//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
+//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
+//    }
+    
+//    var_dump($nomEv);
+    
+    
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', $data['evidence']);
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', $data['Descrip_fdg']);
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B11', $data['CobTem_ft']);
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B12', $data['Oportunidad_ft']);
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B13', $data['Descrip_per']);
 
-  // Add a drawing to the header
-  $objDrawing = new PHPExcel_Worksheet_HeaderFooterDrawing();
-  $objDrawing->setName('Algoritmo'.$data['Algoritmo_ft']);
-  $objDrawing->setPath($data['RutaAlgoritmo_ft'].$data['Algoritmo_ft'].$data['ExpAlgoritmo_ft']);
-  $objDrawing->setHeight(200);
-  $objPHPExcel->getActiveSheet()->getHeaderFooter()->addImage($objDrawing, PHPExcel_Worksheet_HeaderFooter::IMAGE_HEADER_LEFT);
-
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B8', $data['DescripCal_ft']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', $data['Descrip_uni']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', $data['Descrip_fdg']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B11', $data['CobTem_ft']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B12', $data['Oportunidad_ft']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B13', $data['Descrip_per']);
-
-  $fuen = '';
-  $fuente = $data['Fuente'];
-    for ($i=0; $i < count($fuente); $i++) {
-      $fuen .= $fuente[$i]['Descrip_fue'];
-    }
-  //var_dump($fuen);
-  $wizard = new PHPExcel_Helper_HTML;
-  $richText = $wizard->toRichTextObject($fuen);
-
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B14', utf8_decode($richText));// Array
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B15', $data['FechaAct_atr']);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B16', $data['FecProxAct_eic']);
-
-    $resp = '';
-    $responsable = $data['InsResp'];
-    for ($j=0; $j < count($responsable); $j++) {
-      $resp .= $responsable[$j]['Descrip_ins'] . '<br />' . $responsable[$j]['Abrevia_ins'] . '<br />' . (($responsable[$j]['URL_ins'] == '' || $responsable[$j]['URL_ins'] == null) ? '' : $responsable[$j]['URL_ins']) . '<br /><br />';
-    }
-
-    $wizard2 = new PHPExcel_Helper_HTML;
-    $richText2 = $wizard2->toRichTextObject($resp);
-
-    //var_dump($resp);
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B17', utf8_decode($richText2));//Array
-
-
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B18', $data['Importancia_ft']);
-
-
-  $ref = '';
-  $refs = $data['RefInt'];
-  for ($k=0; $k < count($refs); $k++) {
-    $ref .= $refs[$k]['Descrip_ri'] . '<br /><br />';
-  }
-
-  $wizard3 = new PHPExcel_Helper_HTML;
-  $richText3 = $wizard3->toRichTextObject($ref);
-
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B19', utf8_decode($richText3));//Array
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B20', $data['Observacion_ft']);
-
-  $con = '';
-  $contacto = $data['Contacto'];
-  for ($l=0; $l < count($contacto); $l++) {
-    $con .= $contacto[$l]['Nombre_con'] . '<br />' . $contacto[$l]['Puesto_con'] . '<br /> <b>Teléfono:</b> ' . $contacto[$l]['Telefono_con'] . '<br /> <b>Email:</b> ' . $contacto[$l]['Correo_con'] . '<br /> <b>Dirección:</b> ' . $contacto[$l]['Domicilio_con'].'<br /><br />';
-  }
-  $wizard4 = new PHPExcel_Helper_HTML;
-  $richText4 = $wizard4->toRichTextObject($con);
-
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B21', utf8_decode($richText4));//Array
+//  $fuen = '';
+//  $fuente = $data['Fuente'];
+//    for ($i=0; $i < count($fuente); $i++) {
+//      $fuen .= $fuente[$i]['Descrip_fue'];
+//    }
+//  //var_dump($fuen);
+//  $wizard = new PHPExcel_Helper_HTML;
+//  $richText = $wizard->toRichTextObject($fuen);
+//
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B14', utf8_decode($richText));// Array
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B15', $data['FechaAct_atr']);
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B16', $data['FecProxAct_eic']);
+//
+//    $resp = '';
+//    $responsable = $data['InsResp'];
+//    for ($j=0; $j < count($responsable); $j++) {
+//      $resp .= $responsable[$j]['Descrip_ins'] . '<br />' . $responsable[$j]['Abrevia_ins'] . '<br />' . (($responsable[$j]['URL_ins'] == '' || $responsable[$j]['URL_ins'] == null) ? '' : $responsable[$j]['URL_ins']) . '<br /><br />';
+//    }
+//
+//    $wizard2 = new PHPExcel_Helper_HTML;
+//    $richText2 = $wizard2->toRichTextObject($resp);
+//
+//    //var_dump($resp);
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B17', utf8_decode($richText2));//Array
+//
+//
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B18', $data['Importancia_ft']);
+//
+//
+//  $ref = '';
+//  $refs = $data['RefInt'];
+//  for ($k=0; $k < count($refs); $k++) {
+//    $ref .= $refs[$k]['Descrip_ri'] . '<br /><br />';
+//  }
+//
+//  $wizard3 = new PHPExcel_Helper_HTML;
+//  $richText3 = $wizard3->toRichTextObject($ref);
+//
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B19', utf8_decode($richText3));//Array
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B20', $data['Observacion_ft']);
+//
+//  $con = '';
+//  $contacto = $data['Contacto'];
+//  for ($l=0; $l < count($contacto); $l++) {
+//    $con .= $contacto[$l]['Nombre_con'] . '<br />' . $contacto[$l]['Puesto_con'] . '<br /> <b>Teléfono:</b> ' . $contacto[$l]['Telefono_con'] . '<br /> <b>Email:</b> ' . $contacto[$l]['Correo_con'] . '<br /> <b>Dirección:</b> ' . $contacto[$l]['Domicilio_con'].'<br /><br />';
+//  }
+//  $wizard4 = new PHPExcel_Helper_HTML;
+//  $richText4 = $wizard4->toRichTextObject($con);
+//
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B21', utf8_decode($richText4));//Array
 
   $objPHPExcel->getActiveSheet()->mergeCells('A1:B1');
   $objPHPExcel->getActiveSheet()->getColumnDimension('A')->setWidth(40);
@@ -439,7 +444,7 @@ function metadato($data){
   $objPHPExcel->getActiveSheet()->getRowDimension('4')->setRowHeight(-1);
   $objPHPExcel->getActiveSheet()->getRowDimension('5')->setRowHeight(-1);
   $objPHPExcel->getActiveSheet()->getRowDimension('6')->setRowHeight(-1);
-  $objPHPExcel->getActiveSheet()->getRowDimension('7')->setRowHeight(200);
+  $objPHPExcel->getActiveSheet()->getRowDimension('7')->setRowHeight(-1);
   $objPHPExcel->getActiveSheet()->getRowDimension('8')->setRowHeight(-1);
   $objPHPExcel->getActiveSheet()->getRowDimension('9')->setRowHeight(-1);
   $objPHPExcel->getActiveSheet()->getRowDimension('10')->setRowHeight(-1);
@@ -462,7 +467,7 @@ function metadato($data){
 
   // Rename worksheet
   //echo date('H:i:s') , " Rename worksheet" , EOL;
-  $objPHPExcel->getActiveSheet()->setTitle(substr($data['Algoritmo_ft'].$data['Descrip_ind'], 0, 25));
+  $objPHPExcel->getActiveSheet()->setTitle(substr($data['indicator_code'], 0, 25));
 
   // Set active sheet index to the first sheet, so Excel opens this as the first sheet
   $objPHPExcel->setActiveSheetIndex(0);
@@ -475,22 +480,12 @@ function metadato($data){
   PHPExcel_Settings::setZipClass(PHPExcel_Settings::PCLZIP);
 
   $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel2007');
-  $objWriter->save('xlscsv/Metadato_'.$nds.'.xlsx');
+  $objWriter->save('../xlscsv/FichayEvidencias_'.$data['indicator_code'].'.xlsx');
   // $objWriter->save(str_replace('.php', '.xlsx', __FILE__));
   //echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
   $callEndTime = microtime(true);
   $callTime = $callEndTime - $callStartTime;
 
-  //echo date('H:i:s') , " File written to " , str_replace('.php', '.xls', pathinfo(__FILE__, PATHINFO_BASENAME)) , EOL;
-  //echo 'Call time to write Workbook was ' , sprintf('%.4f',$callTime) , " seconds" , EOL;
-  // Echo memory usage
-  //echo date('H:i:s') , ' Current memory usage: ' , (memory_get_usage(true) / 1024 / 1024) , " MB" , EOL;
-
-  // Echo memory peak usage
-  //echo date('H:i:s') , " Peak memory usage: " , (memory_get_peak_usage(true) / 1024 / 1024) , " MB" , EOL;
-
-  // Echo done
-  //echo date('H:i:s') , " Done writing files" , EOL;
   echo 'Files have been created in ' , getcwd() , EOL;
   //var_dump($data);
 }
