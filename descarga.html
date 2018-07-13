@@ -64,60 +64,89 @@
 					<li class="active">Descarga masiva</li>
 				</ol>
 			</div>
-		    
+            
+    <form id="formulario">
 	      <div class="container">
 		      <br /><br />
 		  	<!-- Inicia Bloque -->
 		      <div class="row">
-			      <div class="col-md-12">
+			      <div class="col-md-12" >
 				      <h1>Descarga masiva de datos</h1>
 				      <hr />
-				      <div class="row">
+                      <div class="container">
+                            <div class="row">
+                                <p>En la siguiente sección podrás descargar toda la información contenida en los indicadores de manera masiva. Para hacerlo tendras que: </p>
+                                <ol>
+                                    <li>Selecciona el formato en el que quieras descargar la información (XLS o CSV)</li>
+                                    <li>Seleccionar el/los derechos que aparecen debajo</li>
+                                    <li>Seleccionar los indicadores. </li>
+                                    <li>Dar click en el botón de descarga</li>
+                                    <li>Espera a que se genere la liga para descargar los archivos correspondientes en formato zip</li>
+                                </ol>
+                            </div>
+                        </div>
+            
+                      <br /><br />
+                      
+				      <div class="row" id="filtroDescarga">
 					      <div class="col-md-3">
 						      <h6>Elementos a exportar</h6>
 					      </div>
-					      <div class="col-md-2">
-						      <div class="checkbox">
-							    <label>
-							      <input type="checkbox">
-							      Indicador
-							    </label>
-							  </div>
-					      </div>
-					      <div class="col-md-2">
-							  <div class="checkbox">
-							    <label>
-							      <input type="checkbox">
-							      Metadato
-							    </label>
-							  </div>
-					      </div>
-					      <div class="col-md-3">
-							  <select class="form-control" placeholder="Tipo de formato">
-								  <option>XLS</option>
-								  <option>CSV</option>
+
+					      <div class="col-md-4">
+							  <select class="form-control" placeholder="Tipo de formato" id="tipoFormato" name="tipoFormato">
+								  <option id="tipoXLS" value="xls" selected>XLS</option>
+								  <option id="tipoCSV" value="csv">CSV</option>
 								</select>
 					      </div>
-					      <div class="col-md-2">
-						      <button type="button" class="btn btn-primary">Descargar datos</button>
+					      <div class="col-md-3">
+						      <button type="button" id="descargarDatos" class="btn btn-primary">Descargar datos</button>
 					      </div>
 					  	
 				      </div>
 				      <br /><br />
 				      <div class="row">
 					      
-					      <div class="panel-group ficha-collapse" id="accordions">
-							  
-							</div>
+					      <div class="panel-group ficha-collapse" id="accordions"></div>
 					  	
+                          <div id="descargaZip" style="text-align: center;">
+                              <div class="caja">
+                                  <h5 id="mensajeDescarga">Se está generando su carpeta de descarga</h5>
+                                  <div style="margin:0 auto;text-align:center;" class="loadload">
+                                    <div class="preloader-wrapper big active">
+                                      <div class="spinner-layer spinner-blue-only">
+                                        <div class="circle-clipper left">
+                                          <div class="circle"></div>
+                                        </div><div class="gap-patch">
+                                          <div class="circle"></div>
+                                        </div><div class="circle-clipper right">
+                                          <div class="circle"></div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                </div>
+                                <div id="resp">
+
+                                </div>
+                                <br/>
+                                <br/>
+                                <div class="cerrar">
+                                    <button type="button" id="nuevaDescarga" class="btn btn-primary">Reiniciar selección de indicadores</button>
+                                </div>
+                              </div>
+                            </div>
+                          
+                          
 				      </div>
 				      
 			      </div>
 		      </div>
 		      <!-- Termina Bloque -->      
-		      
+		      <input type="hidden" value="" id="indPost" name="indicadores" />
 	      </div>
+    </form>
 		  <br /><br />
+            
 
 	    </main>
 	
@@ -129,7 +158,9 @@
 	    <script src="js/main.js"></script>
         <script src="js/consultas.js"></script>
         <script>
-        
+        $('#descargaZip').hide();
+            $('#nuevaDescarga').hide();
+            
           var colap = '';
             var indDer = ['Culturales','Medio Ambiente','Trabajo','Alimentación','Sindicales'];
             
@@ -184,12 +215,13 @@
             
             
             // Acciones para la descarga
-            $('#generarInsumos').on('click',function(e){
+            $('#descargarDatos').on('click',function(e){
                 $(this).hide();
-                $('#nuevoInsumos').show();
+                $('#nuevaDescarga').show();
+                $('#accordions').hide();
+                $('#filtroDescarga').hide();
+                $('#descargaZip').show();
                 
-                $('#selIndis').hide();
-              $('#tabuladoInsumo').show();
               e.preventDefault();
               var indica = [];
               var valor='';
@@ -208,31 +240,51 @@
 
                 console.log(valor);
                 
+                $('#indPost').val(valor);
+                
                 // Variable de lo seleccionado en string separado por comas
                 var iji = valor.substr(1);
                 console.log(iji);
 
                 var resol = iji.split(",");
                 
-                for(var ll=0;ll<resol.length;ll++){
-                    var url = pathAPI + "data/PUDH:INDI:" + resol[ll];
-                    var indContd = '';
-                    $.ajax({
-                       type: "GET",
-                       url: url,
-                       success: function(data)
-                       {
-                            indContd = '<tr><td>'+data.right_name_short+'</td><td>'+data.indicator_code+'</td><td>'+data.indicator_name+'</td><td>'+data.indicator_category_name+'</td><td>'+data.indicator_type_short+'</td>';
-                           var tipoInfo = (data.is_cuantitative === true) ? "Cuantitativo" : "Cualitativo";
-                           indContd += '<td>'+tipoInfo+'</td><td><a href="indicadores.html?codigo=PUDH:INDI:'+data.indicator_code+'" target="_blank">Indicador '+data.indicator_code+'</a></td></tr>';
-                           
-                           console.log(indContd);
-                           
-                            $('#tabuladoInsumo table tbody').append(indContd);
-                       },
-                       async: true
-                   });
-                }
+                var url = "descargaMasiva/descargaMasiva.php";
+                $.ajax({
+                   type: "POST",
+                   url: url,
+                   data: $("#formulario").serialize(),
+                   success: function(data)
+                   {
+                     $('#resp').html(data);
+                     $('.loadload').hide();
+                     $('.cerrar').show();
+                     $('#mensajeDescarga').html('Se ha generado su carpeta de descarga. Haga click en el siguiente enlace para descargar.<br/><br/>');
+                     //exit();
+
+                   },
+                   async: false
+               });
+                
+                
+//                for(var ll=0;ll<resol.length;ll++){
+//                    var url = pathAPI + "data/PUDH:INDI:" + resol[ll];
+//                    var indContd = '';
+//                    $.ajax({
+//                       type: "GET",
+//                       url: url,
+//                       success: function(data)
+//                       {
+//                            indContd = '<tr><td>'+data.right_name_short+'</td><td>'+data.indicator_code+'</td><td>'+data.indicator_name+'</td><td>'+data.indicator_category_name+'</td><td>'+data.indicator_type_short+'</td>';
+//                           var tipoInfo = (data.is_cuantitative === true) ? "Cuantitativo" : "Cualitativo";
+//                           indContd += '<td>'+tipoInfo+'</td><td><a href="indicadores.html?codigo=PUDH:INDI:'+data.indicator_code+'" target="_blank">Indicador '+data.indicator_code+'</a></td></tr>';
+//                           
+//                           console.log(indContd);
+//                           
+//                            $('#tabuladoInsumo table tbody').append(indContd);
+//                       },
+//                       async: true
+//                   });
+//                }
                 
 
       });
