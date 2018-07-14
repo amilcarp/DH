@@ -24,8 +24,7 @@ if($tipoFormato == 'xls'){
       //var_dump(codigoIndicador($opo[$i]));
       $codigos .= '../xlscsv/'.$opo[$i].'_FichaEvidencias.xlsx,';
     }
-
-
+    
 
 //  if($calculoDescarga == "3"){
 //    for ($i=0; $i < count($opo); $i++) {
@@ -86,6 +85,36 @@ function leer_contenido_completo($url){
       $texto .= $trozo;
    }
    return $texto;
+}
+
+function datos($indicador){
+  $ch = curl_init();
+
+    // Setup cURL
+    //$ch = curl_init('https://datosabiertos.unam.mx/api/alice/data/PUDH:INDI:CjR01');
+    $ch = curl_init('https://datosabiertos.unam.mx/api/alice/data/PUDH:INDI:'.$indicador);
+    curl_setopt_array($ch, array(
+        CURLOPT_RETURNTRANSFER => TRUE,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+        CURLOPT_USERAGENT => 'SNEDH'
+    ));
+
+    // Send the request
+    $response = curl_exec($ch);
+
+    // Check for errors
+    if($response === FALSE){
+        die(curl_error($ch));
+    }
+
+    // Decode the response
+    $responseData = json_decode($response, TRUE);
+
+    curl_close($ch);
+    //var_dump($responseData);
+    return $responseData;
 }
 
 ?>

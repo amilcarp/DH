@@ -791,7 +791,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-01" aria-expanded="true" aria-controls="panel-01">Recepción del derecho</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-01" aria-expanded="true" aria-controls="panel-01" title="Categoría conceptual cuyos indicadores permiten identificar información sobre la forma en que cada derecho se encuentra incorporado en el sistema legal y en las políticas públicas, así como los resultados generales sobre su garantía.">Recepción del derecho</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button" data-parent="#accordion" data-toggle="collapse" href="#panel-01"></button>' + 
                     '                </div>' + 
@@ -806,7 +806,7 @@ $(document).ready(function () {
                     '           <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-02" aria-expanded="true" aria-controls="panel-02">Contexto financiero y presupuestal</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-02" aria-expanded="true" aria-controls="panel-02" title="Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.">Contexto financiero y presupuestal</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-02"></button>' + 
                     '                </div>' + 
