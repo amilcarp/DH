@@ -625,7 +625,7 @@ $(document).ready(function() {
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
         
-                                cuanti += '<div class="row"><div class="col-md-12">';
+                                cuanti += '<canvas style="display:none;" height="500" width="960"></canvas><button class="btn btn-default btn-sm" id="save">Descargar Gráfica</button><div class="row"><div class="col-md-12">';
                                 cuanti += (tieneBreakdown === false) ? '' : '<p><b>Nota: </b> ' + data.indicator_reference + '</p>';
 
                                 cuanti += '</div></div>' +
