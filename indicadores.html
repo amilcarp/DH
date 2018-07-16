@@ -924,6 +924,31 @@
         downloadLink.click();
         document.body.removeChild(downloadLink);
     }
+    
+    
+    function SVG2PNG(svg, callback) {
+      var canvas = document.createElement('canvas'); // Create a Canvas element.
+      var ctx = canvas.getContext('2d'); // For Canvas returns 2D graphic.
+      var data = svg.outerHTML; // Get SVG element as HTML code.
+      canvg(canvas, data); // Render SVG on Canvas.
+      callback(canvas); // Execute callback function.
+    }
+    
+    
+    function generateLink(fileName, data) {
+      var link = document.createElement('a');
+      link.download = fileName;
+      link.href = data;
+      return link;
+    }
+    
+    document.getElementById('save').onclick = function() { // Bind click event on download button.
+      var element = document.getElementById('graph'); // Get SVG element.
+      SVG2PNG(element, function(canvas) { // Arguments: SVG element, callback function.
+        var base64 = canvas.toDataURL("image/png"); // toDataURL return DataURI as Base64 format.
+        generateLink('Gráfica.png', base64).click(); // Trigger the Link is made by Link Generator and download.
+      });
+    }
  
 
         </script>

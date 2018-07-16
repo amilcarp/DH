@@ -16,29 +16,26 @@ for ($i=1; $i < count($indicadores); $i++) {
    $opo[] = $otra;
 }
 
-if($tipoFormato == 'xls'){
-
-  $codigos = '';
-    for ($i=0; $i < count($opo); $i++) {
-      //var_dump($opo[$i]);
-      //var_dump(codigoIndicador($opo[$i]));
-      $codigos .= '../xlscsv/'.$opo[$i].'_FichaEvidencias.xlsx,';
-    }
+  $directorio = '../xlscsv';
+    $ficheros1  = scandir($directorio);
     
 
-//  if($calculoDescarga == "3"){
-//    for ($i=0; $i < count($opo); $i++) {
-//      for ($j=0; $j < count(datoscalculo($opo[$i])); $j++) {
-//        $f = $j + 1;
-//        $codigos .= '../xlscsv/DatosCalculo_T'.$f.'_'.codigoIndicador($opo[$i]).'.xlsx,';
-//      }
-//    }
-//  }
+if($tipoFormato == 'xls'){
+
+
+    $codigos = '';
+    for ($i=0; $i < count($opo); $i++) {
+        for($j=0;$j<count($ficheros1);$j++){
+            if (strpos($ficheros1[$j], $opo[$i]) !== false) {
+                if (strpos($ficheros1[$j], '.xlsx') !== false) {
+                    $codigos .= '../xlscsv/'.$ficheros1[$j].',';
+                }
+                
+            }
+        }
+    }
 
   $resultado =  trim($codigos, ',');
-
-// var_dump($resultado);
-// exit();
 
   $fecha = date('Y-m-d-His');
   $nameFile = 'SNEDH_DescargaMasiva-'.$fecha.'.zip';
@@ -50,22 +47,18 @@ if($tipoFormato == 'xls'){
 
 if($tipoFormato == 'csv'){
 
-   $codigos = '';
-    for ($i=0; $i < count($opo); $i++) {
-      //var_dump($opo[$i]);
-      //var_dump(codigoIndicador($opo[$i]));
-      $codigos .= '../xlscsv/'.$opo[$i].'_FichaEvidencias.csv,';
-    }
-    
-    
-//  if($calculoDescarga == "3"){
-//    for ($i=0; $i < count($opo); $i++) {
-//      for ($j=0; $j < count(datoscalculo($opo[$i])); $j++) {
-//        $f = $j + 1;
-//        $codigos .= '../xlscsv/DatosCalculo_T'.$f.'_'.codigoIndicador($opo[$i]).'.csv,';
-//      }
-//    }
-//  }
+  
+    $codigos = '';
+        for ($i=0; $i < count($opo); $i++) {
+            for($j=0;$j<count($ficheros1);$j++){
+                if (strpos($ficheros1[$j], $opo[$i]) !== false) {
+                    if (strpos($ficheros1[$j], '.csv') !== false) {
+                        $codigos .= '../xlscsv/'.$ficheros1[$j].',';
+                    }
+
+                }
+            }
+        }
 
   $resultado =  trim($codigos, ',');
 
