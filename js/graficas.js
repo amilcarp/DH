@@ -106,6 +106,7 @@ function lineas(URLJSON, ejeX, ejeY, color){
         
     //});
 
+
 } 
 
 function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
@@ -325,7 +326,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
             .call(xAxis);
         
     }
-     
+
 }
 
 function barras(URLJSON, ejeX, ejeY, color){
@@ -444,6 +445,7 @@ function barras(URLJSON, ejeX, ejeY, color){
     
         
    // });
+
     
 }
 
@@ -987,6 +989,7 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
         
       }
     }  
+    
 }
 
 function mapa(){
