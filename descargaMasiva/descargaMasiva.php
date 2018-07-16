@@ -27,7 +27,7 @@ if($tipoFormato == 'xls'){
     for ($i=0; $i < count($opo); $i++) {
         for($j=0;$j<count($ficheros1);$j++){
             if (strpos($ficheros1[$j], $opo[$i]) !== false) {
-                if (strpos($ficheros1[$j], '.xlsx') !== false) {
+                if (strpos($ficheros1[$j], '.xlsx') !== false || strpos($ficheros1[$j], '.xls') !== false) {
                     $codigos .= '../xlscsv/'.$ficheros1[$j].',';
                 }
                 
