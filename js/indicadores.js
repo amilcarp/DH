@@ -627,7 +627,7 @@ $(document).ready(function() {
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
         
-                                cuanti += '<button class="btn btn-default btn-sm" onclick="svgToPng()" id="save">Descargar Gráfica</button><br/><br/><div class="row"><div class="col-md-12">';
+                                cuanti += '<button class="btn btn-default btn-sm" onclick="svgToPng(\''+data.indicator_code+'-'+data.indicator_name+'\')" id="save">Descargar Gráfica</button><br/><br/><div class="row"><div class="col-md-12">';
                                 cuanti += (tieneBreakdown === false) ? '' : '<p><b>Nota: </b> ' + data.indicator_reference + '</p>';
 
                                 cuanti += '</div></div>' +

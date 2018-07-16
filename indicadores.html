@@ -526,12 +526,7 @@
 	    <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="js/excellentexport.js"></script>
         <script src="js/pace.min.js"></script>
-        <script src="http://requirejs.org/docs/release/2.3.2/minified/require.js"></script>
-        <script>
-            require(['js/excellentexport'], function(ee) {
-                window.ExcellentExport = ee;
-            });
-        </script>
+        
         <script src="js/main.js"></script>
         <script src="js/indicadores.js"></script>
         <script src="js/graficas.js"></script>
@@ -543,9 +538,7 @@
         <script src="js/data.js"></script>
         <script src='js/funcionesApi.js'></script>
         
-<!--        <script src='js/saveSvgAsPng.js'></script>-->
-        
-        <!-- saveSvgAsPng - https://github.com/exupero/saveSvgAsPng -->
+          <!-- saveSvgAsPng - https://github.com/exupero/saveSvgAsPng -->
 <script>
   (function() {
     var out$ = typeof exports != 'undefined' && exports || typeof define != 'undefined' && {} || this;
@@ -758,12 +751,30 @@
 
   })();
     
-     function svgToPng() {
-    var saveSvgAsPng = require(['js/saveSvgAsPng']);
-      // **** saveSvgAsPng ****
-      saveSvgAsPng.saveSvgAsPng(d3.select('svg').node(), 'myDrawing.png');
+    function svgToPng(nom) {
+        //var saveSvgAsPng = require(['js/saveSvgAsPng']);
+        // **** saveSvgAsPng ****
+        if ( $("#map").length > 0 ) {
+        // hacer algo aquí si el elemento existe
+            saveSvgAsPng(d3.select('#map svg').node(), nom+'.png');
+        }else{
+            saveSvgAsPng(d3.select('svg').node(), nom+'.png');
+        }   
+        
     }
 </script>
+        
+        
+        <script src="http://requirejs.org/docs/release/2.3.2/minified/require.js"></script>
+        <script>
+            require(['js/excellentexport'], function(ee) {
+                window.ExcellentExport = ee;
+            });
+        </script>
+        
+<!--        <script src='js/saveSvgAsPng.js'></script>-->
+        
+      
         
         
         
@@ -1123,12 +1134,6 @@
     legend.addTo(map);
     }
     
-    
-//    function svgToPng() {
-//  
-//      // **** saveSvgAsPng ****
-//      saveSvgAsPng(d3.select('svg').node(), 'myDrawing.png');
-//    }
 
         </script>
 	</body>
