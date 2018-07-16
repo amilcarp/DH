@@ -791,7 +791,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-01" aria-expanded="true" aria-controls="panel-01">Recepción del derecho</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-01" aria-expanded="true" aria-controls="panel-01" title="Categoría conceptual cuyos indicadores permiten identificar información sobre la forma en que cada derecho se encuentra incorporado en el sistema legal y en las políticas públicas, así como los resultados generales sobre su garantía.">Recepción del derecho</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button" data-parent="#accordion" data-toggle="collapse" href="#panel-01"></button>' + 
                     '                </div>' + 
@@ -806,7 +806,7 @@ $(document).ready(function () {
                     '           <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-02" aria-expanded="true" aria-controls="panel-02">Contexto financiero y presupuestal</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-02" aria-expanded="true" aria-controls="panel-02" title="Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.">Contexto financiero y presupuestal</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-02"></button>' + 
                     '                </div>' + 
@@ -821,7 +821,7 @@ $(document).ready(function () {
                     '           <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-03" aria-expanded="true" aria-controls="panel-03">Capacidades estatales</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-03" aria-expanded="true" aria-controls="panel-03" title="Categoría conceptual cuyos indicadores incorporan los aspectos instrumentales y de disponibilidad de recursos al interior del aparato estatal para la atención de los derechos.">Capacidades estatales</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-03"></button>' + 
                     '                </div>' + 
@@ -836,7 +836,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-04" aria-expanded="true" aria-controls="panel-04">Igualdad y no discriminación</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-04" aria-expanded="true" aria-controls="panel-04" title="Principio transversal cuyos indicadores se orientan a asegurar la protección igualitaria y no discriminatoria de los derechos; detallan los mecanismos y políticas específicos disponibles para los grupos de población en situación de vulnerabilidad.">Igualdad y no discriminación</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-04"></button>' + 
                     '                </div>' + 
@@ -851,7 +851,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-05" aria-expanded="true" aria-controls="panel-05">Acceso a información pública y participación</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-05" aria-expanded="true" aria-controls="panel-05" title="Principio transversal cuyos indicadores revisan, por un lado, el nivel de información y transparencia sobre los derechos, para una adecuada rendición de cuentas; y por el otro, examinan la disponibilidad de mecanismos para la participación en el diseño, implementación y seguimiento de las políticas públicas correspondientes.">Acceso a información pública y participación</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-05"></button>' + 
                     '                </div>' + 
@@ -866,7 +866,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-06" aria-expanded="true" aria-controls="panel-06">Acceso a la justicia</a>' + 
+                    '                        <a data-parent="#accordion" data-toggle="collapse" href="#panel-06" aria-expanded="true" aria-controls="panel-06" title="Principio transversal cuyos indicadores están dirigidos a garantizar los recursos para la exigibilidad de los derechos y el apropiado acceso a la justicia, incluyendo el examen sobre la posibilidad de acceso a mecanismos de reclamo y protección.">Acceso a la justicia</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion" data-toggle="collapse" href="#panel-06"></button>' + 
                     '                </div>' + 
@@ -896,7 +896,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-011" aria-expanded="true" aria-controls="panel-011">Recepción del derecho</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-011" aria-expanded="true" aria-controls="panel-011" title="Categoría conceptual cuyos indicadores permiten identificar información sobre la forma en que cada derecho se encuentra incorporado en el sistema legal y en las políticas públicas, así como los resultados generales sobre su garantía.">Recepción del derecho</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button" data-parent="#accordion2" data-toggle="collapse" href="#panel-011"></button>' + 
                     '                </div>' + 
@@ -910,7 +910,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-021" aria-expanded="true" aria-controls="panel-021">Contexto financiero y presupuestal</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-021" aria-expanded="true" aria-controls="panel-021" title="Categoría conceptual cuyos indicadores se orientan a valorar la disponibilidad efectiva de recursos financieros del Estado para el gasto público social, así como sus compromisos presupuestarios para los derechos.">Contexto financiero y presupuestal</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-021"></button>' + 
                     '                </div>' + 
@@ -924,7 +924,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-031" aria-expanded="true" aria-controls="panel-031">Capacidades estatales</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-031" aria-expanded="true" aria-controls="panel-031" title="Categoría conceptual cuyos indicadores incorporan los aspectos instrumentales y de disponibilidad de recursos al interior del aparato estatal para la atención de los derechos.">Capacidades estatales</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-031"></button>' + 
                     '                </div>' + 
@@ -938,7 +938,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-041" aria-expanded="true" aria-controls="panel-041">Igualdad y no discriminación</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-041" aria-expanded="true" aria-controls="panel-041" title="Principio transversal cuyos indicadores se orientan a asegurar la protección igualitaria y no discriminatoria de los derechos; detallan los mecanismos y políticas específicos disponibles para los grupos de población en situación de vulnerabilidad.">Igualdad y no discriminación</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-041"></button>' + 
                     '                </div>' + 
@@ -952,7 +952,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-051" aria-expanded="true" aria-controls="panel-051">Acceso a información pública y participación</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-051" aria-expanded="true" aria-controls="panel-051" title="Principio transversal cuyos indicadores revisan, por un lado, el nivel de información y transparencia sobre los derechos, para una adecuada rendición de cuentas; y por el otro, examinan la disponibilidad de mecanismos para la participación en el diseño, implementación y seguimiento de las políticas públicas correspondientes.">Acceso a información pública y participación</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-051"></button>' + 
                     '                </div>' + 
@@ -966,7 +966,7 @@ $(document).ready(function () {
                     '            <div class="panel panel-default">' + 
                     '                <div class="panel-heading">' + 
                     '                    <h4 class="panel-title">' + 
-                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-061" aria-expanded="true" aria-controls="panel-061">Acceso a la justicia</a>' + 
+                    '                        <a data-parent="#accordion2" data-toggle="collapse" href="#panel-061" aria-expanded="true" aria-controls="panel-061" title="Principio transversal cuyos indicadores están dirigidos a garantizar los recursos para la exigibilidad de los derechos y el apropiado acceso a la justicia, incluyendo el examen sobre la posibilidad de acceso a mecanismos de reclamo y protección.">Acceso a la justicia</a>' + 
                     '                    </h4>' + 
                     '                    <button type="button" class="collpase-button collapsed" data-parent="#accordion2" data-toggle="collapse" href="#panel-061"></button>' + 
                     '                </div>' + 

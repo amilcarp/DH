@@ -16,30 +16,26 @@ for ($i=1; $i < count($indicadores); $i++) {
    $opo[] = $otra;
 }
 
+  $directorio = '../xlscsv';
+    $ficheros1  = scandir($directorio);
+    
+
 if($tipoFormato == 'xls'){
 
-  $codigos = '';
+
+    $codigos = '';
     for ($i=0; $i < count($opo); $i++) {
-      //var_dump($opo[$i]);
-      //var_dump(codigoIndicador($opo[$i]));
-      $codigos .= '../xlscsv/'.$opo[$i].'_FichaEvidencias.xlsx,';
+        for($j=0;$j<count($ficheros1);$j++){
+            if (strpos($ficheros1[$j], $opo[$i]) !== false) {
+                if (strpos($ficheros1[$j], '.xlsx') !== false) {
+                    $codigos .= '../xlscsv/'.$ficheros1[$j].',';
+                }
+                
+            }
+        }
     }
 
-
-
-//  if($calculoDescarga == "3"){
-//    for ($i=0; $i < count($opo); $i++) {
-//      for ($j=0; $j < count(datoscalculo($opo[$i])); $j++) {
-//        $f = $j + 1;
-//        $codigos .= '../xlscsv/DatosCalculo_T'.$f.'_'.codigoIndicador($opo[$i]).'.xlsx,';
-//      }
-//    }
-//  }
-
   $resultado =  trim($codigos, ',');
-
-// var_dump($resultado);
-// exit();
 
   $fecha = date('Y-m-d-His');
   $nameFile = 'SNEDH_DescargaMasiva-'.$fecha.'.zip';
@@ -51,22 +47,18 @@ if($tipoFormato == 'xls'){
 
 if($tipoFormato == 'csv'){
 
-   $codigos = '';
-    for ($i=0; $i < count($opo); $i++) {
-      //var_dump($opo[$i]);
-      //var_dump(codigoIndicador($opo[$i]));
-      $codigos .= '../xlscsv/'.$opo[$i].'_FichaEvidencias.csv,';
-    }
-    
-    
-//  if($calculoDescarga == "3"){
-//    for ($i=0; $i < count($opo); $i++) {
-//      for ($j=0; $j < count(datoscalculo($opo[$i])); $j++) {
-//        $f = $j + 1;
-//        $codigos .= '../xlscsv/DatosCalculo_T'.$f.'_'.codigoIndicador($opo[$i]).'.csv,';
-//      }
-//    }
-//  }
+  
+    $codigos = '';
+        for ($i=0; $i < count($opo); $i++) {
+            for($j=0;$j<count($ficheros1);$j++){
+                if (strpos($ficheros1[$j], $opo[$i]) !== false) {
+                    if (strpos($ficheros1[$j], '.csv') !== false) {
+                        $codigos .= '../xlscsv/'.$ficheros1[$j].',';
+                    }
+
+                }
+            }
+        }
 
   $resultado =  trim($codigos, ',');
 
@@ -86,6 +78,36 @@ function leer_contenido_completo($url){
       $texto .= $trozo;
    }
    return $texto;
+}
+
+function datos($indicador){
+  $ch = curl_init();
+
+    // Setup cURL
+    //$ch = curl_init('https://datosabiertos.unam.mx/api/alice/data/PUDH:INDI:CjR01');
+    $ch = curl_init('https://datosabiertos.unam.mx/api/alice/data/PUDH:INDI:'.$indicador);
+    curl_setopt_array($ch, array(
+        CURLOPT_RETURNTRANSFER => TRUE,
+        CURLOPT_HTTPHEADER => array(
+            'Content-Type: application/json'
+        ),
+        CURLOPT_USERAGENT => 'SNEDH'
+    ));
+
+    // Send the request
+    $response = curl_exec($ch);
+
+    // Check for errors
+    if($response === FALSE){
+        die(curl_error($ch));
+    }
+
+    // Decode the response
+    $responseData = json_decode($response, TRUE);
+
+    curl_close($ch);
+    //var_dump($responseData);
+    return $responseData;
 }
 
 ?>

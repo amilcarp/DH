@@ -167,12 +167,14 @@ $(document).ready(function() {
             $(".btnTabla").hide();
             $(".divGrafica").hide();
             $(".divTabla").show();
+              $("#save").hide();
             $(".btnGrafica").on("click",function(){ 
                 var variable = $('#breakdown').val();
                 $(".verGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic)+'<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
                 $(".tipo0").addClass('active');
                 $(".btnGrafica").hide();
                 $(".btnTabla").show();
+                $("#save").show();
                 $(".divGrafica").show();
                 $(".divTabla").hide();
                 //$(".verGrafica").html(graficaCuanti(JSONvar,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos 
@@ -625,7 +627,7 @@ $(document).ready(function() {
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
         
-                                cuanti += '<div class="row"><div class="col-md-12">';
+                                cuanti += '<button class="btn btn-default btn-sm" id="save">Descargar Gráfica</button><div class="row"><div class="col-md-12">';
                                 cuanti += (tieneBreakdown === false) ? '' : '<p><b>Nota: </b> ' + data.indicator_reference + '</p>';
 
                                 cuanti += '</div></div>' +

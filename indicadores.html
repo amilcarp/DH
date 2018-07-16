@@ -542,6 +542,9 @@
         <script src="js/classybrew/build/classybrew.min.js"></script>
         <script src="js/data.js"></script>
         <script src='js/funcionesApi.js'></script>
+        <script type="text/javascript" src="http://gabelerner.github.io/canvg/rgbcolor.js"></script>
+    <script type="text/javascript" src="http://gabelerner.github.io/canvg/StackBlur.js"></script>
+    <script type="text/javascript" src="http://gabelerner.github.io/canvg/canvg.js"></script>
         
 <!--        <script src="https://d3js.org/d3.v4.min.js"></script>-->
 <!--
@@ -905,6 +908,46 @@
       return div;
     };
     legend.addTo(map);
+    }
+    
+    
+    function saveSvg(svgEl, name) {
+        svgEl.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+        var svgData = svgEl.outerHTML;
+        var preface = '<?xml version="1.0" standalone="no"?>\r\n';
+        var svgBlob = new Blob([preface, svgData], {type:"image/svg+xml;charset=utf-8"});
+        var svgUrl = URL.createObjectURL(svgBlob);
+        var downloadLink = document.createElement("a");
+        downloadLink.href = svgUrl;
+        downloadLink.download = name;
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+    }
+    
+    
+    function SVG2PNG(svg, callback) {
+      var canvas = document.createElement('canvas'); // Create a Canvas element.
+      var ctx = canvas.getContext('2d'); // For Canvas returns 2D graphic.
+      var data = svg.outerHTML; // Get SVG element as HTML code.
+      canvg(canvas, data); // Render SVG on Canvas.
+      callback(canvas); // Execute callback function.
+    }
+    
+    
+    function generateLink(fileName, data) {
+      var link = document.createElement('a');
+      link.download = fileName;
+      link.href = data;
+      return link;
+    }
+    
+    document.getElementById('save').onclick = function() { // Bind click event on download button.
+      var element = document.getElementById('graph'); // Get SVG element.
+      SVG2PNG(element, function(canvas) { // Arguments: SVG element, callback function.
+        var base64 = canvas.toDataURL("image/png"); // toDataURL return DataURI as Base64 format.
+        generateLink('Gráfica.png', base64).click(); // Trigger the Link is made by Link Generator and download.
+      });
     }
  
 

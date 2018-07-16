@@ -325,8 +325,6 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
             .call(xAxis);
         
     }
-    
-    
      
 }
 

@@ -106,79 +106,6 @@ function datos($indicador){
 }
 
 
-function get_tabulado($indicador){
-
-    $class = clasificaciones($indicador);
-
-    $clasif = $class['Serie'][0]['AgrupaClas']['TotalNivAgrupa_cla'];
-    //var_dump($clasif);
-
-    $valores = datos($indicador);
-
-    switch($valores['Series'][0]['TipoCua_ats']){
-      case 'CoS':
-        $t = creaXLSCoS(datos($indicador));
-      break;
-      case 'CoCl':
-        if($clasif > 1){
-          $t = creaXLSCoClAnidada(datos($indicador));
-        }else{
-          $t = creaXlSCoCl(datos($indicador));
-        }
-      break;
-      case 'ACl':
-        if($clasif > 1){
-          $t = creaXLSAClanidada(datos($indicador));
-        }else{
-          $t = creaXLSACl(datos($indicador));
-        }
-      break;
-      case 'AS':
-        $t = creaXLSAS(datos($indicador));
-      break;
-      case 'ClA':
-        $t = creaXLSClA(datos($indicador));
-      break;
-    }
-    return $t;
-}
-
-function get_tabuladoCSV($indicador){
-
-    $class = clasificaciones($indicador);
-
-    $clasif = $class['Serie'][0]['AgrupaClas']['TotalNivAgrupa_cla'];
-    //var_dump($clasif);
-
-    $valores = datos($indicador);
-
-    switch($valores['Series'][0]['TipoCua_ats']){
-      case 'CoS':
-        $t = creaCSVCoS(datos($indicador));
-      break;
-      case 'CoCl':
-        if($clasif > 1){
-          $t = creaCSVCoClAnidada(datos($indicador));
-        }else{
-          $t = creaCSVCoCl(datos($indicador));
-        }
-      break;
-      case 'ACl':
-        if($clasif > 1){
-          $t = creaCSVAClanidada(datos($indicador));
-        }else{
-          $t = creaCSVACl(datos($indicador));
-        }
-      break;
-      case 'AS':
-        $t = creaCSVAS(datos($indicador));
-      break;
-      case 'ClA':
-        $t = creaCSVClA(datos($indicador));
-      break;
-    }
-    return $t;
-}
 
 
 //get_tabuladoCSV(164);
@@ -367,26 +294,36 @@ $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B7', $data['indicator_defini
   $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B8', '');
     
     
-//    for($r=0;$r<count($data['evidence']);$r++){
-//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
-//        $obsEv[] = $data['evidence'][$r]['observation_unit_name'];
-//        $urlEv[] = $data['evidence'][$r]['evidence_url'];
-//        $valEv[] = $data['evidence'][$r]['institution_name_evidencie'];
-//        $vigEv[] = $data['evidence'][$r]['validity_year_start']-$data['evidence'][$r]['validity_end_start'];
-//        $updateEv[] = $data['evidence'][$r]['update_date'];
-//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
-//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
-//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
-//        $nomEv[] = $data['evidence'][$r]['evidence_name'];
-//    }
+    for($r=0;$r<count($data['evidence']);$r++){
+        $nomEv[] = $data['evidence'][$r]['evidence_name'];
+        $obsEv[] = $data['evidence'][$r]['observation_unit_name'];
+        $urlEv[] = $data['evidence'][$r]['evidence_url'];
+        $valEv[] = $data['evidence'][$r]['institution_name_evidencie'];
+        $vigEv[] = $data['evidence'][$r]['validity_year_start']-$data['evidence'][$r]['validity_end_start'];
+        $updateEv[] = $data['evidence'][$r]['update_date'];
+    }
+    
+    
+    $wizard = new PHPExcel_Helper_HTML;
+    
+    $evid1 = $wizard->toRichTextObject('Nombre de evidencia: '.$nomEv[0].'<br />Unidad de observación: '.$obsEv[0].'<br /> URL: '.$urlEv[0].'<br /> Institución: '.$valEv[0].'<br /> Vigencia: '.$vigEv[0].'<br /> Fecha de acualización: '.$updateEv[0]);
+    $evid2 = $wizard->toRichTextObject('Nombre de evidencia: '.$nomEv[1].'<br />Unidad de observación: '.$obsEv[1].'<br /> URL: '.$urlEv[1].'<br /> Institución: '.$valEv[1].'<br /> Vigencia: '.$vigEv[1].'<br /> Fecha de acualización: '.$updateEv[1]);
+    $evid3 = $wizard->toRichTextObject('Nombre de evidencia: '.$nomEv[2].'<br />Unidad de observación: '.$obsEv[2].'<br /> URL: '.$urlEv[2].'<br /> Institución: '.$valEv[2].'<br /> Vigencia: '.$vigEv[2].'<br /> Fecha de acualización: '.$updateEv[2]);
+    $evid4 = $wizard->toRichTextObject('Nombre de evidencia: '.$nomEv[3].'<br />Unidad de observación: '.$obsEv[3].'<br /> URL: '.$urlEv[3].'<br /> Institución: '.$valEv[3].'<br /> Vigencia: '.$vigEv[3].'<br /> Fecha de acualización: '.$updateEv[3]);
     
 //    var_dump($nomEv);
     
     
-  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', $data['evidence']);
-//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', $data['Descrip_fdg']);
-//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B11', $data['CobTem_ft']);
-//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B12', $data['Oportunidad_ft']);
+
+    
+    
+    
+  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B9', utf8_decode($evid1));
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B10', utf8_decode($evid2));
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B11', utf8_decode($evid3));
+//  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B12', utf8_decode($evid4));
+    
+    
 //  $objPHPExcel->setActiveSheetIndex(0)->setCellValue('B13', $data['Descrip_per']);
 
 //  $fuen = '';
