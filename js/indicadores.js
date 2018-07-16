@@ -120,7 +120,7 @@ $(document).ready(function() {
 					  	'<div class="col-md-4" id="descarDatos1">...</div>'+
                         '<div class="col-md-4" id="descarDatos2">...</div>'+
                         '<div class="col-md-4" id="btnDescarga">'+
-                            '<a download="Indicador.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, \'tabuls1\', \'Indicador\');">XLS</a> '+
+                            '<a download="'+datosDer.indicator_code+'.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, \'tabuls1\', \'Indicador\');">XLS</a> '+
                         '</div>'+
 				      '</div>'+
 			      '</div>');
@@ -141,8 +141,8 @@ $(document).ready(function() {
                         '<div class="col-md-3" id="descarDatos2">...</div>'+
                         '<div class="col-md-3" id="descarDatos3">...</div>'+
                         '<div class="col-md-3" id="btnDescarga">'+
-                            '<a download="Indicador.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, \'tabuls1\', \'Indicador\');">XLS</a> '+
-                            '<a download="Indicador.csv" class="btn btn-primary" onclick="return ExcellentExport.csv(this, \'tabuls1\');">CSV</a>'+
+                            '<a download="'+datosDer.indicator_code+'.xls" class="btn btn-primary" onclick="return ExcellentExport.excel(this, \'tabuls1\', \'Indicador\');">XLS</a> '+
+                            '<a download="'+datosDer.indicator_code+'.csv" class="btn btn-primary" onclick="return ExcellentExport.csv(this, \'tabuls1\');">CSV</a>'+
                         '</div>'+
 				      '</div>'+
 			      '</div>');
@@ -627,7 +627,7 @@ $(document).ready(function() {
                                 //cuanti += '<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>';
                                 
         
-                                cuanti += '<button class="btn btn-default btn-sm" id="save">Descargar Gráfica</button><div class="row"><div class="col-md-12">';
+                                cuanti += '<button class="btn btn-default btn-sm" onclick="svgToPng()" id="save">Descargar Gráfica</button><br/><br/><div class="row"><div class="col-md-12">';
                                 cuanti += (tieneBreakdown === false) ? '' : '<p><b>Nota: </b> ' + data.indicator_reference + '</p>';
 
                                 cuanti += '</div></div>' +
