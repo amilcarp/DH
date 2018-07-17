@@ -1116,7 +1116,7 @@
     map.attributionControl.addAttribution('');
     var legend = L.control();
     legend.onAdd = function (map) {
-      var div = L.DomUtil.create('div', 'info2 legend hide'),
+      var div = L.DomUtil.create('g', 'info2 legend'),
         grades = brew.getBreaks(),//[0, 20, 50, 100],
         labels = [],
         from, to;
@@ -1125,13 +1125,14 @@
         to = grades[i + 1];
         var res = String(getColoR(from)).split(",");
         labels.push(
-          '<div style="float:left; text-align: center;"><i class="leyenda" onmouseover="highlightFromLegend(\'c' + res[1] + '\')" onmouseout="clearHighlight();" style="width:100%; background:' + getColoR(from) + '"></i><br>' +
-          from.toFixed(2) + (to.toFixed(2) ? '&ndash;' + to.toFixed(2) : '+') + '</div>');
+          '<g style="float:left; text-align: center;"><i class="leyenda" onmouseover="highlightFromLegend(\'c' + res[1] + '\')" onmouseout="clearHighlight();" style="width:100%; background:' + getColoR(from) + '"></i><br>' +
+          from.toFixed(0) + (to.toFixed(0) ? '&ndash;' + to.toFixed(0) : '+') + '</g>');
       }
       div.innerHTML = labels.join('');
       return div;
     };
     legend.addTo(map);
+        legent.addTo('canvas');
     }
     
 

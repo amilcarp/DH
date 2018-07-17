@@ -297,7 +297,7 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
         var vals;
          //Legend
         var legend = svg.selectAll(".legend")
-          .data(nested.map(function(d) { vals = d[0]; console.log(tor.age[1]); return d.age[0].key; }).reverse())
+          .data(nested[0].age.map(function(d) {console.log(d.key); return d.key; }).reverse())
         .enter().append("g")
           .attr("class", "legend")
           .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
@@ -314,7 +314,21 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
           .attr("y", 9)
           .attr("dy", ".35em")
           .style("text-anchor", "end")
-          .text(function(d) {console.log(d); return d; });
+          .text(function(d,i) {console.log(d); return d; });
+        
+//        legend.append("text")
+//          .attr("x", width - 44)
+//          .attr("y", 9)
+//          .attr("dy", ".35em")
+//          .style("text-anchor", "end")
+//          .text(d.age[0].key);
+//        
+//        legend.append("text")
+//          .attr("x", width - 44)
+//          .attr("y", 9)
+//          .attr("dy", ".35em")
+//          .style("text-anchor", "end")
+//          .text(d.age[1].key);
 
         legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
         
