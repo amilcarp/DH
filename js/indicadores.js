@@ -202,6 +202,7 @@ $(document).ready(function() {
                 $(".Col").css("display","none");
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","none");
+                $('#save').text('Descargar Gráfica');
             });
               
             $(".btnColAg").on("click",function(){
@@ -216,6 +217,7 @@ $(document).ready(function() {
                 $(".Col").css("display","none");
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","none");
+                $('#save').text('Descargar Gráfica');
             });
                 
             $(".btnColLin").on("click",function(){
@@ -244,6 +246,7 @@ $(document).ready(function() {
                 $(".Col").css("display","none");
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","none");
+                $('#save').text('Descargar Gráfica');
             });
                 
             $(".btnColCPAg").on("click",function(){
@@ -258,6 +261,7 @@ $(document).ready(function() {
                 $(".Col").css("display","none");
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","none");
+                $('#save').text('Descargar Gráfica');
             });
                 
             $(".btnColAgAp").on("click",function(){
@@ -272,6 +276,7 @@ $(document).ready(function() {
                 $(".Col").css("display","none");
                 $(".Ln").css("display","none");
                 $(".Mapa").css("display","none");
+                $('#save').text('Descargar Gráfica');
             });
                 
             $(".btnCol").on("click",function(){
@@ -288,6 +293,7 @@ $(document).ready(function() {
                 $(".Mapa").css("display","none");
                 $("#graph").css("display","block");
                 $("#map").css("display","none");
+                $('#save').text('Descargar Gráfica');
                 $("#map").remove();
             });
                 
@@ -303,6 +309,7 @@ $(document).ready(function() {
                 $(".Col").css("display","none");
                 $(".Ln").css("display","block");
                 $(".Mapa").css("display","none");
+                $('#save').text('Descargar Gráfica');
             });
                 
             $(".btnMapa").on("click",function(){
@@ -319,6 +326,7 @@ $(document).ready(function() {
                 $(".Mapa").css("display","block");
                 $(".divGrafica").append('<div id="map"></div>');
                 $("#graph").css("display","none");
+                $('#save').text('Descargar Mapa');
                 init_map();
                 
             });
@@ -332,6 +340,7 @@ $(document).ready(function() {
                 $(".btnTabla").hide();
                 $(".divGrafica").hide();
                 $(".divTabla").show();
+                $('#save').hide();
             });
               
               
@@ -339,8 +348,6 @@ $(document).ready(function() {
         
         function armaTabla(data, str){
             var cua = "";
-           // cua += datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
-            //console.log(datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name));
             console.log(data.breakdown_group[str].breakdown_attribute);
             cua += '<div class="tabulado'+str+'" style="padding:25px 0 0 0;">';
 //            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
@@ -356,6 +363,7 @@ $(document).ready(function() {
                 console.log(str);
                 console.log(datosDer);
                 $(".tipoGrafica").html('');
+                $('#save').hide();
                 if($('.btnGrafica').show()){
                     muestraGrafica = true;
                     $(".divGrafica").hide();
@@ -370,14 +378,11 @@ $(document).ready(function() {
                     $(".divTabla").hide();
                     $(".btnGrafica").hide();
                     $(".btnTabla").show();
-//                    $(".verGrafica").html(graficaCuanti(datosDer,'Ln',str)); //fuente, tipoGrafica, ejeX, ejeY, color, datos
+
                     $(".verGrafica").append('<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
                     console.log('Pone la gráfica');
                 }
-                //$(".verTabla").html(armaTabla(datosDer,str));
-//                $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="500"></svg></div>');
-//                $(".verGrafica").append(graficaCuanti(datosDer,str));
-                //$(".verGrafica").html(graficaCuanti(datosDer,str));
+
                 console.log("Aquí hace algo------------------");
             });
             

@@ -13,6 +13,11 @@ function lineas(URLJSON, ejeX, ejeY, color){
     var svg = d3.select("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom);
+    svg.append("rect")
+        .attr("transform", "translate(0,-10)")
+        .attr("fill","#ffffff")
+        .attr("width","960")
+        .attr("height","500");
     
     var g = svg.append("g")
         .attr("class","Ln")
@@ -126,7 +131,13 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
           .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("class","ColAg")
-          .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+          .attr("transform", "translate(16,20)");
+    
+    svg.append("rect")
+        .attr("transform", "translate(-20,-10)")
+        .attr("fill","#ffffff")
+        .attr("width","960")
+        .attr("height","500");
 
     
     // Se definen las variables de los ejes X y Y
@@ -283,29 +294,29 @@ function columnaAgrupada(URLJSON, ejeX,var1, var2, color){
         console.log(nested);
         var tor = nested[0];
         console.log(tor);
-        
+        var vals;
          //Legend
         var legend = svg.selectAll(".legend")
-          .data(nested.map(function(d) { console.log(d.age[0].key); return d.age[0].key; }).reverse())
+          .data(nested.map(function(d) { vals = d[0]; console.log(tor.age[1]); return d.age[0].key; }).reverse())
         .enter().append("g")
           .attr("class", "legend")
           .attr("transform", function(d,i) { return "translate(0," + i * 20 + ")"; })
           .style("opacity","0");
 
         legend.append("rect")
-          .attr("x", width - 18)
+          .attr("x", width - 38)
           .attr("width", 18)
           .attr("height", 18)
           .style("fill", function(d) { return color(d); });
 
         legend.append("text")
-          .attr("x", width - 24)
+          .attr("x", width - 44)
           .attr("y", 9)
           .attr("dy", ".35em")
           .style("text-anchor", "end")
-          .text(function(d) {return d; });
+          .text(function(d) {console.log(d); return d; });
 
-        legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","0");
+        legend.transition().duration(500).delay(function(d,i){ return 1300 + 100 * i; }).style("opacity","1");
         
     }
     
@@ -344,6 +355,13 @@ function barras(URLJSON, ejeX, ejeY, color){
     var svg = d3.select("svg")
           .attr("width", width + margin.left + margin.right)
           .attr("height", height + margin.top + margin.bottom);
+    
+    svg.append("rect")
+        .attr("transform", "translate(0,5)")
+        .attr("fill","#ffffff")
+        .attr("width","960")
+        .attr("height","500");
+    
         var g = svg.append("g")
         .attr("class","Col")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -475,6 +493,11 @@ function dotplot(URLJSON, ejeX,var1, var2, color){
         .append("g")
         .attr("class","Bre")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        svg.append("rect")
+        .attr("transform", "translate(-60,-40)")
+        .attr("fill","#ffffff")
+        .attr("width","960")
+        .attr("height","500");
     
     function sortBy(data, attribute, order) {
     	data.sort(function(a, b) {
