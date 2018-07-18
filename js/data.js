@@ -1,12 +1,12 @@
-var atributos_global =
-{
-"indicator_code": "Indicador",
-"Serie": [
-  {
-    "CobTemporal_ser": "2010-2016",
-  }
-],
-};
+//var atributos_global =
+//{
+//"indicator_code": "Indicador",
+//"Serie": [
+//  {
+//    "CobTemporal_ser": "2010-2016",
+//  }
+//],
+//};
 
 
 var estados_global = [
