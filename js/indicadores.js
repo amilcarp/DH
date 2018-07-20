@@ -1160,10 +1160,10 @@ atributos_global = {
         for(var t = 0;t<tipo.length;t++){
             switch(tipo[t].graphic_key){
                 case "Bre":
-                    salida = dotplot(fuente,ejeX,var1,var2, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.7)"]);
+                    salida = dotplot(fuente,ejeX,var1,var2, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.55)"]);
                 break;
                 case "ColAg":
-                    salida = columnaAgrupada(fuente,ejeX,var1,var2, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.7)"]);
+                    salida = columnaAgrupada(fuente,ejeX,var1,var2, ["rgba(71, 73, 160,1)","rgba(71, 73, 160,0.55)"]);
                 break;
                 case "Ln":
                     salida = lineas(fuente,ejeX,var1, color);
