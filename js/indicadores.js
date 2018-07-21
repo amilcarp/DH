@@ -1663,7 +1663,7 @@ $(document).ready(function() {
 
         var cabezera = [];
         cabezera.push('Entidad');
-        for(var i = 1; i< datoInd2[0].length; i++)
+        for(var i = 0; i< datoInd2[0].length; i++)
         {
             cabezera.push(datoInd2[0][i]['periodo']+'-01-01')
         }
