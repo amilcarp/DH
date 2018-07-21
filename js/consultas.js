@@ -784,7 +784,7 @@ $(document).ready(function () {
         var indis = ' <div class="row internoDerecho" >' + 
                     '    <div class="row alinea-derecha">' + 
                     '        <button type="button" class="btn btn-primary btnListado">Vista listado</button>' + 
-                    '        <button type="button" class="btn btn-primary btnMatriz">Vista matríz</button>' + 
+                    '        <button type="button" class="btn btn-primary btnMatriz">Vista matriz</button>' + 
                     '    </div>' + 
                     '    <div class="example">' + 
                     '        <div class="panel-group ficha-collapse" id="accordion">' + 
@@ -888,7 +888,7 @@ $(document).ready(function () {
                   '<div class="row internoDerechoMatriz" >' + 
                     '  <div class="row alinea-derecha">' + 
                     '    <button type="button" class="btn btn-primary btnListado">Vista listado</button>' + 
-                    '    <button type="button" class="btn btn-primary btnMatriz">Vista matríz</button>' + 
+                    '    <button type="button" class="btn btn-primary btnMatriz">Vista matriz</button>' + 
                     '  </div>' + 
 
                     '  <div class="example">' + 

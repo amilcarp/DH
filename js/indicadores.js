@@ -22,6 +22,7 @@ var rec2 = '';
 var clas2 = '';
 var dat111;
 var str = "0";
+var graficaDat = [];
 var tados;
 var tabulado1, tabulado2;
 
@@ -189,7 +190,10 @@ $(document).ready(function() {
                 
                 var peri = (data.breakdown_group[str].breakdown_group_name === 'Entidad federativa') ? "Entidad" : "Periodo";
                 
-            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name,data.breakdown_group[str].breakdown_group_name), peri, datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer,data.breakdown_group[str].breakdown_group_name));
+                graficaDat = datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name,data.breakdown_group[str].breakdown_group_name);
+                
+                
+            $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, graficaDat, peri, datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer,data.breakdown_group[str].breakdown_group_name));
                 
                 //$(".verGrafica").html(tipoGrafica('Ln', "AaR02.json", 'Periodo', 'poblacion_de_18_anios_o_mas', '#f00', datosDer));
                 //tipoGrafica(tipo, fuente, ejeX, ejeY, color, datos)
@@ -397,42 +401,42 @@ $(document).ready(function() {
               
               
               
-    var estados_global = [
-    ["Entidad","1997-01-01","1998-01-01","1999-01-01","2000-01-01"],
-    ["Estados Unidos Mexicanos",16866,14216,14619,13849],
-    ["Aguascalientes",355,66,27,14],
-    ["Baja California",492,292,657,460],
-    ["Baja California Sur",60,18,31,31],
-    ["Campeche",130,117,78,55],
-    ["Coahuila de Zaragoza",175,165,139,113],
-    ["Colima",99,89,53,45],
-    ["Chiapas",1357,1399,1452,127],
-    ["Chihuahua",677,584,425,437],
-    ["Ciudad de México",977,947,880,709],
-    ["Durango",61,134,291,268],
-    ["Guanajuato",567,230,259,219],
-    ["Guerrero",1273,1306,1242,1399],
-    ["Hidalgo",360,250,199,115],
-    ["Jalisco",600,604,545,486],
-    ["México",3037,2221,2966,2726],
-    ["Michoacán de Ocampo",757,1022,575,487],
-    ["Morelos",178,216,344,352],
-    ["Nayarit",132,165,146,121],
-    ["Nuevo León",163,160,131,123],
-    ["Oaxaca",788,14,823,1292],
-    ["Puebla",729,675,575,573],
-    ["Querétaro",234,39,55,62],
-    ["Quintana Roo",335,117,123,245],
-    ["San Luis Potosí",301,297,414,254],
-    ["Sinaloa",669,643,564,501],
-    ["Sonora",526,555,292,194],
-    ["Tabasco",353,368,229,210],
-    ["Tamaulipas",473,428,253,221],
-    ["Tlaxcala",63,49,163,280],
-    ["Veracruz de Ignacio de la Llave",722,707,590,465],
-    ["Yucatán",110, 23,8,26],
-    ["Zacatecas",113,316,90,96]
-  ];        
+            var estados_global = [
+                ["Entidad","1997-01-01","1998-01-01","1999-01-01","2000-01-01"],
+                ["Estados Unidos Mexicanos",16866,14216,14619,13849],
+                ["Aguascalientes",355,66,27,14],
+                ["Baja California",492,292,657,460],
+                ["Baja California Sur",60,18,31,31],
+                ["Campeche",130,117,78,55],
+                ["Coahuila de Zaragoza",175,165,139,113],
+                ["Colima",99,89,53,45],
+                ["Chiapas",1357,1399,1452,127],
+                ["Chihuahua",677,584,425,437],
+                ["Ciudad de México",977,947,880,709],
+                ["Durango",61,134,291,268],
+                ["Guanajuato",567,230,259,219],
+                ["Guerrero",1273,1306,1242,1399],
+                ["Hidalgo",360,250,199,115],
+                ["Jalisco",600,604,545,486],
+                ["México",3037,2221,2966,2726],
+                ["Michoacán de Ocampo",757,1022,575,487],
+                ["Morelos",178,216,344,352],
+                ["Nayarit",132,165,146,121],
+                ["Nuevo León",163,160,131,123],
+                ["Oaxaca",788,14,823,1292],
+                ["Puebla",729,675,575,573],
+                ["Querétaro",234,39,55,62],
+                ["Quintana Roo",335,117,123,245],
+                ["San Luis Potosí",301,297,414,254],
+                ["Sinaloa",669,643,564,501],
+                ["Sonora",526,555,292,194],
+                ["Tabasco",353,368,229,210],
+                ["Tamaulipas",473,428,253,221],
+                ["Tlaxcala",63,49,163,280],
+                ["Veracruz de Ignacio de la Llave",722,707,590,465],
+                ["Yucatán",110, 23,8,26],
+                ["Zacatecas",113,316,90,96]
+              ];        
 
       var datEnt = [];
               
@@ -455,8 +459,12 @@ atributos_global = {
                     ]
                 };
 
+              
+                console.log(graficaDat);
+              
     var titulo_des_graf="Indicador";
-    var estados = estados_global;
+    //var estados = graficaDat;
+      var estados = estados_global;
     var atributos = atributos_global;
     var anioo;
   
@@ -903,8 +911,8 @@ atributos_global = {
                                                     for(var k = 0; k< data.evidence[i].objective.length; k++){
                                                         cuali += '<br />';
                                                         cuali += (data.evidence[i].objective[k].objective_sequence === null) ? '' : '<p><b>Objetivo '+ data.evidence[i].objective[k].objective_sequence +':</b> ' + data.evidence[i].objective[k].objective_name + '</p>';
-                                                        cuali += (data.evidence[i].objective[k].strategy_sequence === null) ? '' : '<p><b>Estrategia '+ data.evidence[i].objective[k].strategy_sequence +':</b> ' + data.evidence[i].objective[k].strategy_name + '</p>';
-                                                        cuali += (data.evidence[i].objective[k].action_line_sequence === null) ? '' : '<p><b>Línea de acción '+ data.evidence[i].objective[k].action_line_sequence +':</b> ' + data.evidence[i].objective[k].action_line_name + '</p>';
+                                                        cuali += (data.evidence[i].objective[k].strategy_sequence === null) ? '' : '<p style="padding-left:25px;"><b>Estrategia '+ data.evidence[i].objective[k].strategy_sequence +':</b> ' + data.evidence[i].objective[k].strategy_name + '</p>';
+                                                        cuali += (data.evidence[i].objective[k].action_line_sequence === null) ? '' : '<p style="padding-left:50px;"><b>Línea de acción '+ data.evidence[i].objective[k].action_line_sequence +':</b> ' + data.evidence[i].objective[k].action_line_name + '</p>';
                                                         
                                                     }
                                                 }
@@ -915,7 +923,7 @@ atributos_global = {
                                                 }
                                                 if(typeof data.evidence[i].paper !== 'undefined'){
                                                     for(var m = 0; m < data.evidence[i].paper.length; m++){
-                                                        cuali += (data.evidence[i].paper[m].paper_sequence === null) ? '' : '<p><b>Artículo '+ data.evidence[i].paper[m].paper_sequence +':</b> ' + data.evidence[i].paper[m].paper_name + '</p>';
+                                                        cuali += (data.evidence[i].paper[m].paper_sequence === null) ? '' : '<p style="padding-right:30px;"><b>Artículo '+ data.evidence[i].paper[m].paper_sequence +':</b> ' + saltos(data.evidence[i].paper[m].paper_name) + '</p>';
                                                     }
                                                 }
 
@@ -1523,6 +1531,17 @@ atributos_global = {
         contenido=contenido.replace(/ñ/g,"n");
         return contenido;
     }
+    
+    function saltos(dato){
+        var contenido=dato;
+        contenido=contenido.replace("\r\n","<br/>");
+        contenido=contenido.replace("\r","<br/>");
+        contenido=contenido.replace("\n","<br/>");
+        return contenido;
+    }
+    
+    
+    
 
         function deselect(e) {
             $('.pop').slideFadeToggle(function() {
