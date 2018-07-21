@@ -28,6 +28,7 @@ var tados;
 var tabulado1, tabulado2;
 var atributos;
 var estados_global;
+var varis;
 
 var JSONvar = [];
 
@@ -192,6 +193,8 @@ $(document).ready(function() {
 //                $(".tipoGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic));
                 
                 var peri = (data.breakdown_group[str].breakdown_group_name === 'Entidad federativa') ? "Entidad" : "Periodo";
+                
+                varis = (typeof data.breakdown_group[str].breakdown_group_variable !== 'undefined') ? data.breakdown_group[str].breakdown_group_variable : '';
                 
                 graficaDat = datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, data.breakdown_group[str].breakdown_group_name);
                 
@@ -769,7 +772,7 @@ $(document).ready(function() {
             console.log(data.breakdown_group[str].breakdown_attribute);
             cua += '<div class="tabulado'+str+'" style="padding:25px 0 0 0;">';
 //            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, varis);
             cua += '</div>';
             console.log(cua);
             return cua;
@@ -1002,7 +1005,7 @@ $(document).ready(function() {
         for(var rrr = 0; rrr < tados.length; rrr++){
             cuanti += '<div class="tabulado'+rrr+'">';
             cuanti += '<h3>' + tados[rrr].breakdown_group_name + '</h3><br />';
-            cuanti += datosTabulado(tados[rrr].resource_id, tados[rrr].variable_dataset_id, tados[rrr].breakdown_attribute_result, tados[rrr].breakdown_attribute, tados[rrr].breakdown_group_year, tados[rrr].breakdown_resource_name);
+            cuanti += datosTabulado(tados[rrr].resource_id, tados[rrr].variable_dataset_id, tados[rrr].breakdown_attribute_result, tados[rrr].breakdown_attribute, tados[rrr].breakdown_group_year, tados[rrr].breakdown_resource_name, varis);
             cuanti += '</div>';
         }
     }
@@ -1011,7 +1014,7 @@ $(document).ready(function() {
     function llamaDatos(data, key){
             cuanti += '<div class="tabulado'+key+'">';
             cuanti += '<h3>' + tados[key].breakdown_group_name + '</h3><br />';
-            cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name);
+            cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name, varis);
             cuanti += '</div>';
     }
     
@@ -1019,7 +1022,7 @@ $(document).ready(function() {
         var cua = '';
             cua += '<div class="tabulado'+str+'">';
             cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, varis);
             cua += '</div>';
         console.log(cua);
         return cua;
@@ -1258,7 +1261,7 @@ $(document).ready(function() {
     //clasificacion: Atributo a llamar de la API de datos.gob.mx Ej. grupo-especifico
     //periodos: Periodos que se van a consultar para el indicador, según reporte la API y consumido desde la variable breakdown_group_year
     //recurso: Nombre del recurso para la clasificación y el periodo a consultar. Ej. poblacion_con_menos_de_18_anios
-    function datosTabulado(resource, dataset, resultado, clasificacion, periodos, recurso){
+    function datosTabulado(resource, dataset, resultado, clasificacion, periodos, recurso, varis){
         datoInd = [];
         datoInd2 = [];
         datoInd3 = [];
@@ -1267,6 +1270,12 @@ $(document).ready(function() {
         res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         console.log(clas);
+        
+        var lor;
+        for(var t = 0;t < varis.length;t++){
+            //desglose de varis
+        }
+        
         if(clas === null || res === null){
             var inf = [];
             //for(var yy=0;yy<rec.length;yy++){
@@ -1676,7 +1685,7 @@ $(document).ready(function() {
         {
             //console.log(datoInd2[i]);
             var nuevo_array_interno = [];
-            nuevo_array_interno.push(datoInd2[i][0]['entidad']);
+            nuevo_array_interno.push(datoInd2[i][0][clas2]);
             for(var j = 0; j< datoInd2[i].length; j++)
             {
                 //console.log(datoInd2[i][j]);
