@@ -23,8 +23,11 @@ var clas2 = '';
 var dat111;
 var str = "0";
 var graficaDat = [];
+var mapaDat = [];
 var tados;
 var tabulado1, tabulado2;
+var atributos;
+var estados_global;
 
 var JSONvar = [];
 
@@ -165,7 +168,7 @@ $(document).ready(function() {
             $('#descarDatos1').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
             $('#descarDatos2').html(datosDer.indicator_definition);
             $('#descarDatos3').html(datosDer.responsible_institution);
-              $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
+            $(".verGrafica").html('<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
 
             //Muestra u oculta botones para las gráficas y los tabulados
             $(".btnGrafica").show();
@@ -190,8 +193,17 @@ $(document).ready(function() {
                 
                 var peri = (data.breakdown_group[str].breakdown_group_name === 'Entidad federativa') ? "Entidad" : "Periodo";
                 
-                graficaDat = datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name,data.breakdown_group[str].breakdown_group_name);
+                graficaDat = datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, data.breakdown_group[str].breakdown_group_name);
                 
+                mapaDat = datosMapa(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, data.breakdown_group[str].breakdown_group_name);
+                console.log(mapaDat);
+                
+                
+                //var estados = JSON.parse(graficaDat);
+                
+                estados_global = mapaDat;
+
+              console.log(estados_global);
                 
             $(".verGrafica").html(tipoGrafica(datosDer.breakdown_group[variable].graphic, graficaDat, peri, datosDer.breakdown_group[variable].breakdown_resource_name, '#f00', datosDer,data.breakdown_group[str].breakdown_group_name));
                 
@@ -342,136 +354,48 @@ $(document).ready(function() {
                 
                 
                 
-            });
-            $(".btnTabla").on("click",function(){
-                $(".tipoGrafica").html('');
-                $(".btnGrafica").show();
-                $(".btnTabla").hide();
-                $(".divGrafica").hide();
-                $(".divTabla").show();
-                $('#save').hide();
-            });
+                
+                
+                
+                
+        var datEnt = [];
               
-              
-              
-        
-        function armaTabla(data, str){
-            var cua = "";
-            console.log(data.breakdown_group[str].breakdown_attribute);
-            cua += '<div class="tabulado'+str+'" style="padding:25px 0 0 0;">';
-//            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
-            cua += '</div>';
-            console.log(cua);
-            return cua;
+        for(var g=0;g<datosGlobal.breakdown_group.length;g++){
+            if(datosGlobal.breakdown_group[g].breakdown_group_name === "Entidad federativa"){
+               datEnt.push(datosGlobal.breakdown_group[g].breakdown_group_year);
+               }
         }
               
-            $("#breakdown").on("change", function() {
-                console.log("Si jaló ------------------------");
-                str = $(this).val();
-                console.log(str);
-                console.log(datosDer);
-                $(".tipoGrafica").html('');
-                $('#save').hide();
-                if($('.btnGrafica').show()){
-                    muestraGrafica = true;
-                    $(".divGrafica").hide();
-                    $(".divTabla").show();
-                    $(".btnGrafica").show();
-                    $(".btnTabla").hide();
-                    $(".verTabla").html(armaTabla(datosDer,str));
-                }else{
-                    muestraGrafica = false;
-                    $(".tipoGrafica").html('');
-                    $(".divGrafica").show();
-                    $(".divTabla").hide();
-                    $(".btnGrafica").hide();
-                    $(".btnTabla").show();
-
-                    $(".verGrafica").append('<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
-                    console.log('Pone la gráfica');
-                }
-
-                console.log("Aquí hace algo------------------");
-            });
-            
-            // Mostramos
-              $('#breakdown').val('0').change();
+        console.log(datEnt);
               
+        var lastEl = datEnt[0][datEnt[0].length-1];
               
-              
-              
-            var estados_global = [
-                ["Entidad","1997-01-01","1998-01-01","1999-01-01","2000-01-01"],
-                ["Estados Unidos Mexicanos",16866,14216,14619,13849],
-                ["Aguascalientes",355,66,27,14],
-                ["Baja California",492,292,657,460],
-                ["Baja California Sur",60,18,31,31],
-                ["Campeche",130,117,78,55],
-                ["Coahuila de Zaragoza",175,165,139,113],
-                ["Colima",99,89,53,45],
-                ["Chiapas",1357,1399,1452,127],
-                ["Chihuahua",677,584,425,437],
-                ["Ciudad de México",977,947,880,709],
-                ["Durango",61,134,291,268],
-                ["Guanajuato",567,230,259,219],
-                ["Guerrero",1273,1306,1242,1399],
-                ["Hidalgo",360,250,199,115],
-                ["Jalisco",600,604,545,486],
-                ["México",3037,2221,2966,2726],
-                ["Michoacán de Ocampo",757,1022,575,487],
-                ["Morelos",178,216,344,352],
-                ["Nayarit",132,165,146,121],
-                ["Nuevo León",163,160,131,123],
-                ["Oaxaca",788,14,823,1292],
-                ["Puebla",729,675,575,573],
-                ["Querétaro",234,39,55,62],
-                ["Quintana Roo",335,117,123,245],
-                ["San Luis Potosí",301,297,414,254],
-                ["Sinaloa",669,643,564,501],
-                ["Sonora",526,555,292,194],
-                ["Tabasco",353,368,229,210],
-                ["Tamaulipas",473,428,253,221],
-                ["Tlaxcala",63,49,163,280],
-                ["Veracruz de Ignacio de la Llave",722,707,590,465],
-                ["Yucatán",110, 23,8,26],
-                ["Zacatecas",113,316,90,96]
-              ];        
-
-      var datEnt = [];
-              
-    for(var g=0;g<datosGlobal.breakdown_group.length;g++){
-        if(datosGlobal.breakdown_group[g].breakdown_group_name === "Entidad federativa"){
-           datEnt.push(datosGlobal.breakdown_group[g].breakdown_group_year);
-           }
-    }
-              
-              console.log(datEnt);
-              
-              var lastEl = datEnt[0][datEnt[0].length-1];
-              
-atributos_global = {
-                    "indicator_code": datosGlobal.indicator_code+' - '+datosGlobal.indicator_name,
-                    "Serie": [
-                        {
-                            "CobTemporal_ser": datEnt[0][0]+"-"+lastEl
-                        }
-                    ]
-                };
+        atributos_global = {
+            "indicator_code": datosGlobal.indicator_code+' - '+datosGlobal.indicator_name,
+                "Serie": [
+                    {
+                        "CobTemporal_ser": datEnt[0][0]+"-"+lastEl
+                    }
+                ]
+            };
 
               
-                console.log(graficaDat);
+    console.log(graficaDat);
               
-    var titulo_des_graf="Indicador";
-    //var estados = graficaDat;
-      var estados = estados_global;
-    var atributos = atributos_global;
+    var titulo_des_graf = "Indicador";
+    var estados = estados_global;
+              
+    console.log(estados);
+   
+    atributos = atributos_global;
     var anioo;
   
+    //console.log(estados);
+              
     // docuemento general
     $(document).ready(function () 
     {
-      titulo_des_graf = atributos.indicator_code;
+      titulo_des_graf = atributos_global.indicator_code;
       //$('#loader').delay(2000).fadeOut("slow");
     });
 
@@ -642,7 +566,7 @@ atributos_global = {
       return this._div;
     };
 
-    var res = atributos.Serie[0].CobTemporal_ser;
+    var res = atributos_global.Serie[0].CobTemporal_ser;
     anioo = res.split('-');
 
     info.update = function (props) 
@@ -784,6 +708,7 @@ atributos_global = {
       values.push(busqueda_estado(statesData.features[i].properties.nom_ent));
     }
 
+        console.log(values);
     brew.setSeries(values);
     brew.setNumClasses(4);
     brew.setColorCode("Purples");
@@ -817,10 +742,112 @@ atributos_global = {
     };
     legend.addTo(map);
     }
-    
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            });
+            $(".btnTabla").on("click",function(){
+                $(".tipoGrafica").html('');
+                $(".btnGrafica").show();
+                $(".btnTabla").hide();
+                $(".divGrafica").hide();
+                $(".divTabla").show();
+                $('#save').hide();
+            });
               
               
               
+        
+        function armaTabla(data, str){
+            var cua = "";
+            console.log(data.breakdown_group[str].breakdown_attribute);
+            cua += '<div class="tabulado'+str+'" style="padding:25px 0 0 0;">';
+//            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += '</div>';
+            console.log(cua);
+            return cua;
+        }
+              
+            $("#breakdown").on("change", function() {
+                console.log("Si jaló ------------------------");
+                str = $(this).val();
+                console.log(str);
+                console.log(datosDer);
+                $(".tipoGrafica").html('');
+                $('#save').hide();
+                if($('.btnGrafica').show()){
+                    muestraGrafica = true;
+                    $(".divGrafica").hide();
+                    $(".divTabla").show();
+                    $(".btnGrafica").show();
+                    $(".btnTabla").hide();
+                    $(".verTabla").html(armaTabla(datosDer,str));
+                }else{
+                    muestraGrafica = false;
+                    $(".tipoGrafica").html('');
+                    $(".divGrafica").show();
+                    $(".divTabla").hide();
+                    $(".btnGrafica").hide();
+                    $(".btnTabla").show();
+
+                    $(".verGrafica").append('<div class="divGrafica"><svg id="graph" width="960" height="550"></svg></div>');
+                    console.log('Pone la gráfica');
+                }
+
+                console.log("Aquí hace algo------------------");
+            });
+            
+            // Mostramos
+              $('#breakdown').val('0').change();
+              
+              
+              
+              
+//            var estados_global = [
+//                ["Entidad","1997-01-01","1998-01-01","1999-01-01","2000-01-01"],
+//                ["Estados Unidos Mexicanos",16866,14216,14619,13849],
+//                ["Aguascalientes",355,66,27,14],
+//                ["Baja California",492,292,657,460],
+//                ["Baja California Sur",60,18,31,31],
+//                ["Campeche",130,117,78,55],
+//                ["Coahuila de Zaragoza",175,165,139,113],
+//                ["Colima",99,89,53,45],
+//                ["Chiapas",1357,1399,1452,127],
+//                ["Chihuahua",677,584,425,437],
+//                ["Ciudad de México",977,947,880,709],
+//                ["Durango",61,134,291,268],
+//                ["Guanajuato",567,230,259,219],
+//                ["Guerrero",1273,1306,1242,1399],
+//                ["Hidalgo",360,250,199,115],
+//                ["Jalisco",600,604,545,486],
+//                ["México",3037,2221,2966,2726],
+//                ["Michoacán de Ocampo",757,1022,575,487],
+//                ["Morelos",178,216,344,352],
+//                ["Nayarit",132,165,146,121],
+//                ["Nuevo León",163,160,131,123],
+//                ["Oaxaca",788,14,823,1292],
+//                ["Puebla",729,675,575,573],
+//                ["Querétaro",234,39,55,62],
+//                ["Quintana Roo",335,117,123,245],
+//                ["San Luis Potosí",301,297,414,254],
+//                ["Sinaloa",669,643,564,501],
+//                ["Sonora",526,555,292,194],
+//                ["Tabasco",353,368,229,210],
+//                ["Tamaulipas",473,428,253,221],
+//                ["Tlaxcala",63,49,163,280],
+//                ["Veracruz de Ignacio de la Llave",722,707,590,465],
+//                ["Yucatán",110, 23,8,26],
+//                ["Zacatecas",113,316,90,96]
+//              ];
+              
+            
               
 		  },
 		  async:true
@@ -1576,64 +1603,17 @@ atributos_global = {
         clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         console.log(recurso);
         
-        if(clas2 === "entidad" || clas2 === "Entidad Federativa"){
-        //if(clas === "1" || clas === "En"){
-       
-            if(nombreCat === "Total"){
-               
-                var inf = [];
-                for(var yy=0;yy<rec2.length;yy++){
-                    datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
-                }
 
-                console.log(datoInd2);
-                console.log(rec2);
-                    dat111 += '[';
-
-                    var periodos = [];
-                    for(var jj=0; jj < datoInd2[0].length; jj++){
-                        periodos.push(datoInd2[0][jj].periodo);
-                    }
-
-                    dat111 += '';
-
-                for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
-                        dat111 += '{';
-                        dat111 += '"Entidad" : ' + periodos[gg] + ',';
-
-                    for(var hh=0;hh<rec2.length;hh++){
-                                dat111 += '"'+rec2[hh]+'" : ';
-                                dat111 += '' + datoInd2[hh][gg][res2] + '';
-                                if(hh === datoInd2.length-1){
-                                    dat111 += '';
-                                }else{
-                                    dat111 += ',';
-                                }
-
-                        } 
-                        dat111 += '}';
-
-                        console.log(periodos.length);
-                        console.log(periodos[gg]); 
-                        if(gg === periodos.length-1){
-                            dat111 += '';
-                        }else{
-                            dat111 += ',';
-                        }
-                    }
-                    dat111 += ']';
-                
-               }else{
-                // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-            // nuevos calculos para voltear el arreglo
-            var inf = [];
+        
+        var inf = [];
                 
             for(var yy=0;yy<rec2.length;yy++){
                 datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
             }
             
             dat111 += '[';
-
+            
+            
             var periodos = [];
             for(var jj=0; jj < datoInd2[0].length; jj++)
             {
@@ -1646,12 +1626,13 @@ atributos_global = {
             for(var gg=0; gg<rec2.length; gg++)
             {
                 dat111 += '{';
+                //dat111 += '"Entidad" : "' + rec2[gg] + '",';
                 dat111 += '"Entidad" : "' + rec2[gg] + '",';
                 
                 
                 for(var hh = 0; hh < periodos.length; hh++)
                 {
-                    dat111 += '"'+periodos[hh]+'" : ';
+                    //dat111 += '"'+periodos[hh]+'" : ';
                     dat111 += '' + datoInd2[gg][hh][res2] + '';
 
                     if(hh === periodos.length-1)
@@ -1678,94 +1659,39 @@ atributos_global = {
             dat111 += ']';
             
             console.log(dat111);
-// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-               }    
-            
-        }else{
-            
-            var inf = [];
-        for(var yy=0;yy<rec2.length;yy++){
-            datoInd2.push(apiGobGrupo(resource,dataset,clas2,rec2[yy])); 
+        
+
+        var cabezera = [];
+        cabezera.push('Entidad');
+        for(var i = 1; i< datoInd2[0].length; i++)
+        {
+            cabezera.push(datoInd2[0][i]['periodo']+'-01-01')
         }
         
-        console.log(datoInd2);
-        console.log(rec2);
-            dat111 += '[';
-            
-            var periodos = [];
-            for(var jj=0; jj < datoInd2[0].length; jj++){
-                periodos.push(datoInd2[0][jj].periodo);
+            console.log(datoInd2);
+        var nuevo_array = [];
+        //cargar cabezeras
+        nuevo_array.push(cabezera);
+        for(var i = 0; i< datoInd2.length; i++)
+        {
+            //console.log(datoInd2[i]);
+            var nuevo_array_interno = [];
+            nuevo_array_interno.push(datoInd2[i][0]['entidad']);
+            for(var j = 0; j< datoInd2[i].length; j++)
+            {
+                //console.log(datoInd2[i][j]);
+                nuevo_array_interno.push(datoInd2[i][j][res2]);
             }
             
-            dat111 += '';
-        
-        for(var gg=0;gg<periodos.length;gg++){//Cuento cortes
-                dat111 += '{';
-                dat111 += '"Periodo", ' + periodos[gg] + ',';
-            
-            for(var hh=0;hh<rec2.length;hh++){
-                        dat111 += '"'+rec2[hh]+'" : ';
-                        dat111 += '' + datoInd2[hh][gg][res2] + '';
-                        if(hh === datoInd2.length-1){
-                            dat111 += '';
-                        }else{
-                            dat111 += ',';
-                        }
-                        
-                } 
-                dat111 += '}';
-                
-                console.log(periodos.length);
-                console.log(periodos[gg]); 
-                if(gg === periodos.length-1){
-                    dat111 += '';
-                }else{
-                    dat111 += ',';
-                }
-            }
-            dat111 += ']';
-            
+            nuevo_array.push(nuevo_array_interno);
         }
         
-        return dat111;
+        console.log(nuevo_array);
+        
+        return nuevo_array;
     }
     
-    var estados_global = [
-    ["Entidad","1997-01-01","1998-01-01","1999-01-01","2000-01-01"],
-    ["Estados Unidos Mexicanos",16866,14216,14619,13849],
-    ["Aguascalientes",355,66,27,14],
-    ["Baja California",492,292,657,460],
-    ["Baja California Sur",60,18,31,31],
-    ["Campeche",130,117,78,55],
-    ["Coahuila de Zaragoza",175,165,139,113],
-    ["Colima",99,89,53,45],
-    ["Chiapas",1357,1399,1452,127],
-    ["Chihuahua",677,584,425,437],
-    ["Ciudad de México",977,947,880,709],
-    ["Durango",61,134,291,268],
-    ["Guanajuato",567,230,259,219],
-    ["Guerrero",1273,1306,1242,1399],
-    ["Hidalgo",360,250,199,115],
-    ["Jalisco",600,604,545,486],
-    ["México",3037,2221,2966,2726],
-    ["Michoacán de Ocampo",757,1022,575,487],
-    ["Morelos",178,216,344,352],
-    ["Nayarit",132,165,146,121],
-    ["Nuevo León",163,160,131,123],
-    ["Oaxaca",788,14,823,1292],
-    ["Puebla",729,675,575,573],
-    ["Querétaro",234,39,55,62],
-    ["Quintana Roo",335,117,123,245],
-    ["San Luis Potosí",301,297,414,254],
-    ["Sinaloa",669,643,564,501],
-    ["Sonora",526,555,292,194],
-    ["Tabasco",353,368,229,210],
-    ["Tamaulipas",473,428,253,221],
-    ["Tlaxcala",63,49,163,280],
-    ["Veracruz de Ignacio de la Llave",722,707,590,465],
-    ["Yucatán",110, 23,8,26],
-    ["Zacatecas",113,316,90,96]
-  ];
+
     
 });
 
