@@ -795,7 +795,7 @@ $(document).ready(function() {
                 
                 if(varis.length!==0){
                     variableGroup = '<div id="variableSel"><br/><span>Elige una variable: </span><select name="breakdown_var" id="breakdown_var">';
-                    for (var mm=0;mm<varis.length;mm++){
+                    for (var mm=0;mm<data.breakdown_group[str].breakdown_resource_name.length;mm++){
                         variableGroup += '<option value="' + mm + '">' + data.breakdown_group[str].breakdown_resource_name[mm] + '</option>';
                     }
                     variableGroup += '</select></div>';
@@ -835,48 +835,6 @@ $(document).ready(function() {
             
             // Mostramos
               $('#breakdown').val('0').change();
-              
-              
-              
-              
-//            var estados_global = [
-//                ["Entidad","1997-01-01","1998-01-01","1999-01-01","2000-01-01"],
-//                ["Estados Unidos Mexicanos",16866,14216,14619,13849],
-//                ["Aguascalientes",355,66,27,14],
-//                ["Baja California",492,292,657,460],
-//                ["Baja California Sur",60,18,31,31],
-//                ["Campeche",130,117,78,55],
-//                ["Coahuila de Zaragoza",175,165,139,113],
-//                ["Colima",99,89,53,45],
-//                ["Chiapas",1357,1399,1452,127],
-//                ["Chihuahua",677,584,425,437],
-//                ["Ciudad de México",977,947,880,709],
-//                ["Durango",61,134,291,268],
-//                ["Guanajuato",567,230,259,219],
-//                ["Guerrero",1273,1306,1242,1399],
-//                ["Hidalgo",360,250,199,115],
-//                ["Jalisco",600,604,545,486],
-//                ["México",3037,2221,2966,2726],
-//                ["Michoacán de Ocampo",757,1022,575,487],
-//                ["Morelos",178,216,344,352],
-//                ["Nayarit",132,165,146,121],
-//                ["Nuevo León",163,160,131,123],
-//                ["Oaxaca",788,14,823,1292],
-//                ["Puebla",729,675,575,573],
-//                ["Querétaro",234,39,55,62],
-//                ["Quintana Roo",335,117,123,245],
-//                ["San Luis Potosí",301,297,414,254],
-//                ["Sinaloa",669,643,564,501],
-//                ["Sonora",526,555,292,194],
-//                ["Tabasco",353,368,229,210],
-//                ["Tamaulipas",473,428,253,221],
-//                ["Tlaxcala",63,49,163,280],
-//                ["Veracruz de Ignacio de la Llave",722,707,590,465],
-//                ["Yucatán",110, 23,8,26],
-//                ["Zacatecas",113,316,90,96]
-//              ];
-              
-            
               
 		  },
 		  async:true
@@ -1026,34 +984,6 @@ $(document).ready(function() {
         }
         return dato;
     }
-    
-//    function iuio(tados){
-//        for(var rrr = 0; rrr < tados.length; rrr++){
-//            cuanti += '<div class="tabulado'+rrr+'">';
-//            cuanti += '<h3>' + tados[rrr].breakdown_group_name + '</h3><br />';
-//            cuanti += datosTabulado(tados[rrr].resource_id, tados[rrr].variable_dataset_id, tados[rrr].breakdown_attribute_result, tados[rrr].breakdown_attribute, tados[rrr].breakdown_group_year, tados[rrr].breakdown_resource_name, varis);
-//            cuanti += '</div>';
-//        }
-//    }
-    
-    
-//    function llamaDatos(data, key){
-//            cuanti += '<div class="tabulado'+key+'">';
-//            cuanti += '<h3>' + tados[key].breakdown_group_name + '</h3><br />';
-//            cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name, varis);
-//            cuanti += '</div>';
-//    }
-    
-//    function armaTabla(data, str){
-//        var cua = '';
-//            cua += '<div class="tabulado'+str+'">';
-//            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-//            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, varis);
-//            cua += '</div>';
-//        console.log(cua);
-//        return cua;
-//    }
-//    
     
     function indicadorCuanti(data,tieneBreakdown){
 
@@ -1342,40 +1272,96 @@ $(document).ready(function() {
             dat1 += '</tbody>';
             dat1 += '</table>';
         }else if(clas === "entidad" || clas === "Entidad Federativa" || clas === "Circuito Judicial"){
-           var inf = [];
-            for(var yy=0;yy<rec.length;yy++){
-                datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
-            }
             
-            console.log(rec);//Muestra las entidades
-        
-            var periodos = [];
-            for(var jj=0; jj < datoInd[0].length; jj++){
-                periodos.push(datoInd[0][jj].periodo);
-            }
+            if(str2 !== ''){
             
-            console.log(periodos);
-            console.log(datoInd);
             
-            dat1 += '<table class="table" id="tabuls1">';
-            dat1 += '<thead><th>Entidad</th>';
-            for(var hh=0;hh<periodos.length;hh++){
-                dat1 += '<th>'+periodos[hh]+'</th>';
-            }
+                var inf = [];
+                //for(var yy=0;yy<rec.length;yy++){
+                    datoInd.push(apiGobGrupo(resource,dataset,clas,rec[str2])); 
+                //}
 
-            dat1 += '</thead><tbody>';
-            
-            for(var gg=0;gg<rec.length;gg++){
-                dat1 += '<tr>';
-                    dat1 += '<td>' + rec[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
-                for(var ii = 0; ii < datoInd[gg].length; ii++){
-                    dat1 += '<td>' + datoInd[gg][ii][res] + '</td>';
-                } 
-                dat1 += '</tr>';
+                console.log(rec);
+
+                dat1 += '<table class="table" id="tabuls1">';
+                dat1 += '<thead><th>Periodo</th>';
+                if(lor.length!==0){
+                    console.log(lor);
+                    for(var oo=0;oo<lor.length;oo++){
+                        dat1 += '<th>'+lor[oo]+'</th>';
+                    }
+                }
+                
+                //for(var hh=0;hh<rec.length;hh++){
+                    dat1 += '<th>'+res+'</th>';
+                //}
+                
+
+                var periodos = [];
+                for(var jj=0; jj < datoInd[0].length; jj++){
+                    periodos.push(datoInd[0][jj].periodo);
+                }
+
+                dat1 += '</thead><tbody>';
+                for(var gg=0;gg<periodos.length;gg++){
+                    dat1 += '<tr>';
+                        dat1 += '<td>' + periodos[gg] + '</td>';
+                    //for(var ii = 0; ii < datoInd[str2].length; ii++){
+                        //dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+                        if(lor.length!==0){
+                            console.log(lor);
+                            for(var pp=0;pp<lor.length;pp++){
+                                var fog = lor[pp];
+                                    dat1 += '<td>'+datoInd[0][gg][fog]+'</td>';
+                            }
+                        }
+                        dat1 += '<td>' + datoInd[0][gg][res] + '</td>';
+                    //} 
+
+                    dat1 += '</tr>';
+                }
+                dat1 += '</tbody>';
+                dat1 += '</table>';
+                
+                
+                
+            }else{
+                
+               var inf = [];
+                for(var yy=0;yy<rec.length;yy++){
+                    datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+                }
+
+                console.log(rec);//Muestra las entidades
+
+                var periodos = [];
+                for(var jj=0; jj < datoInd[0].length; jj++){
+                    periodos.push(datoInd[0][jj].periodo);
+                }
+
+                console.log(periodos);
+                console.log(datoInd);
+
+                dat1 += '<table class="table" id="tabuls1">';
+                dat1 += '<thead><th>Entidad</th>';
+                for(var hh=0;hh<periodos.length;hh++){
+                    dat1 += '<th>'+periodos[hh]+'</th>';
+                }
+
+                dat1 += '</thead><tbody>';
+
+                for(var gg=0;gg<rec.length;gg++){
+                    dat1 += '<tr>';
+                        dat1 += '<td>' + rec[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                    for(var ii = 0; ii < datoInd[gg].length; ii++){
+                        dat1 += '<td>' + datoInd[gg][ii][res] + '</td>';
+                    } 
+                    dat1 += '</tr>';
+                }
+                dat1 += '</tbody>';
+                dat1 += '</table>';
             }
-            dat1 += '</tbody>';
-            dat1 += '</table>';
-            
+                
         }else{
             
             if(str2 !== ''){
