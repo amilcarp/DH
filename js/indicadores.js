@@ -22,12 +22,14 @@ var rec2 = '';
 var clas2 = '';
 var dat111;
 var str = "0";
+var str2 = "0";
 var graficaDat = [];
 var mapaDat = [];
 var tados;
 var tabulado1, tabulado2;
 var atributos;
 var estados_global;
+var varis;
 
 var JSONvar = [];
 
@@ -113,7 +115,6 @@ $(document).ready(function() {
               datosGlobal = data;
               
               
-              
             if(datosDer.is_cuantitative == false){
                 //El Indicador es cualitativo
                 $('#indicadores').html(indicadorCuali(datosDer));
@@ -160,6 +161,8 @@ $(document).ready(function() {
                 }
             }
               
+              varis = (typeof data.breakdown_group[str].breakdown_group_variable !== 'undefined') ? data.breakdown_group[str].breakdown_group_variable : '';
+              
             $('#claveInd').html(datosDer.indicator_code);
             $('#categoriaInd').html('<a href="derechos.html#'+sinEspacios(datosDer.right_name_short)+'">' + datosDer.right_name_short+'</a>');
             $('#tituloInd').html(datosDer.indicator_code + ' - ' + datosDer.indicator_name);
@@ -192,6 +195,7 @@ $(document).ready(function() {
 //                $(".tipoGrafica").html(switchGraficas(datosDer.breakdown_group[variable].graphic));
                 
                 var peri = (data.breakdown_group[str].breakdown_group_name === 'Entidad federativa') ? "Entidad" : "Periodo";
+                
                 
                 graficaDat = datosGrafica(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, data.breakdown_group[str].breakdown_group_name);
                 
@@ -764,31 +768,55 @@ $(document).ready(function() {
               
               
         
-        function armaTabla(data, str){
+        function armaTabla(data, str,str2){
             var cua = "";
             console.log(data.breakdown_group[str].breakdown_attribute);
             cua += '<div class="tabulado'+str+'" style="padding:25px 0 0 0;">';
 //            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
+            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, varis, str2);
             cua += '</div>';
             console.log(cua);
             return cua;
         }
               
+              
+              var variableGroup = '';
+              
             $("#breakdown").on("change", function() {
                 console.log("Si jaló ------------------------");
+                $('#variableSel').html('');
                 str = $(this).val();
+                str2 = $("#breakdown_var").val();
                 console.log(str);
                 console.log(datosDer);
                 $(".tipoGrafica").html('');
                 $('#save').hide();
+                varis = (typeof data.breakdown_group[str].breakdown_group_variable !== 'undefined') ? data.breakdown_group[str].breakdown_group_variable : '';
+                
+                if(varis.length!==0){
+                    variableGroup = '<div id="variableSel"><br/><span>Elige una variable: </span><select name="breakdown_var" id="breakdown_var">';
+                    for (var mm=0;mm<varis.length;mm++){
+                        variableGroup += '<option value="' + mm + '">' + data.breakdown_group[str].breakdown_resource_name[mm] + '</option>';
+                    }
+                    variableGroup += '</select></div>';
+                    
+                    $('#selectCat').append(variableGroup);
+                    str2 = $("#breakdown_var").val();
+                }
+                
+                $("#breakdown_var").on("change", function(){
+                    str2 = $("#breakdown_var").val();
+                    $(".verTabla").html(armaTabla(datosDer,str,str2));
+                });
+
+                
                 if($('.btnGrafica').show()){
                     muestraGrafica = true;
                     $(".divGrafica").hide();
                     $(".divTabla").show();
                     $(".btnGrafica").show();
                     $(".btnTabla").hide();
-                    $(".verTabla").html(armaTabla(datosDer,str));
+                    $(".verTabla").html(armaTabla(datosDer,str,str2));
                 }else{
                     muestraGrafica = false;
                     $(".tipoGrafica").html('');
@@ -802,6 +830,7 @@ $(document).ready(function() {
                 }
 
                 console.log("Aquí hace algo------------------");
+                
             });
             
             // Mostramos
@@ -954,7 +983,7 @@ $(document).ready(function() {
                                                     }
                                                 }
 
-                                                cuali += '<hr>';
+                                                cuali += '<hr style="border-top: 1px solid #bbb !important;">';
                                             }
                               
                                        cuali += '</td></tr>' +
@@ -998,33 +1027,33 @@ $(document).ready(function() {
         return dato;
     }
     
-    function iuio(tados){
-        for(var rrr = 0; rrr < tados.length; rrr++){
-            cuanti += '<div class="tabulado'+rrr+'">';
-            cuanti += '<h3>' + tados[rrr].breakdown_group_name + '</h3><br />';
-            cuanti += datosTabulado(tados[rrr].resource_id, tados[rrr].variable_dataset_id, tados[rrr].breakdown_attribute_result, tados[rrr].breakdown_attribute, tados[rrr].breakdown_group_year, tados[rrr].breakdown_resource_name);
-            cuanti += '</div>';
-        }
-    }
+//    function iuio(tados){
+//        for(var rrr = 0; rrr < tados.length; rrr++){
+//            cuanti += '<div class="tabulado'+rrr+'">';
+//            cuanti += '<h3>' + tados[rrr].breakdown_group_name + '</h3><br />';
+//            cuanti += datosTabulado(tados[rrr].resource_id, tados[rrr].variable_dataset_id, tados[rrr].breakdown_attribute_result, tados[rrr].breakdown_attribute, tados[rrr].breakdown_group_year, tados[rrr].breakdown_resource_name, varis);
+//            cuanti += '</div>';
+//        }
+//    }
     
     
-    function llamaDatos(data, key){
-            cuanti += '<div class="tabulado'+key+'">';
-            cuanti += '<h3>' + tados[key].breakdown_group_name + '</h3><br />';
-            cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name);
-            cuanti += '</div>';
-    }
+//    function llamaDatos(data, key){
+//            cuanti += '<div class="tabulado'+key+'">';
+//            cuanti += '<h3>' + tados[key].breakdown_group_name + '</h3><br />';
+//            cuanti += datosTabulado(tados[key].resource_id, tados[key].variable_dataset_id, tados[key].breakdown_attribute_result, tados[key].breakdown_attribute, tados[key].breakdown_group_year, tados[key].breakdown_resource_name, varis);
+//            cuanti += '</div>';
+//    }
     
-    function armaTabla(data, str){
-        var cua = '';
-            cua += '<div class="tabulado'+str+'">';
-            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
-            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name);
-            cua += '</div>';
-        console.log(cua);
-        return cua;
-    }
-    
+//    function armaTabla(data, str){
+//        var cua = '';
+//            cua += '<div class="tabulado'+str+'">';
+//            cua += '<h3>' + data.breakdown_group[str].breakdown_group_name + '</h3><br />';
+//            cua += datosTabulado(data.breakdown_group[str].resource_id, data.breakdown_group[str].variable_dataset_id, data.breakdown_group[str].breakdown_attribute_result, data.breakdown_group[str].breakdown_attribute, data.breakdown_group[str].breakdown_group_year, data.breakdown_group[str].breakdown_resource_name, varis);
+//            cua += '</div>';
+//        console.log(cua);
+//        return cua;
+//    }
+//    
     
     function indicadorCuanti(data,tieneBreakdown){
 
@@ -1052,7 +1081,7 @@ $(document).ready(function() {
                                 '<div class="row">';
         
                                     if(tieneBreakdown === true){
-                                        cuanti += '<div class="col-md-10">';
+                                        cuanti += '<div class="col-md-10" id="selectCat">';
                                         tados = data.breakdown_group;
                                         if(tados.length > 1){
                                             cuanti += '<br/><span>Elige un desglose: </span><select name="breakdown" id="breakdown">';
@@ -1258,7 +1287,7 @@ $(document).ready(function() {
     //clasificacion: Atributo a llamar de la API de datos.gob.mx Ej. grupo-especifico
     //periodos: Periodos que se van a consultar para el indicador, según reporte la API y consumido desde la variable breakdown_group_year
     //recurso: Nombre del recurso para la clasificación y el periodo a consultar. Ej. poblacion_con_menos_de_18_anios
-    function datosTabulado(resource, dataset, resultado, clasificacion, periodos, recurso){
+    function datosTabulado(resource, dataset, resultado, clasificacion, periodos, recurso, varis, str2=''){
         datoInd = [];
         datoInd2 = [];
         datoInd3 = [];
@@ -1267,6 +1296,16 @@ $(document).ready(function() {
         res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         console.log(clas);
+        
+        console.log(varis);
+        var lor = [];
+        for(var t = 0;t < varis.length;t++){
+            //desglose de varis
+            lor.push(parseAPI(varis[t].variable_breakdown_group_name));
+            console.log(lor);
+            
+        }
+        
         if(clas === null || res === null){
             var inf = [];
             //for(var yy=0;yy<rec.length;yy++){
@@ -1339,35 +1378,105 @@ $(document).ready(function() {
             
         }else{
             
-            var inf = [];
-            for(var yy=0;yy<rec.length;yy++){
-                datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
-            }
-        
-            console.log(rec);
-        
-            dat1 += '<table class="table" id="tabuls1">';
-            dat1 += '<thead><th>Periodo</th>';
-            for(var hh=0;hh<rec.length;hh++){
-                dat1 += '<th>'+rec[hh]+'</th>';
-            }
+            if(str2 !== ''){
+                
+                var inf = [];
+                for(var yy=0;yy<rec.length;yy++){
+                    datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+                }
+
+                console.log(rec);
+
+                dat1 += '<table class="table" id="tabuls1">';
+                dat1 += '<thead><th>Periodo</th>';
+                if(lor.length!==0){
+                    console.log(lor);
+                    for(var oo=0;oo<lor.length;oo++){
+                        dat1 += '<th>'+lor[oo]+'</th>';
+                    }
+                }
+                
+                //for(var hh=0;hh<rec.length;hh++){
+                    dat1 += '<th>'+res+'</th>';
+                //}
+                
+
+                var periodos = [];
+                for(var jj=0; jj < datoInd[0].length; jj++){
+                    periodos.push(datoInd[0][jj].periodo);
+                }
+
+                dat1 += '</thead><tbody>';
+                for(var gg=0;gg<periodos.length;gg++){
+                    dat1 += '<tr>';
+                        dat1 += '<td>' + periodos[gg] + '</td>';
+                    //for(var ii = 0; ii < datoInd[str2].length; ii++){
+                        //dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+                        if(lor.length!==0){
+                            console.log(lor);
+                            for(var pp=0;pp<lor.length;pp++){
+                                var fog = lor[pp];
+                                    dat1 += '<td>'+datoInd[str2][gg][fog]+'</td>';
+                            }
+                        }
+                        dat1 += '<td>' + datoInd[str2][gg][res] + '</td>';
+                    //} 
+
+                    dat1 += '</tr>';
+                }
+                dat1 += '</tbody>';
+                dat1 += '</table>';
+                
+                
+               }else{
+               
+               var inf = [];
+                for(var yy=0;yy<rec.length;yy++){
+                    datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+                }
+
+
+                console.log(rec);
+
+                dat1 += '<table class="table" id="tabuls1">';
+                dat1 += '<thead><th>Periodo</th>';
+                for(var hh=0;hh<rec.length;hh++){
+                    dat1 += '<th>'+rec[hh]+'</th>';
+                }
+                if(lor.length!==0){
+                    console.log(lor);
+                    for(var oo=0;oo<lor.length;oo++){
+                        dat1 += '<th>'+lor[oo]+'</th>';
+                    }
+                }
+
+                var periodos = [];
+                for(var jj=0; jj < datoInd[0].length; jj++){
+                    periodos.push(datoInd[0][jj].periodo);
+                }
+
+                dat1 += '</thead><tbody>';
+                for(var gg=0;gg<periodos.length;gg++){
+                    dat1 += '<tr>';
+                        dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
+                    for(var ii = 0; ii < datoInd.length; ii++){
+                        dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+//                        if(lor.length!==0){
+//                            console.log(lor);
+//                            for(var pp=0;pp<lor.length;pp++){
+//                                var fog = lor[pp];
+//                                    dat1 += '<td>'+datoInd[ii][gg][fog]+'</td>';
+//                            }
+//                        }
+                    } 
+
+                    dat1 += '</tr>';
+                }
+                dat1 += '</tbody>';
+                dat1 += '</table>';
+               
+               }
             
-            var periodos = [];
-            for(var jj=0; jj < datoInd[0].length; jj++){
-                periodos.push(datoInd[0][jj].periodo);
-            }
-            
-            dat1 += '</thead><tbody>';
-            for(var gg=0;gg<periodos.length;gg++){
-                dat1 += '<tr>';
-                    dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
-                for(var ii = 0; ii < datoInd.length; ii++){
-                    dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
-                } 
-                dat1 += '</tr>';
-            }
-            dat1 += '</tbody>';
-            dat1 += '</table>';
         }
         
         tabulado1 = dat1;
@@ -1676,7 +1785,7 @@ $(document).ready(function() {
         {
             //console.log(datoInd2[i]);
             var nuevo_array_interno = [];
-            nuevo_array_interno.push(datoInd2[i][0]['entidad']);
+            nuevo_array_interno.push(datoInd2[i][0][clas2]);
             for(var j = 0; j< datoInd2[i].length; j++)
             {
                 //console.log(datoInd2[i][j]);
