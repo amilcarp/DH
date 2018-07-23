@@ -784,7 +784,7 @@ $(document).ready(function() {
               
             $("#breakdown").on("change", function() {
                 console.log("Si jaló ------------------------");
-                $('#variableSel').html('');
+                $('#variableSel').remove();
                 str = $(this).val();
                 str2 = $("#breakdown_var").val();
                 console.log(str);
