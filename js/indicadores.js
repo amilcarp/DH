@@ -161,7 +161,7 @@ $(document).ready(function() {
                 }
             }
               
-              varis = (typeof data.breakdown_group[str].breakdown_group_variable !== 'undefined') ? data.breakdown_group[str].breakdown_group_variable : '';
+             // varis = (typeof datosDer.breakdown_group[str].breakdown_group_variable !== 'undefined') ? datosDer.breakdown_group[str].breakdown_group_variable : '';
               
             $('#claveInd').html(datosDer.indicator_code);
             $('#categoriaInd').html('<a href="derechos.html#'+sinEspacios(datosDer.right_name_short)+'">' + datosDer.right_name_short+'</a>');
