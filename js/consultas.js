@@ -35,7 +35,7 @@ $(document).ready(function () {
         var nombres = []; 
         $.ajax({
             type:'GET',
-            url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+            url: "json/general.json",
             data: {},
             success: function( data, textStatus, jqxhr ) {  
                 
@@ -461,7 +461,7 @@ $(document).ready(function () {
                 $( "."+rom[1] ).trigger("click");
                 
             },
-            async:true
+            async:false
 		});
     
     
@@ -471,10 +471,11 @@ $(document).ready(function () {
    function getValores(derecho){
         //var derecho = "Medio Ambiente";
         //var id_derecho = 5;
-         $.ajax({
+       var urlId = 'json/'+derecho+'.json';  
+       $.ajax({
 		  type: 'GET',
-//		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
-            url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
+            //url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
+           url: urlId,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {   
               
@@ -560,9 +561,11 @@ $(document).ready(function () {
    
     function derechos(){
         // Función para visualizar derechos disponibles
+        var urlDer = 'json/general.json';
         $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+		  //url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+            url: urlDer,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               countDer = data['fac.json']['array']['buckets'];

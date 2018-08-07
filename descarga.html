@@ -185,10 +185,11 @@
             
             function getValores(derecho){
                 var valores = '';
-
+                var urlDat = 'json/'+derecho+'.json';
                  $.ajax({
                   type: 'GET',
-                  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+                  //url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+                     url: urlDat,
                      //url: pathAPI + "search?q=right_id:"+derecho+"&rows=100",
                   data: {},
                   success: function( data, textStatus, jqxhr ) {
