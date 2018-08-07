@@ -106,9 +106,11 @@ $(document).ready(function() {
     
     
     // Aquí se cargan los datos de los derechos
+    var g = c.split(':');
     $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "data/" + c,
+            url: "json/"+g[2]+".json",
+		  //url: pathAPI + "data/" + c,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               datosDer = data;
