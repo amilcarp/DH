@@ -10,27 +10,27 @@ var cuan = '';
 
 $(document).ready(function () {
     
-    //console.log(nombreDerechos());
-    
     function init(){
         var x;
          var valores = nombreDerechos();
         //var valores = nombreDerechos();
         //console.log(valores);
         for (x = 0; x < valores.length; x++){
-            //getValores(valores[i]);
+            getValores(valores[i]);
             //console.log(valores[x]);
         }
     }
     
-//    derechos();
-   //getValores('Alimentación');
-//
-   //function getValores(derecho){
-        var derecho = "Medio Ambiente";
+    derechos();
+
+   function getValores(derecho){
+    
+        //var derecho = "Medio Ambiente";
+        var urlDatIni = "json/"+derecho+'.json';
          $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+		  //url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
+             url: urlDatIni,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               tipoDer = data['results']['records'];
@@ -39,7 +39,7 @@ $(document).ready(function () {
 		  },
 		  async:true
 		});
-    //}
+    }
     
     var estatusDerecho = nombreDerechos();
     
@@ -48,9 +48,11 @@ $(document).ready(function () {
         //Parcial = Si solo hay indicadores cualitativos
         //Próximamente = Si no hay indicadores
         var uno = "";
+        var urlDatStatus = "json/status"+derecho+'.json';
         $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100&fac.json={array:{type:%22terms%22,field:%22is_cuantitative%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}},nombres: {type:%22terms%22,field:%22right_name_short_lit%22,limit:20,facet:{unique_indicators: %22unique(indicator_name_lit)%22,indicators_null: {type: %22query%22,q: %22-indicator_name:[*%20TO%20*]%22}}}}",
+		  //url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100&fac.json={array:{type:%22terms%22,field:%22is_cuantitative%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}},nombres: {type:%22terms%22,field:%22right_name_short_lit%22,limit:20,facet:{unique_indicators: %22unique(indicator_name_lit)%22,indicators_null: {type: %22query%22,q: %22-indicator_name:[*%20TO%20*]%22}}}}",
+            url: urlDatStatus,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {
               console.log(data['fac.json']);
@@ -80,9 +82,11 @@ $(document).ready(function () {
    
     function derechos(){
         // Función para visualizar derechos disponibles
+        var urlDere = 'json/general.json';
         $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+		  //url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+            url: urlDere,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               countDer = data['fac.json']['array']['buckets'];
@@ -141,10 +145,12 @@ $(document).ready(function () {
     
     function nombreDerechos(){
         // Función para visualizar derechos disponibles
+        var urlDere = 'json/general.json';
         var nombres = []; 
         $.ajax({
 		  type: 'GET',
-		  url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+		  //url: pathAPI + "search?q=*:*&rows=0&fac.json={array:{type:%22terms%22,field:%22right_name_short_lit%22,limit:10,facet:{unique_indicators:%22unique(indicator_name_lit)%22,indicators_null:{type:%22query%22,q:%22-indicator_name:[*%20TO%20*]%22}}}}",
+            url: urlDere,
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {      
               countDer = data['fac.json']['array']['buckets'];
