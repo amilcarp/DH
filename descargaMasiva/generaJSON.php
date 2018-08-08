@@ -41,6 +41,7 @@ function derechoNombre($nombre, $rows = 100, $offset = 0){
 
     // Setup cURL
     //$ch = curl_init('https://datosabiertos.unam.mx/api/alice/data/PUDH:INDI:CjR01');
+    var_dump('https://datosabiertos.unam.mx/api/alice/search?q=right_name_short_lit:'.$nombre.'&rows='.$rows.'&offset='.$offset);
     $ch = curl_init('https://datosabiertos.unam.mx/api/alice/search?q=right_name_short_lit:'.$nombre.'&rows='.$rows.'&offset='.$offset);
     curl_setopt_array($ch, array(
         CURLOPT_RETURNTRANSFER => TRUE,
@@ -163,7 +164,7 @@ function derechos($rows = 100, $offset = 0){
 
 
 
-$derechos = array('Culturales', 'Medio Ambiente', 'Trabajo', 'Alimentación', 'Sindicales', 'Salud', 'Seguridad Social', 'Educación');
+$derechos = array('Salud','Seguridad%20Social','Educaci%C3%B3n','Alimentaci%C3%B3n', 'Medio%20Ambiente','Culturales', 'Trabajo',  'Sindicales');
 
 $idDerecho = array(1,2,3,4,5,6,7,8);
 
@@ -262,19 +263,19 @@ function datos($indicador){
 //var_dump(derechoNombre('Alimentación'));
 
 //Genera JSON por nombre de Derecho
-//for ($j=0; $j < count($derechos);$j++){
-//    generaDerechos($derechos[$j]);
-//}
+for ($j=0; $j < count($derechos);$j++){
+    generaDerechos($derechos[$j]);
+}
 //
 //Genera JSON de Derechos por ID
-for ($jj=0; $jj < count($idDerecho);$jj++){
-    generaId($idDerecho[$jj]);
-}
+//for ($jj=0; $jj < count($idDerecho);$jj++){
+//    generaId($idDerecho[$jj]);
+//}
 
 //Genera JSON de Status de derechos
-//for ($jjj=0; $jjj < count($derechos);$jjj++){
-//    generaStatusDer($derechos[$jjj]);
-//}
+for ($jjj=0; $jjj < count($derechos);$jjj++){
+    generaStatusDer($derechos[$jjj]);
+}
 
 // General JSON de Derechos disponibles
 //generaListaDer();
@@ -284,7 +285,7 @@ for ($jj=0; $jj < count($idDerecho);$jj++){
 function generaStatusDer($derecho){
     $baro = json_encode(derechosStatus($derecho),JSON_UNESCAPED_UNICODE);
 
-    $fhh = fopen("../json/status".$derecho.".json", 'w');
+    $fhh = fopen("../json/status".sinEspacios($derecho).".json", 'w');
     fwrite($fhh, $baro);
     fclose($fhh);
 }
@@ -300,7 +301,7 @@ function generaListaDer(){
 function generaDerechos($derecho){
     $baro = json_encode(derechoNombre($derecho),JSON_UNESCAPED_UNICODE);
 
-    $fhh = fopen("../json/".$derecho.".json", 'w');
+    $fhh = fopen("../json/".sinEspacios($derecho).".json", 'w');
     fwrite($fhh, $baro);
     fclose($fhh);
 }
@@ -323,5 +324,18 @@ function generaIndicador($indicador){
     fwrite($fh, $bar);
     fclose($fh);
 }
+
+    function sinEspacios($dato){
+        $contenido=$dato;
+        $contenido=str_replace(" ","",$contenido);
+        $contenido=str_replace("á","a",$contenido);
+        $contenido=str_replace("é","e",$contenido);
+        $contenido=str_replace("í","i",$contenido);
+        $contenido=str_replace("ó","o",$contenido);
+        $contenido=str_replace("ú","u",$contenido);
+        $contenido=str_replace("ñ","n",$contenido);
+        return $contenido;
+    }
+
 
 ?>

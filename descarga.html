@@ -183,9 +183,53 @@
                 return colap;
             }
             
+    function sinEspacios(dato){
+        var contenido=dato;
+        contenido=contenido.replace(/ /g,"");
+        contenido=contenido.replace(/á/g,"a");
+        contenido=contenido.replace(/é/g,"e");
+        contenido=contenido.replace(/í/g,"i");
+        contenido=contenido.replace(/ó/g,"o");
+        contenido=contenido.replace(/ú/g,"u");
+        contenido=contenido.replace(/ñ/g,"n");
+        return contenido;
+    }
+            
+            function der2Id(derecho){
+                var din = '';
+                switch(derecho){
+                    case "Salud":
+                        din = 1;
+                    break;
+                    case "Seguridad Social":
+                        din = 2;
+                    break;
+                    case "Educación":
+                        din = 3;
+                    break;
+                    case "Alimentación":
+                        din = 4;
+                    break;
+                    case "Medio Ambiente":
+                        din = 5;
+                    break;
+                    case "Culturales":
+                        din = 6;
+                    break;
+                    case "Trabajo":
+                        din = 7;
+                    break;
+                    case "Sindicales":
+                        din = 8;
+                    break;
+                }
+                return din;
+            }
+            
+            
             function getValores(derecho){
                 var valores = '';
-                var urlDat = 'json/'+derecho+'.json';
+                var urlDat = 'json/'+der2Id(derecho)+'.json';
                  $.ajax({
                   type: 'GET',
                   //url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
