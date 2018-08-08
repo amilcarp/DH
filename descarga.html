@@ -183,9 +183,20 @@
                 return colap;
             }
             
+    function sinEspacios(dato){
+        var contenido=dato;
+        contenido=contenido.replace(/ /g,"");
+        contenido=contenido.replace(/á/g,"a");
+        contenido=contenido.replace(/é/g,"e");
+        contenido=contenido.replace(/í/g,"i");
+        contenido=contenido.replace(/ó/g,"o");
+        contenido=contenido.replace(/ú/g,"u");
+        contenido=contenido.replace(/ñ/g,"n");
+        return contenido;
+    } 
             function getValores(derecho){
                 var valores = '';
-                var urlDat = 'json/'+derecho+'.json';
+                var urlDat = 'json/'+sinEspacios(derecho)+'.json';
                  $.ajax({
                   type: 'GET',
                   //url: pathAPI + "search?q=right_name_short_lit:"+derecho+"&rows=100",
