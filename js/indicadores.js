@@ -1,6 +1,6 @@
 //---- Variables
 var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
-var pathAPIGob = "https://api.datos.gob.mx/v1/";
+var pathAPIGob = "http://api.datos.gob.mx/v2/SNEDH-";
 var datosDer = [];
 var datosGlobal = [];
 var atributos_global = [];
@@ -48,7 +48,7 @@ String.prototype.replaceAll = function(search, replacement) {
 function apiGOB(resource, dataset, page, total){
         $.ajax({
 		  type: 'GET',
-		  url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?page='+page+'',
+		  url: pathAPIGob+resource+'?page='+page+'',
 		  data: {},
 		  success: function( data, textStatus, jqxhr ) {
               gob = data;
@@ -65,7 +65,7 @@ function apiGOB(resource, dataset, page, total){
         if(atributo === null || variable === null){
             $.ajax({
               type: 'GET',
-              url: pathAPIGob + 'ckan.'+dataset+'.'+resource,
+              url: pathAPIGob+resource,
               data: {},
               success: function( data, textStatus, jqxhr ) {
                   gobGrupo = data['results'];
@@ -75,7 +75,7 @@ function apiGOB(resource, dataset, page, total){
         }else{
             $.ajax({
               type: 'GET',
-              url: pathAPIGob + 'ckan.'+dataset+'.'+resource+'?'+atributo+'='+variable,
+              url: pathAPIGob+resource+'?'+atributo+'='+variable,
               data: {},
               success: function( data, textStatus, jqxhr ) {
                   gobGrupo = data['results'];
