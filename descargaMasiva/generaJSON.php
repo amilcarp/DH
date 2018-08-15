@@ -254,10 +254,10 @@ function datos($indicador){
 
 // ----------- Crea todos los JSON por código de indicador ---------//
 //
- for ($i=0; $i < count($indicator_code); $i++) {
-     generaIndicador($indicator_code[$i]);
-     var_dump($indicator_code[$i]);
- }
+// for ($i=0; $i < count($indicator_code); $i++) {
+//     generaIndicador($indicator_code[$i]);
+//     var_dump($indicator_code[$i]);
+// }
 //
  
 //var_dump(derechoNombre('Alimentación'));
@@ -273,9 +273,9 @@ for ($jj=0; $jj < count($idDerecho);$jj++){
 }
 
 //Genera JSON de Status de derechos
-for ($jjj=0; $jjj < count($derechos);$jjj++){
-    generaStatusDer($derechos[$jjj]);
-}
+//for ($jjj=0; $jjj < count($derechos);$jjj++){
+//    generaStatusDer($derechos[$jjj]);
+//}
 
 // General JSON de Derechos disponibles
 generaListaDer();
