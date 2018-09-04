@@ -254,10 +254,10 @@ function datos($indicador){
 
 // ----------- Crea todos los JSON por código de indicador ---------//
 //
- for ($i=0; $i < count($indicator_code); $i++) {
-     generaIndicador($indicator_code[$i]);
-     var_dump($indicator_code[$i]);
- }
+// for ($i=0; $i < count($indicator_code); $i++) {
+//     generaIndicador($indicator_code[$i]);
+//     var_dump($indicator_code[$i]);
+// }
 //
  
 //var_dump(derechoNombre('Alimentación'));
