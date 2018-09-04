@@ -7,3 +7,4 @@ ________          __         _________                            .__
 
 // Código Generado por DataCrunchers
 // Esta carpeta almacena temporalmente los archivos para la descarga masiva en formato ZIP
+// Actualizado al 3 de Septiembre de 2018
