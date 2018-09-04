@@ -216,7 +216,7 @@ $indicator_code = array();
     }
 
 
-//var_dump($indicator_code);
+var_dump($indicator_code);
 
 
 
@@ -273,9 +273,9 @@ for ($jj=0; $jj < count($idDerecho);$jj++){
 }
 
 //Genera JSON de Status de derechos
-for ($jjj=0; $jjj < count($derechos);$jjj++){
-    generaStatusDer($derechos[$jjj]);
-}
+//for ($jjj=0; $jjj < count($derechos);$jjj++){
+//    generaStatusDer($derechos[$jjj]);
+//}
 
 // General JSON de Derechos disponibles
 generaListaDer();
@@ -285,7 +285,7 @@ generaListaDer();
 function generaStatusDer($derecho){
     $baro = json_encode(derechosStatus($derecho),JSON_UNESCAPED_UNICODE);
 
-    $fhh = fopen("../json/status".sinEspacios($derecho).".json", 'w');
+    $fhh = fopen("../json/status".sinEspacios($derecho).".json", 'w+');
     fwrite($fhh, $baro);
     fclose($fhh);
 }
@@ -293,7 +293,7 @@ function generaStatusDer($derecho){
 function generaListaDer(){
     $baro = json_encode(derechos(),JSON_UNESCAPED_UNICODE);
 
-    $fhh = fopen("../json/general.json", 'w');
+    $fhh = fopen("../json/general.json", 'w+');
     fwrite($fhh, $baro);
     fclose($fhh);
 }
@@ -301,7 +301,7 @@ function generaListaDer(){
 function generaDerechos($derecho){
     $baro = json_encode(derechoNombre($derecho),JSON_UNESCAPED_UNICODE);
 
-    $fhh = fopen("../json/".sinEspacios($derecho).".json", 'w');
+    $fhh = fopen("../json/".sinEspacios($derecho).".json", 'w+');
     fwrite($fhh, $baro);
     fclose($fhh);
 }
@@ -309,7 +309,7 @@ function generaDerechos($derecho){
 function generaId($derecho){
     $baro = json_encode(derechoId($derecho),JSON_UNESCAPED_UNICODE);
 
-    $fhh = fopen("../json/".$derecho.".json", 'w');
+    $fhh = fopen("../json/".$derecho.".json", 'w+');
     fwrite($fhh, $baro);
     fclose($fhh);
 }
@@ -320,7 +320,7 @@ function generaIndicador($indicador){
 
     $bar = json_encode($arr_clientes,JSON_UNESCAPED_UNICODE);
 
-    $fh = fopen("../json/".$indicador.".json", 'w');
+    $fh = fopen("../json/".$indicador.".json", 'w+');
     fwrite($fh, $bar);
     fclose($fh);
 }
