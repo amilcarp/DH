@@ -1,6 +1,6 @@
 //---- Variables
 var pathAPI = "https://datosabiertos.unam.mx/api/alice/";
-var pathAPIGob = "http://api.datos.gob.mx/v2/SNEDH-";
+var pathAPIGob = "https://api.datos.gob.mx/v2/SNEDH-";
 var datosDer = [];
 var datosGlobal = [];
 var atributos_global = [];
