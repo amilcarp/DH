@@ -1228,7 +1228,8 @@ $(document).ready(function() {
         res = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         console.log(clas);
-        
+        clas = minusculas(clas);
+        console.log(res);
         console.log(varis);
         var lor = [];
         for(var t = 0;t < varis.length;t++){
@@ -1241,7 +1242,11 @@ $(document).ready(function() {
         if(clas === null || res === null){
             var inf = [];
             //for(var yy=0;yy<rec.length;yy++){
-                datoInd.push(apiGobGrupo(resource,dataset,clas,rec[yy])); 
+                if(clas=="Entidad Federativa" || clas=="Entidad federativa"){
+                        datoInd.push(apiGobGrupo(resource,dataset,minusculas(clas),rec[str2])); 
+                    }else{
+                        datoInd.push(apiGobGrupo(resource,dataset,clas,rec[str2])); 
+                    }
             //}
             
             console.log(datoInd);
@@ -1273,14 +1278,19 @@ $(document).ready(function() {
             }
             dat1 += '</tbody>';
             dat1 += '</table>';
-        }else if(clas === "entidad" || clas === "Entidad Federativa" || clas === "Circuito Judicial"){
+        }else if(clas === "entidad" || clas === "Entidad Federativa" || clas === "entidad-federativa"  || clas === "Circuito Judicial"){
             
             if(str2 !== ''){
             
             
                 var inf = [];
                 //for(var yy=0;yy<rec.length;yy++){
-                    datoInd.push(apiGobGrupo(resource,dataset,clas,rec[str2])); 
+                    if(clas==="Entidad Federativa" || clas==="Entidad federativa"){
+                        datoInd.push(apiGobGrupo(resource,dataset,minusculas(clas),rec[str2])); 
+                    }else{
+                        datoInd.push(apiGobGrupo(resource,dataset,clas,rec[str2])); 
+                    }
+                
                 //}
 
                 console.log(rec);
@@ -1489,6 +1499,7 @@ $(document).ready(function() {
         res2 = parseAPI(resultado);//Trae la variable del valor del dato. Ej. porc-pob-carencia-alim
         clas2 = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         console.log(recurso);
+        clas2 = minusculas(clas2);
         
         if(clas2 === "entidad" || clas2 === "Entidad Federativa"){
         //if(clas === "1" || clas === "En"){
@@ -1653,6 +1664,13 @@ $(document).ready(function() {
         contenido=contenido.replace(/ó/g,"o");
         contenido=contenido.replace(/ú/g,"u");
         contenido=contenido.replace(/ñ/g,"n");
+        return contenido;
+    }
+    
+    function minusculas(dato){
+        var contenido=dato;
+        contenido=contenido.replace(/ /g,"-");
+        contenido=contenido.toLowerCase();
         return contenido;
     }
     
