@@ -29,7 +29,7 @@ var tados;
 var tabulado1, tabulado2;
 var atributos;
 var estados_global;
-var varis;
+var varis, ggg;
 
 var JSONvar = [];
 
@@ -1229,7 +1229,8 @@ $(document).ready(function() {
         clas = parseAPI(clasificacion);//Trae el valor de de la clasificación. Ej. grupo-especifico
         console.log(clas);
         clas = minusculas(clas);
-        console.log(res);
+        ggg = minusculas(res);
+        console.log(ggg);
         console.log(varis);
         var lor = [];
         for(var t = 0;t < varis.length;t++){
@@ -1272,7 +1273,7 @@ $(document).ready(function() {
                 dat1 += '<tr>';
                     dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
                 for(var ii = 0; ii < datoInd[0][gg].length; ii++){
-                    dat1 += '<td>' + datoInd[0][gg][ii]["porcentaje-de-iniciativas-legislativas-en-el-mbito-cultural-para-la-legislatura"] + '</td>';
+                    dat1 += '<td>' + datoInd[0][gg][ii][minusculas(res)] + '</td>';
                 } 
                 dat1 += '</tr>';
             }
@@ -1324,10 +1325,10 @@ $(document).ready(function() {
                             console.log(lor);
                             for(var pp=0;pp<lor.length;pp++){
                                 var fog = lor[pp];
-                                    dat1 += '<td>'+datoInd[0][gg][fog]+'</td>';
+                                    dat1 += '<td>'+datoInd[0][gg][minusculas(fog)]+'</td>';
                             }
                         }
-                        dat1 += '<td>' + datoInd[0][gg][res] + '</td>';
+                        dat1 += '<td>' + datoInd[0][gg][minusculas(res)] + '</td>';
                     //} 
 
                     dat1 += '</tr>';
@@ -1366,7 +1367,7 @@ $(document).ready(function() {
                     dat1 += '<tr>';
                         dat1 += '<td>' + rec[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
                     for(var ii = 0; ii < datoInd[gg].length; ii++){
-                        dat1 += '<td>' + datoInd[gg][ii][res] + '</td>';
+                        dat1 += '<td>' + datoInd[gg][ii][minusculas(res)] + '</td>';
                     } 
                     dat1 += '</tr>';
                 }
@@ -1417,7 +1418,7 @@ $(document).ready(function() {
                                     dat1 += '<td>'+datoInd[str2][gg][fog]+'</td>';
                             }
                         }
-                        dat1 += '<td>' + datoInd[str2][gg][res] + '</td>';
+                        dat1 += '<td>' + datoInd[str2][gg][minusculas(res)] + '</td>';
                     //} 
 
                     dat1 += '</tr>';
@@ -1458,7 +1459,7 @@ $(document).ready(function() {
                     dat1 += '<tr>';
                         dat1 += '<td>' + periodos[gg] + '</td>';// + '<td>' + datoInd[ll][gg][res] + '</td>';
                     for(var ii = 0; ii < datoInd.length; ii++){
-                        dat1 += '<td>' + datoInd[ii][gg][res] + '</td>';
+                        dat1 += '<td>' + datoInd[ii][gg][minusculas(res)] + '</td>';
 //                        if(lor.length!==0){
 //                            console.log(lor);
 //                            for(var pp=0;pp<lor.length;pp++){
@@ -1528,7 +1529,7 @@ $(document).ready(function() {
 
                     for(var hh=0;hh<rec2.length;hh++){
                                 dat111 += '"'+rec2[hh]+'" : ';
-                                dat111 += '' + datoInd2[hh][gg][res2] + '';
+                                dat111 += '' + datoInd2[hh][gg][minusculas(res2)] + '';
                                 if(hh === datoInd2.length-1){
                                     dat111 += '';
                                 }else{
@@ -1577,7 +1578,7 @@ $(document).ready(function() {
                 for(var hh = 0; hh < periodos.length; hh++)
                 {
                     dat111 += '"'+periodos[hh]+'" : ';
-                    dat111 += '' + datoInd2[gg][hh][res2] + '';
+                    dat111 += '' + datoInd2[gg][hh][minusculas(res2)] + '';
 
                     if(hh === periodos.length-1)
                     {
@@ -1630,7 +1631,7 @@ $(document).ready(function() {
             
             for(var hh=0;hh<rec2.length;hh++){
                         dat111 += '"'+rec2[hh]+'" : ';
-                        dat111 += '' + datoInd2[hh][gg][res2] + '';
+                        dat111 += '' + datoInd2[hh][gg][minusculas(res2)] + '';
                         if(hh === datoInd2.length-1){
                             dat111 += '';
                         }else{
@@ -1667,9 +1668,20 @@ $(document).ready(function() {
         return contenido;
     }
     
+    function escapeRegExp(string) {
+      return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'); 
+    }
+    
     function minusculas(dato){
         var contenido=dato;
-        contenido=contenido.replace(/ /g,"-");
+        contenido=contenido.replace(/[ _]/g,"-");
+        contenido=contenido.replace(/[.,;()%]/g,"");
+        contenido=contenido.replace(/á/g,"a");
+        contenido=contenido.replace(/é/g,"e");
+        contenido=contenido.replace(/í/g,"i");
+        contenido=contenido.replace(/ó/g,"o");
+        contenido=contenido.replace(/ú/g,"u");
+        contenido=contenido.replace(/ñ/g,"n");
         contenido=contenido.toLowerCase();
         return contenido;
     }
@@ -1748,7 +1760,7 @@ $(document).ready(function() {
                 for(var hh = 0; hh < periodos.length; hh++)
                 {
                     //dat111 += '"'+periodos[hh]+'" : ';
-                    dat111 += '' + datoInd2[gg][hh][res2] + '';
+                    dat111 += '' + datoInd2[gg][hh][minusculas(res2)] + '';
 
                     if(hh === periodos.length-1)
                     {
@@ -1795,7 +1807,7 @@ $(document).ready(function() {
             for(var j = 0; j< datoInd2[i].length; j++)
             {
                 //console.log(datoInd2[i][j]);
-                nuevo_array_interno.push(datoInd2[i][j][res2]);
+                nuevo_array_interno.push(datoInd2[i][j][minusculas(res2)]);
             }
             
             nuevo_array.push(nuevo_array_interno);
