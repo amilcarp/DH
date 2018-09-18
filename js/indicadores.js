@@ -1401,6 +1401,7 @@ $(document).ready(function() {
                 
 
                 var periodos = [];
+                
                 for(var jj=0; jj < datoInd[0].length; jj++){
                     periodos.push(datoInd[0][jj].periodo);
                 }
@@ -1415,7 +1416,7 @@ $(document).ready(function() {
                             console.log(lor);
                             for(var pp=0;pp<lor.length;pp++){
                                 var fog = lor[pp];
-                                    dat1 += '<td>'+datoInd[str2][gg][fog]+'</td>';
+                                    dat1 += '<td>'+datoInd[str2][gg][minusculas(fog)]+'</td>';
                             }
                         }
                         dat1 += '<td>' + datoInd[str2][gg][minusculas(res)] + '</td>';
