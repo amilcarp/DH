@@ -1103,7 +1103,7 @@ $(document).ready(function() {
                                             '<td>'+moment(data.lastmodified).format('DD-MM-YYYY')+'</td>' +
                                         '</tr>' +
                                         '<tr>' +
-                                            '<td>Entidad responsable del indicador</td>' +
+                                            '<td>Entidad que reporta el indicador</td>' +
                                             '<td>'+data.responsible_institution+'</td>' +
                                         '</tr>' +
                                     '</tbody>' +
